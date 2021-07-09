@@ -29,6 +29,7 @@ static void InitializeFlipper(UIApplication *application) {
 {
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
+  
 #endif
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
