@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
         marginBottom: 8,
         flexDirection: 'row',
         alignItems: 'center',
+        paddingRight: 18
     },
     icon: {
         marginLeft: 18,
@@ -70,6 +71,8 @@ const styles = StyleSheet.create({
     textInput: {
         marginLeft: 20,
         color: Themes.NeutralColors.grey,
+        width: '80%',
+
     },
 });
 export default IconLeftInputForm;
