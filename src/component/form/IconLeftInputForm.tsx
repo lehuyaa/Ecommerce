@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     textInput: {
         marginLeft: 20,
         color: Themes.NeutralColors.grey,
+        width: '80%',
     },
 });
 export default IconLeftInputForm;

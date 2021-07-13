@@ -12,6 +12,7 @@ import * as yup from 'yup';
 import { FormProvider, useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import IconLeftInputForm from '../../component/form/IconLeftInputForm';
+import { APP_ROUTE, TAB_NAVIGATION_ROOT } from '../../navigation/config/routes';
 
 
 const LoginScreen = () => {
@@ -34,7 +35,7 @@ const LoginScreen = () => {
 
     const login = (data) => {
         console.log('data', data)
-        // navigation.navigate('')
+        navigation.navigate(APP_ROUTE.MAIN_TAB);
     }
 
     const goRegisterScreen = () => {
