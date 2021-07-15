@@ -10,23 +10,27 @@ const APP_ROUTE = {
 const HOME_ROUTE = {
     ROOT: 'HOME_ROOT',
     HOME: 'HOME',
-    
+
 };
 
 const EXPLORE_ROUTE = {
     ROOT: 'SETTING_ROOT',
+    EXPLORE: 'EXPLORE',
 };
 
 const CART_ROUTE = {
     ROOT: 'NOTIFICATION_ROOT',
+    CART: 'CART'
 };
 
 const OFFER_ROUTE = {
     ROOT: 'ACCOUNT_ROUTE',
+    OFFER: 'OFFER',
 };
 
 const ACCOUNT_ROUTE = {
     ROOT: 'HEART_ROUT',
+    ACCOUNT: 'ACCOUNT'
 };
 
 const TAB_NAVIGATION_ROOT = {

@@ -7,8 +7,9 @@ import ExploreScreen from '../../screen/explore/ExploreScreen';
 import CartScreen from '../../screen/cart/CartScreen';
 import OfferScreen from '../../screen/offer/OfferScreen';
 import AccountScreen from '../../screen/account/AccountScreen';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import { BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import BottomTab from '../component/BottomTab';
+import Images from '../../assets/images';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -16,41 +17,74 @@ const Tab = createBottomTabNavigator();
 
 const HomeStack = () => (
     <Stack.Navigator headerMode={'none'} screenOptions={navigationConfigs} >
-        <Stack.Screen name={TAB_NAVIGATION_ROOT.HOME_ROUTE.ROOT} component={HomeScreen} />
+        <Stack.Screen name={TAB_NAVIGATION_ROOT.HOME_ROUTE.HOME} component={HomeScreen} />
     </Stack.Navigator>
 );
 const ExploreStack = () => (
     <Stack.Navigator headerMode={'none'} screenOptions={navigationConfigs} >
-        <Stack.Screen name={TAB_NAVIGATION_ROOT.EXPLORE_ROUTE.ROOT} component={ExploreScreen} />
+        <Stack.Screen name={TAB_NAVIGATION_ROOT.EXPLORE_ROUTE.EXPLORE} component={ExploreScreen} />
     </Stack.Navigator>
 );
 
 const CartStack = () => (
     <Stack.Navigator headerMode={'none'} screenOptions={navigationConfigs} >
-        <Stack.Screen name={TAB_NAVIGATION_ROOT.CART_ROUTE.ROOT} component={CartScreen} />
+        <Stack.Screen name={TAB_NAVIGATION_ROOT.CART_ROUTE.CART} component={CartScreen} />
     </Stack.Navigator>
 );
 
 const OfferStack = () => (
     <Stack.Navigator headerMode={'none'} screenOptions={navigationConfigs} >
-        <Stack.Screen name={TAB_NAVIGATION_ROOT.OFFER_ROUTE.ROOT} component={OfferScreen} />
+        <Stack.Screen name={TAB_NAVIGATION_ROOT.OFFER_ROUTE.OFFER} component={OfferScreen} />
     </Stack.Navigator>
 )
 
 const AccountStack = () => (
     <Stack.Navigator headerMode={'none'} screenOptions={navigationConfigs} >
-        <Stack.Screen name={TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.ROOT} component={AccountScreen} />
+        <Stack.Screen name={TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.ACCOUNT} component={AccountScreen} />
     </Stack.Navigator>
 )
 
+const ArrayTabs = [
+    {
+        name: TAB_NAVIGATION_ROOT.HOME_ROUTE.ROOT,
+        title: 'Home',
+        component: HomeStack,
+        icon: Images.icon.home,
+
+    },
+    {
+        name: TAB_NAVIGATION_ROOT.EXPLORE_ROUTE.ROOT,
+        title: 'Explore',
+        component: ExploreStack,
+        icon: Images.icon.explore
+    },
+    {
+        name: TAB_NAVIGATION_ROOT.CART_ROUTE.ROOT,
+        title: 'Cart',
+        component: CartStack,
+        icon: Images.icon.cart
+    },
+    {
+        name: TAB_NAVIGATION_ROOT.OFFER_ROUTE.ROOT,
+        title: 'Offer',
+        component: OfferStack,
+        icon: Images.icon.offer
+    },
+    {
+        name: TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.ROOT,
+        title: 'Account',
+        component: AccountStack,
+        icon: Images.icon.account
+    },
+];
+
+
 const AppTab = () => {
     return (
-        <Tab.Navigator>
-            <Tab.Screen name="Home" component={HomeStack} />
-            <Tab.Screen name="Explore" component={ExploreStack} />
-            <Tab.Screen name="Cart" component={CartStack} />
-            <Tab.Screen name="Offer" component={OfferStack} />
-            <Tab.Screen name="Account" component={AccountStack} />
+        <Tab.Navigator tabBar={(props: BottomTabBarProps) => <BottomTab {...props} />}>
+            {ArrayTabs.map((item, index) => (
+                <Tab.Screen key={`${index}`} options={{ ...item }} {...item} />
+            ))}
         </Tab.Navigator>
 
     );
