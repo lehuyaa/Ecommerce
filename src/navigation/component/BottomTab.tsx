@@ -2,6 +2,7 @@
 import React, { FunctionComponent } from 'react';
 import { Platform, View, TouchableOpacity, Image, StyleSheet, Text } from 'react-native';
 import { Themes } from '../../assets/themes';
+import { ScaledSheet } from 'react-native-size-matters';
 
 const StyledTabBar: FunctionComponent<any> = ({
     state,
@@ -59,7 +60,7 @@ const StyledTabBar: FunctionComponent<any> = ({
     );
 };
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
     tabContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -74,17 +75,17 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         alignItems: 'center',
         width: '20%',
-        marginBottom: 10
+        marginBottom: '10@vs'
     },
     tabIcon: {
-        width: 24,
-        height: 24,
+        width: '24@s',
+        height: '24@vs',
         resizeMode: 'contain',
     },
     tabLabel: {
-        fontSize: 12,
+        fontSize: '12@ms0.3',
         textAlign: 'center',
-        marginTop: 5,
+        marginTop: '5@vs',
         fontWeight: '400'
     },
 });
