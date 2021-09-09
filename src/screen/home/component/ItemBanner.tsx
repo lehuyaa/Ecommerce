@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import Images from '../../../assets/images'
 import { ScaledSheet } from 'react-native-size-matters';
 import { Themes } from '../../../assets/themes';
@@ -15,9 +15,9 @@ const ItemTime = (props) => {
 
 const ItemBanner = (props) => {
 
-    const { image } = props;
+    const { image, onPress } = props;
     return (
-        <View>
+        <TouchableOpacity onPress={onPress}>
             <Image style={styles.bannerImage} source={image} />
             <Text style={styles.title}>Super Flash Sale{"\n"}
                 50% Off</Text>
@@ -29,7 +29,7 @@ const ItemBanner = (props) => {
                 <ItemTime text='52' />
             </View>
 
-        </View>
+        </TouchableOpacity>
     )
 }
 
