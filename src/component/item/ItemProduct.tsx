@@ -1,9 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import { ScaledSheet } from 'react-native-size-matters';
-import Images from '../../assets/images';
 import { Themes } from '../../assets/themes';
-import { windowWidth, windowHeight } from '../../utill/Size';
 
 const ItemProduct = (props) => {
 

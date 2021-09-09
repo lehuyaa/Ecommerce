@@ -16,7 +16,6 @@ import { arrBanner } from './list/ListBanner';
 import { flashSale, megaSale, product } from './list/ListProduct';
 import ListProduct from './component/ListProduct';
 import ItemBigProduct from '../../component/item/ItemBigProduct';
-import { windowWidth, windowHeight } from '../../utill/Size';
 import { useNavigation } from '@react-navigation/native';
 import { APP_ROUTE } from '../../navigation/config/routes';
 
@@ -63,7 +62,6 @@ const ListHeader = () => {
 };
 
 const HomeScreen = () => {
-    console.log(windowHeight)
     return (
         <View style={styles.container}>
             <Header
@@ -101,6 +99,7 @@ const styles = ScaledSheet.create({
         backgroundColor: Themes.BackgroundColor.white,
         flex: 1,
         alignItems: 'center',
+    
     },
     headerFlatList: {
         width: '100%',

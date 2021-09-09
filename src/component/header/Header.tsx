@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { View } from 'react-native'
 import { Themes } from '../../assets/themes';
 import { ScaledSheet } from 'react-native-size-matters';
 
