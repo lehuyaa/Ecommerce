@@ -2,6 +2,7 @@ import React, { forwardRef, useState } from 'react';
 import { Controller, RegisterOptions, useFormContext, } from 'react-hook-form';
 import { TextInputProps, Text, StyleSheet, TextInput, View } from 'react-native';
 import { Themes } from '../../assets/themes';
+import { ScaledSheet } from 'react-native-size-matters';
 
 
 interface FormInputProps extends TextInputProps {
@@ -50,29 +51,28 @@ const IconLeftInputForm = forwardRef((props: FormInputProps, ref: any) => {
         </>
     );
 });
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
     error: {
         color: Themes.PrimaryColor.red,
-        fontSize: 17,
+        fontSize: '17@ms0.3',
         fontWeight: '700',
     },
     container: {
-        height: 50,
+        height: '50@vs',
         borderWidth: 1,
         borderRadius: 5,
-        marginBottom: 8,
+        marginBottom: '8@vs',
         flexDirection: 'row',
         alignItems: 'center',
         paddingRight: 18
     },
     icon: {
-        marginLeft: 18,
+        marginLeft: '18@s',
     },
     textInput: {
-        marginLeft: 20,
+        marginLeft: '20@s',
         color: Themes.NeutralColors.grey,
         width: '80%',
-
     },
 });
 export default IconLeftInputForm;
