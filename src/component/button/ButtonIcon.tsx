@@ -3,9 +3,9 @@ import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import { ScaledSheet } from 'react-native-size-matters';
 
 const ButtonIcon = (props) => {
-    const { icon } = props;
+    const { icon, customStyles } = props;
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={[styles.container, customStyles]}>
             <Image style={styles.icon} source={icon} />
         </TouchableOpacity>
     )

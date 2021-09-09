@@ -17,8 +17,12 @@ import { flashSale, megaSale, product } from './list/ListProduct';
 import ListProduct from './component/ListProduct';
 import ItemBigProduct from '../../component/item/ItemBigProduct';
 import { windowWidth, windowHeight } from '../../utill/Size';
+import { useNavigation } from '@react-navigation/native';
+import { APP_ROUTE } from '../../navigation/config/routes';
 
 const ListHeader = () => {
+    const navigation = useNavigation();
+
     return (
         <View style={styles.headerFlatList}>
             <View style={styles.banner}>
@@ -33,7 +37,7 @@ const ListHeader = () => {
                     removeClippedSubviews={false}
                 >
                     {arrBanner.map((item, index) => (
-                        <ItemBanner key={`${index}`} image={item.image} />
+                        <ItemBanner onPress={() => navigation.navigate(APP_ROUTE.FLASH_SALE)} key={`${index}`} image={item.image} />
                     ))}
                 </Swiper>
             </View>
@@ -63,7 +67,7 @@ const HomeScreen = () => {
     return (
         <View style={styles.container}>
             <Header
-                formInput={<FormSearch />}
+                children={<FormSearch />}
                 iconRight1={<ButtonIcon icon={Images.icon.heart} />}
                 iconRight2={<ButtonIcon icon={Images.icon.notifications} />}
             />
@@ -74,7 +78,7 @@ const HomeScreen = () => {
                         <ItemBigProduct
                             image={item.images}
                             name={item.name}
-                            price={item.name}
+                            price={item.price}
                             oldPrice={item.oldPrice}
                             percent={item.percent}
                         />
@@ -83,6 +87,7 @@ const HomeScreen = () => {
                     ListHeaderComponent={ListHeader}
                     numColumns={2}
                     keyExtractor={(item, index) => index.toString()}
+                    showsVerticalScrollIndicator={false}
                 />
             </View>
 
@@ -102,7 +107,8 @@ const styles = ScaledSheet.create({
         marginBottom: '20@vs',
     },
     banner: {
-        padding: 16,
+        paddingHorizontal: '16@s',
+        paddingVertical: '16@vs',
         height: '250@vs',
         width: '100%',
         alignItems: 'center',
@@ -160,7 +166,7 @@ const styles = ScaledSheet.create({
         flex: 1,
         justifyContent: 'space-between',
         paddingHorizontal: '16@s',
-        marginBottom: windowHeight > 850 ? -5 : 12,
+        marginBottom: '15@vs',
     }
 
 })

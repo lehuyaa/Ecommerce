@@ -22,7 +22,7 @@ const ItemCategory = (props) => {
 const styles = ScaledSheet.create({
     container: {
         width: '70@s',
-        height: '105@vs',
+        height: '115@vs',
         marginTop: '17@vs',
         marginRight: '14@s',
         alignItems: 'center',

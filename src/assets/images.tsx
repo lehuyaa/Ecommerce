@@ -10,6 +10,8 @@ const Images = {
         account: require('./images/icon/Account.png'),
         heart: require('./images/icon/Heart.png'),
         notifications: require('./images/icon/Notifications.png'),
+        back: require('./images/icon/Back.png'),
+        search: require('./images/icon/Search.png'),
     },
     products: {
         manShirt: require('./images/icon/Manshirt.png'),

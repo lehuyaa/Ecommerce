@@ -30,7 +30,8 @@ const ItemBigProduct = (props) => {
 const styles = ScaledSheet.create({
     container: {
         width: windowWidth * 0.435,
-        height: '230@vs',
+        maxHeight: '255@vs',
+        minHeight: '230@vs',
         borderWidth: 1,
         borderColor: Themes.NeutralColors.light,
         borderRadius: 5,
