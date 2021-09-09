@@ -64,6 +64,7 @@ const styles = ScaledSheet.create({
         marginBottom: '8@vs',
         flexDirection: 'row',
         alignItems: 'center',
+        paddingRight: 18
     },
     icon: {
         marginLeft: '18@s',

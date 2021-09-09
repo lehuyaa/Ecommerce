@@ -48,36 +48,38 @@ const RegisterScreen = () => {
                 <Text style={styles.title}>Let’s Get Started</Text>
                 <Text style={styles.smallTittle}>Create an new account</Text>
                 <View style={styles.viewInput}>
-                    <IconLeftInputForm
-                        name={'fullname'}
-                        form={form}
-                        label="Full Name"
-                        icon={<Feather name="user" size={25} color={errors.fullname?.message ? Themes.NeutralColors.grey : Themes.PrimaryColor.blue} />}
-                        errorMessage={errors.fullname?.message}
-                    />
-                    <IconLeftInputForm
-                        name={'email'}
-                        form={form}
-                        label="Your Email"
-                        icon={<Fontisto name="email" size={25} color={errors.email?.message ? Themes.NeutralColors.grey : Themes.PrimaryColor.blue} />}
-                        errorMessage={errors.email?.message}
-                    />
-                    <IconLeftInputForm
-                        name={'password'}
-                        form={form}
-                        label="Password"
-                        icon={<SimpleLineIcons name="lock" size={25} color={errors.password?.message ? Themes.NeutralColors.grey : Themes.PrimaryColor.blue} />}
-                        errorMessage={errors.password?.message}
-                        isPassword={true}
-                    />
-                    <IconLeftInputForm
-                        name={'passwordAgain'}
-                        form={form}
-                        label="Password Again"
-                        icon={<SimpleLineIcons name="lock" size={25} color={errors.passwordAgain?.message ? Themes.NeutralColors.grey : Themes.PrimaryColor.blue} />}
-                        errorMessage={errors.passwordAgain?.message}
-                        isPassword={true}
-                    />
+                    <ScrollView>
+                        <IconLeftInputForm
+                            name={'fullname'}
+                            form={form}
+                            label="Full Name"
+                            icon={<Feather name="user" size={25} color={errors.fullname?.message ? Themes.NeutralColors.grey : Themes.PrimaryColor.blue} />}
+                            errorMessage={errors.fullname?.message}
+                        />
+                        <IconLeftInputForm
+                            name={'email'}
+                            form={form}
+                            label="Your Email"
+                            icon={<Fontisto name="email" size={25} color={errors.email?.message ? Themes.NeutralColors.grey : Themes.PrimaryColor.blue} />}
+                            errorMessage={errors.email?.message}
+                        />
+                        <IconLeftInputForm
+                            name={'password'}
+                            form={form}
+                            label="Password"
+                            icon={<SimpleLineIcons name="lock" size={25} color={errors.password?.message ? Themes.NeutralColors.grey : Themes.PrimaryColor.blue} />}
+                            errorMessage={errors.password?.message}
+                            isPassword={true}
+                        />
+                        <IconLeftInputForm
+                            name={'passwordAgain'}
+                            form={form}
+                            label="Password Again"
+                            icon={<SimpleLineIcons name="lock" size={25} color={errors.passwordAgain?.message ? Themes.NeutralColors.grey : Themes.PrimaryColor.blue} />}
+                            errorMessage={errors.passwordAgain?.message}
+                            isPassword={true}
+                        />
+                    </ScrollView>
                 </View>
                 <View style={styles.viewButton}>
                     <ButtonDefault
