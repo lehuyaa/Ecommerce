@@ -1,7 +1,7 @@
 import * as React from "react"
 import Svg, { Path } from "react-native-svg"
 
-const IconBack = ({ height, width }) => {
+const IconBack = ({height, width, color}: IconProps) => {
     return (
         <Svg
             width={width}
@@ -11,7 +11,7 @@ const IconBack = ({ height, width }) => {
         >
             <Path
                 d="M15 18l-6-6 6-6"
-                stroke="#9098B1"
+                stroke={color ? color : "#9098B1"}
                 strokeWidth={2}
                 strokeLinecap="round"
                 strokeLinejoin="round"

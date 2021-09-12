@@ -1,8 +1,7 @@
 import * as React from "react"
 import Svg, { Path } from "react-native-svg"
-import { verticalScale } from "react-native-size-matters"
 
-const IconSubstract = ({height, width}) => {
+const IconSubstract = ({height, width, color}: IconProps) => {
   return (
     <Svg
       width={width}

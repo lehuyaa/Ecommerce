@@ -1,19 +1,17 @@
 import * as React from "react"
 import Svg, { Path } from "react-native-svg"
-import { verticalScale } from 'react-native-size-matters';
 
-const IconTrash = ({height, width}) => {
+const IconTrash = ({ height, width, color }: IconProps) => {
   return (
     <Svg
       width={width}
       height={height}
       viewBox="0 0 24 24"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
     >
       <Path
         d="M3 6.375h18M8.625 3h6.75M18.75 6.375H5.25V21h13.5V6.375z"
-        stroke="#9098B1"
+        stroke={color ? color : "#9098B1"}
         strokeWidth={2}
         strokeLinecap="round"
         strokeLinejoin="round"

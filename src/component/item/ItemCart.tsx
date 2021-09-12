@@ -22,7 +22,7 @@ const ItemCart = ({ item }: ItemCartProps) => {
                 <View style={styles.aboveCart}>
                     <Text numberOfLines={2} style={styles.textCart}>{item?.title}</Text>
                     <ButtonIcon onPress={() => {}} children={item?.isFavourite ? <IconHeartFilled height={verticalScale(24)} width={ verticalScale(24)}/> : <IconHeart height={verticalScale(24)} width={ verticalScale(24)}/>} />
-                    <ButtonIcon onPress={() => {}} children={<IconTrash height={verticalScale(24)} width={verticalScale(24)} />} />
+                    <ButtonIcon onPress={() => { }} children={<IconTrash height={verticalScale(24)} width={verticalScale(24)} />} />
                 </View>
                 <View style={styles.belowCart}>
                     <Text numberOfLines={1} style={styles.textPriceCart}>{`$${item?.price}`}</Text>

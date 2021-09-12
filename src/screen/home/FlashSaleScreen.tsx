@@ -53,7 +53,7 @@ const FlashSaleScreen = () => {
         <View style={styles.container}>
             <Header
                 children={<ChildrenHeaders />}
-                iconRight2={<ButtonIcon onPress={() => {}} children={<IconSearch height={verticalScale(24)} width={verticalScale(24)} /> }/>}
+                iconRight2={<ButtonIcon onPress={() => {}} children={<IconSearch height={verticalScale(24)} width={verticalScale(24)}/> }/>}
             />
             <View style={styles.viewListProduct}>
                 <FlatList
