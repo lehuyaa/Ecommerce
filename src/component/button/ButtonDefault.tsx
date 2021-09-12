@@ -1,20 +1,19 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, StyleProp, ViewStyle, TouchableOpacity } from 'react-native';
 import { Themes } from '../../assets/themes';
 import { ScaledSheet } from 'react-native-size-matters';
 
 interface ButtonDefaultProps {
   tittle: string;
   onPress: () => void;
+  customStyles?: StyleProp<ViewStyle>;
 }
 
 const ButtonDefault = (props: ButtonDefaultProps) => {
-  const { tittle, onPress } = props;
+  const { tittle, onPress, customStyles } = props;
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={styles.container}>
+    <TouchableOpacity style={[styles.container, customStyles]} onPress={onPress}>
         <Text style={styles.tittle}>{tittle}</Text>
-      </View>
     </TouchableOpacity>
 
   );
@@ -32,7 +31,7 @@ const styles = ScaledSheet.create({
   },
   tittle: {
     color: Themes.BackgroundColor.white,
-    fontSize: '14@ms0.3',
+    fontSize: '14@vs',
     fontWeight: '700',
   },
 });

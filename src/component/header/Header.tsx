@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { View } from 'react-native'
 import { Themes } from '../../assets/themes';
 import { ScaledSheet } from 'react-native-size-matters';
 
@@ -23,18 +23,19 @@ const styles = ScaledSheet.create({
         backgroundColor: Themes.BackgroundColor.white,
         borderBottomColor: Themes.NeutralColors.light,
         borderBottomWidth: 2,
-        height: '14%',
+        height: '85@vs',
         flexDirection: 'row',
         width: '100%',
-        paddingLeft: '15@s',
-        paddingBottom: '15@vs',
-        alignItems: 'flex-end',
+        paddingHorizontal: '16@s',
+        paddingBottom: '10@vs',
+        // alignItems: 'flex-end',
+        paddingTop: '40@vs',
+        justifyContent: 'space-between'
     },
     icon: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        width: '20%',
     }
 })
 
