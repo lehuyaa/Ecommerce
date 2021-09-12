@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Image, Text, TouchableOpacity, TextInput } from 'react-native';
-import { ScaledSheet } from 'react-native-size-matters';
+import { ScaledSheet, verticalScale } from 'react-native-size-matters';
 import Images from '../../assets/images';
 import { Themes } from '../../assets/themes';
 import IconHeart from '../../assets/icons/IconHeart'
@@ -8,6 +8,7 @@ import IconTrash from '../../assets/icons/IconTrash';
 import IconSubstract from '../../assets/icons/IconSubstract';
 import IconAdd from '../../assets/icons/IconAdd';
 import IconHeartFilled from '../../assets/icons/IconHeartFilled';
+import ButtonIcon from '../button/ButtonIcon';
 
 type ItemCartProps = {
     item: Cart
@@ -20,19 +21,19 @@ const ItemCart = ({ item }: ItemCartProps) => {
             <View style={styles.infoCart}>
                 <View style={styles.aboveCart}>
                     <Text numberOfLines={2} style={styles.textCart}>{item?.title}</Text>
-                    {item?.isFavourite ? <IconHeartFilled/> : <IconHeart />}
-                    <IconTrash />
+                    <ButtonIcon onPress={() => {}} children={item?.isFavourite ? <IconHeartFilled height={verticalScale(24)} width={ verticalScale(24)}/> : <IconHeart height={verticalScale(24)} width={ verticalScale(24)}/>} />
+                    <ButtonIcon onPress={() => {}} children={<IconTrash height={verticalScale(24)} width={verticalScale(24)} />} />
                 </View>
                 <View style={styles.belowCart}>
                     <Text numberOfLines={1} style={styles.textPriceCart}>{`$${item?.price}`}</Text>
 
                     <View style={styles.numberCart}>
                         <TouchableOpacity style={styles.buttonSubstract}>
-                            <IconSubstract/>
+                            <IconSubstract height={verticalScale(16)} width={ verticalScale(16)}/>
                         </TouchableOpacity>
                         <TextInput style={styles.inputNumber} keyboardType='number-pad' defaultValue={item?.amount} />
                         <TouchableOpacity style={styles.buttonAdd}>
-                            <IconAdd/>
+                            <IconAdd height={verticalScale(16)} width={ verticalScale(16)}/>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -57,7 +58,8 @@ const styles = ScaledSheet.create({
         width: '72@vs',
         marginRight: '8@s',
         borderRadius: 5,
-        resizeMode: 'contain',    },
+        resizeMode: 'contain',
+    },
     infoCart: {
         flex: 1,
         justifyContent: 'space-between',
@@ -78,7 +80,7 @@ const styles = ScaledSheet.create({
     belowCart: {
         flexDirection: 'row',
         height: '24@vs',
-        width:'100%',
+        width: '100%',
         alignItems: 'flex-end',
         justifyContent: 'space-between'
     },

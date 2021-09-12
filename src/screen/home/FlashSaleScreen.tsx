@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, View, Image, TouchableOpacity, FlatList } from 'react-native'
-import { ScaledSheet } from 'react-native-size-matters';
+import { ScaledSheet, verticalScale } from 'react-native-size-matters';
 import Images from '../../assets/images';
 import { Themes } from '../../assets/themes';
 import ButtonIcon from '../../component/button/ButtonIcon';
@@ -8,15 +8,15 @@ import Header from '../../component/header/Header';
 import { useNavigation } from '@react-navigation/native';
 import { flashSale } from './list/ListProduct';
 import ItemBigProduct from '../../component/item/ItemBigProduct';
+import IconSearch from '../../assets/icons/IconSearch';
+import IconBack from '../../assets/icons/IconBack';
 
 const ChildrenHeaders = () => {
     const navigation = useNavigation();
 
     return (
         <View style={styles.childrenHeaders}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Image style={styles.iconBack} source={Images.icon.back} />
-            </TouchableOpacity>
+            <ButtonIcon children={<IconBack height={verticalScale(24)} width={verticalScale(24)} />} onPress={() => navigation.goBack()}/>
             <Text style={styles.title}>
                 Super Flash Sale
             </Text>
@@ -53,7 +53,7 @@ const FlashSaleScreen = () => {
         <View style={styles.container}>
             <Header
                 children={<ChildrenHeaders />}
-                iconRight2={<ButtonIcon customStyles={styles.iconRight} icon={Images.icon.search} />}
+                iconRight2={<ButtonIcon onPress={() => {}} children={<IconSearch height={verticalScale(24)} width={verticalScale(24)} /> }/>}
             />
             <View style={styles.viewListProduct}>
                 <FlatList

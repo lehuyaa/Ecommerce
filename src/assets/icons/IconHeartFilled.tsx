@@ -2,11 +2,11 @@ import * as React from "react"
 import Svg, { Path } from "react-native-svg"
 import { verticalScale } from 'react-native-size-matters';
 
-const IconHeartFilled = () => {
-    return (
+const IconHeartFilled = ({height, width}) => {
+  return (
     <Svg
-        width={verticalScale(20)}
-      height={verticalScale(20)}
+      width={width}
+      height={height}
       viewBox="0 0 24 24"
       fill="none"
     >

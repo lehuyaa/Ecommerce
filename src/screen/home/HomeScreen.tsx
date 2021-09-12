@@ -5,7 +5,7 @@ import Header from '../../component/header/Header';
 import FormSearch from './component/FormSearch';
 import ButtonIcon from '../../component/button/ButtonIcon';
 import Images from '../../assets/images';
-import { ScaledSheet } from 'react-native-size-matters';
+import { ScaledSheet, verticalScale } from 'react-native-size-matters';
 import Swiper from 'react-native-swiper'
 import Dot from './component/Dot';
 import ItemBanner from './component/ItemBanner';
@@ -18,6 +18,8 @@ import ListProduct from './component/ListProduct';
 import ItemBigProduct from '../../component/item/ItemBigProduct';
 import { useNavigation } from '@react-navigation/native';
 import { APP_ROUTE } from '../../navigation/config/routes';
+import IconHeart from '../../assets/icons/IconHeart';
+import IconNotification from '../../assets/icons/IconNotification';
 
 const ListHeader = () => {
     const navigation = useNavigation();
@@ -66,8 +68,8 @@ const HomeScreen = () => {
         <View style={styles.container}>
             <Header
                 children={<FormSearch />}
-                iconRight1={<ButtonIcon icon={Images.icon.heart} />}
-                iconRight2={<ButtonIcon icon={Images.icon.notifications} />}
+                iconRight1={<ButtonIcon onPress={() => {}} children={<IconHeart height={verticalScale(24)} width={verticalScale(24)}/>} />}
+                iconRight2={<ButtonIcon onPress={() => {}} children={<IconNotification  height={verticalScale(24)} width={verticalScale(24)} />} />}
             />
             <View style={styles.viewListProduct}>
                 <FlatList
