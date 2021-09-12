@@ -3,7 +3,6 @@ import {FlatList, TextInput, TouchableOpacity, View, Text, Button} from 'react-n
 import {Themes} from '../../assets/themes';
 import {ScaledSheet} from 'react-native-size-matters';
 import Header from '../../component/header/Header';
-import {P} from '../../utill/Typography';
 import ItemCart from '../../component/item/ItemCart';
 import Images from '../../assets/images';
 import ButtonDefault from '../../component/button/ButtonDefault';
@@ -42,9 +41,9 @@ const CartScreen = () => {
   return (
     <View style={styles.container}>
       <Header>
-        <P bold color={Themes.NeutralColors.Dark}>
+        <Text style={styles.headerText}>
           Your Cart
-        </P>
+        </Text>
       </Header>
       <View style={styles.contentCart}>
         {/* <View style={styles.listCart}> */}
@@ -102,6 +101,11 @@ const styles = ScaledSheet.create({
   container: {
     backgroundColor: Themes.BackgroundColor.white,
     flex: 1,
+  },
+  headerText: {
+    color: Themes.NeutralColors.Dark,
+    fontSize: '12@vs',
+    fontWeight: '700',
   },
   contentCart: {
     flex: 1,
