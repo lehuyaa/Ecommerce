@@ -1,14 +1,16 @@
 import React from 'react'
 import { StyleSheet, Text, View, TextInput } from 'react-native'
-import { ScaledSheet } from 'react-native-size-matters';
+import { ScaledSheet, verticalScale } from 'react-native-size-matters';
 import { Themes } from '../../../assets/themes';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { windowHeight, windowWidth } from '../../../utill/Size';
+import ButtonIcon from '../../../component/button/ButtonIcon';
+import IconSearch from '../../../assets/icons/IconSearch';
 
 const FormSearch = () => {
     return (
         <View style={styles.container}>
-            <FontAwesome name="search" size={20} color={Themes.PrimaryColor.blue} />
+            <ButtonIcon onPress={() => {}} children={<IconSearch height={verticalScale(16)} width={verticalScale(16)} color={Themes.PrimaryColor.blue}  />} />
             <TextInput
                 style={styles.textInput}
                 placeholder='Search Product'

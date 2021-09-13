@@ -12,6 +12,8 @@ const Images = {
         notifications: require('./images/icon/Notifications.png'),
         back: require('./images/icon/Back.png'),
         search: require('./images/icon/Search.png'),
+        heartFilled: require('./images/icon/HeartFilled.png'),
+        trash: require('./images/icon/Trash.png')
     },
     products: {
         manShirt: require('./images/icon/Manshirt.png'),

@@ -83,7 +83,7 @@ const ArrayTabs = [
 
 const AppTab = () => {
     return (
-        <Tab.Navigator tabBar={(props: BottomTabBarProps) => <BottomTab {...props} />}>
+        <Tab.Navigator tabBar={(props: BottomTabBarProps) => <BottomTab {...props} />} initialRouteName='Cart'>
             {ArrayTabs.map((item, index) => (
                 <Tab.Screen key={`${index}`} options={{ ...item }} {...item} />
             ))}
