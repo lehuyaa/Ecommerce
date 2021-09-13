@@ -63,12 +63,12 @@ const ListHeader = () => {
 };
 
 const HomeScreen = () => {
-    console.log(windowHeight)
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
             <Header
                 children={<FormSearch />}
-                iconRight1={<ButtonIcon icon={Images.icon.heart} />}
+                iconRight1={<ButtonIcon onPress={() => navigation.navigate(APP_ROUTE.FAVORITE)} icon={Images.icon.heart} />}
                 iconRight2={<ButtonIcon icon={Images.icon.notifications} />}
             />
             <View style={styles.viewListProduct}>

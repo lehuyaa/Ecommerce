@@ -6,6 +6,7 @@ const AUTHENTICATE_ROUTE = {
 const APP_ROUTE = {
     MAIN_TAB: 'MAIN_TAB',
     FLASH_SALE: 'FLASH_SALE',
+    FAVORITE: 'FAVORITE',
 };
 
 const HOME_ROUTE = {

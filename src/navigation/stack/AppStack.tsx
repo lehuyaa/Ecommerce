@@ -8,6 +8,7 @@ import CartScreen from '../../screen/cart/CartScreen';
 import OfferScreen from '../../screen/offer/OfferScreen';
 import AccountScreen from '../../screen/account/AccountScreen';
 import FlashSaleScreen from '../../screen/home/FlashSaleScreen';
+import FavoriteProductScreen from '../../screen/home/FavoriteProductScreen';
 import { BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BottomTab from '../component/BottomTab';
 import Images from '../../assets/images';
@@ -95,6 +96,7 @@ const AppStack = () => (
     <Stack.Navigator headerMode={'none'} screenOptions={navigationConfigs}>
         <Stack.Screen name={APP_ROUTE.MAIN_TAB} component={AppTab} />
         <Stack.Screen name={APP_ROUTE.FLASH_SALE} component={FlashSaleScreen} />
+        <Stack.Screen name={APP_ROUTE.FAVORITE} component={FavoriteProductScreen} />
 
     </Stack.Navigator>
 );
