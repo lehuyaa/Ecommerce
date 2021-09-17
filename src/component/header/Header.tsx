@@ -4,15 +4,12 @@ import { Themes } from '../../assets/themes';
 import { ScaledSheet } from 'react-native-size-matters';
 
 const Header = (props) => {
-    const { children, iconRight1, iconRight2 } = props;
+    const { children, customStyle } = props;
+    console.log('1...', customStyle);
+    
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, customStyle]}>
             {children}
-            <View style={styles.icon}>
-                {iconRight1}
-                {iconRight2}
-            </View>
-
         </View>
     )
 }
@@ -27,10 +24,9 @@ const styles = ScaledSheet.create({
         flexDirection: 'row',
         width: '100%',
         paddingHorizontal: '16@s',
-        paddingBottom: '10@vs',
-        // alignItems: 'flex-end',
-        paddingTop: '40@vs',
-        justifyContent: 'space-between'
+        paddingBottom: '14@vs',
+        alignItems: 'flex-end',
+        // justifyContent: 'space-between'
     },
     icon: {
         flexDirection: 'row',

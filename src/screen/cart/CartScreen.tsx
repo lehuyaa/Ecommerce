@@ -6,6 +6,7 @@ import Header from '../../component/header/Header';
 import ItemCart from '../../component/item/ItemCart';
 import Images from '../../assets/images';
 import ButtonDefault from '../../component/button/ButtonDefault';
+import { useNavigation } from '@react-navigation/native';
 
 const MockCartData: Array<Cart> = [
   {
@@ -38,6 +39,8 @@ const MockCartData: Array<Cart> = [
 ];
 
 const CartScreen = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <Header>
@@ -46,7 +49,6 @@ const CartScreen = () => {
         </Text>
       </Header>
       <View style={styles.contentCart}>
-        {/* <View style={styles.listCart}> */}
         <FlatList
           data={MockCartData}
           renderItem={({item}) => <ItemCart item={item} />}
@@ -88,7 +90,7 @@ const CartScreen = () => {
                 </View>
               </View>
 
-              <ButtonDefault tittle={'Check Out'} onPress={ () => {}}/>
+              <ButtonDefault tittle={'Check Out'} onPress={ () => {navigation.navigate('SHIPPING_ADDRESS')}}/>
             </View>
           }
         />
