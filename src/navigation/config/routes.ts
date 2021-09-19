@@ -6,6 +6,7 @@ const AUTHENTICATE_ROUTE = {
 const APP_ROUTE = {
     MAIN_TAB: 'MAIN_TAB',
     FLASH_SALE: 'FLASH_SALE',
+    SHIPPING_ADDRESS: 'SHIPPING_ADDRESS',
 };
 
 const HOME_ROUTE = {
@@ -21,7 +22,7 @@ const EXPLORE_ROUTE = {
 
 const CART_ROUTE = {
     ROOT: 'NOTIFICATION_ROOT',
-    CART: 'CART'
+    CART: 'CART',
 };
 
 const OFFER_ROUTE = {

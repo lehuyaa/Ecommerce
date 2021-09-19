@@ -1,20 +1,13 @@
-import React from 'react'
-import { TouchableOpacity, View, Image } from 'react-native'
-import { ScaledSheet } from 'react-native-size-matters';
+import React from 'react';
+import {TouchableOpacity} from 'react-native';
 
-const ButtonIcon = (props) => {
-    const { children, onPress } = props;
-    return (
-        <TouchableOpacity style={[styles.container]} onPress={onPress}>
-            {children}
-        </TouchableOpacity>
-    )
-}
+const ButtonIcon = props => {
+  const {children, onPress, customStyle} = props;
+  return (
+    <TouchableOpacity style={customStyle} onPress={onPress}>
+      {children}
+    </TouchableOpacity>
+  );
+};
 
-
-const styles = ScaledSheet.create({
-    container: {
-    }
-})
-
-export default ButtonIcon
+export default ButtonIcon;

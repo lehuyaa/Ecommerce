@@ -11,6 +11,7 @@ import FlashSaleScreen from '../../screen/home/FlashSaleScreen';
 import { BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BottomTab from '../component/BottomTab';
 import Images from '../../assets/images';
+import ShippingAddress from '../../screen/cart/ShippingAddress';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -95,6 +96,7 @@ const AppStack = () => (
     <Stack.Navigator headerMode={'none'} screenOptions={navigationConfigs}>
         <Stack.Screen name={APP_ROUTE.MAIN_TAB} component={AppTab} />
         <Stack.Screen name={APP_ROUTE.FLASH_SALE} component={FlashSaleScreen} />
+        <Stack.Screen name={APP_ROUTE.SHIPPING_ADDRESS} component={ShippingAddress} />
 
     </Stack.Navigator>
 );
