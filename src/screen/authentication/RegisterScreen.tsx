@@ -44,8 +44,13 @@ const RegisterScreen = () => {
             role: ["user"]
         };
         setLoading(true);
-        const response = await register(param);
-        setLoading(false);
+        try {
+            await register(param);
+            navigation.navigate(AUTHENTICATE_ROUTE.LOGIN);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+        }
     }
 
     const goLoginScreen = () => {
