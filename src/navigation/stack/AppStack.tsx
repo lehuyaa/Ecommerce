@@ -12,6 +12,7 @@ import { BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/b
 import BottomTab from '../component/BottomTab';
 import Images from '../../assets/images';
 import ShippingAddress from '../../screen/cart/ShippingAddress';
+import ProfileScreen from '../../screen/account/ProfileScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -97,6 +98,7 @@ const AppStack = () => (
         <Stack.Screen name={APP_ROUTE.MAIN_TAB} component={AppTab} />
         <Stack.Screen name={APP_ROUTE.FLASH_SALE} component={FlashSaleScreen} />
         <Stack.Screen name={APP_ROUTE.SHIPPING_ADDRESS} component={ShippingAddress} />
+        <Stack.Screen name={TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.PROFILE} component={ProfileScreen} />
 
     </Stack.Navigator>
 );

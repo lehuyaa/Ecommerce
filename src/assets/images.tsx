@@ -2,6 +2,7 @@ const Images = {
     logo: require('./images/logo.png'),
     banner: require('./images/banner.png'),
     banner2: require('./images/banner2.png'),
+    avatar: require('./images/avatar.jpg'),
     icon: {
         home: require('./images/icon/Home.png'),
         explore: require('./images/icon/Explore.png'),
@@ -13,7 +14,11 @@ const Images = {
         back: require('./images/icon/Back.png'),
         search: require('./images/icon/Search.png'),
         heartFilled: require('./images/icon/HeartFilled.png'),
-        trash: require('./images/icon/Trash.png')
+        trash: require('./images/icon/Trash.png'),
+        profile: require('./images/icon/ic_profile.png'),
+        order: require('./images/icon/ic_order.png'),
+        address: require('./images/icon/ic_addres.png'),
+        payment: require('./images/icon/ic_payment.png')
     },
     products: {
         manShirt: require('./images/icon/Manshirt.png'),
