@@ -32,7 +32,8 @@ const OFFER_ROUTE = {
 
 const ACCOUNT_ROUTE = {
     ROOT: 'HEART_ROUT',
-    ACCOUNT: 'ACCOUNT'
+    ACCOUNT: 'ACCOUNT',
+    PROFILE: 'PROFILE',
 };
 
 const TAB_NAVIGATION_ROOT = {

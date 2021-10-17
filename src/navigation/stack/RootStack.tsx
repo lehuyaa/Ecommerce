@@ -7,7 +7,7 @@ import { RootState } from '../../redux/reducer';
 const RootStack = () => {
     const { currentUser } = useSelector((state: RootState) => state);
 
-    if (currentUser.token) {
+    if (currentUser.loggedIn) {
         return <AppStack />;
     }
     return <AuthStack />;

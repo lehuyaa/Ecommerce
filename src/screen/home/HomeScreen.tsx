@@ -84,9 +84,7 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <Header
-        customStyle={{
-          justifyContent: 'space-between',
-        }}>
+        customStyle={styles.header}>
         <FormSearch />
         <ButtonIcon
           onPress={() => {}}
@@ -132,6 +130,11 @@ const styles = ScaledSheet.create({
     backgroundColor: Themes.BackgroundColor.white,
     flex: 1,
     alignItems: 'center',
+  },
+  header: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: '40@vs',
   },
   headerFlatList: {
     width: '100%',
