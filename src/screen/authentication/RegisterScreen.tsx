@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Themes } from '../../assets/themes';
 import Images from '../../assets/images';
@@ -13,12 +13,14 @@ import * as yup from 'yup';
 import { FormProvider, useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import IconLeftInputForm from '../../component/form/IconLeftInputForm';
+import { register } from '../../api/module/auth';
+import LoadingScreen from '../../component/LoadingScreen';
 
 const RegisterScreen = () => {
     const navigation = useNavigation();
-
+    const [loading, setLoading] = useState<boolean>(false);
     const loginSchema = yup.object().shape({
-        fullname: yup.string().required('FullName field is required'),
+        username: yup.string().required('UserName field is required'),
         email: yup.string().required("Email field is required").email('Email is not correct'),
         password: yup
             .string()
@@ -34,8 +36,16 @@ const RegisterScreen = () => {
 
     });
     const { handleSubmit, formState: { errors } } = form;
-    const register = (data) => {
-        console.log('data', data)
+    const registerFunc = async (data) => {
+        const param = {
+            username: data.username,
+            email: data.email,
+            password: data.password,
+            role: ["user"]
+        };
+        setLoading(true);
+        const response = await register(param);
+        setLoading(false);
     }
 
     const goLoginScreen = () => {
@@ -44,15 +54,18 @@ const RegisterScreen = () => {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <View style={styles.container}>
+                {loading && (
+                    <LoadingScreen />
+                )}
                 <Image source={Images.logo} />
                 <Text style={styles.title}>Let’s Get Started</Text>
                 <Text style={styles.smallTittle}>Create an new account</Text>
                 <View style={styles.viewInput}>
                     <ScrollView>
                         <IconLeftInputForm
-                            name={'fullname'}
+                            name={'username'}
                             form={form}
-                            label="Full Name"
+                            label="UserName"
                             icon={<Feather name="user" size={25} color={errors.fullname?.message ? Themes.NeutralColors.grey : Themes.PrimaryColor.blue} />}
                             errorMessage={errors.fullname?.message}
                         />
@@ -84,7 +97,7 @@ const RegisterScreen = () => {
                 <View style={styles.viewButton}>
                     <ButtonDefault
                         tittle='Sign Up'
-                        onPress={handleSubmit(register)}
+                        onPress={handleSubmit(registerFunc)}
                     />
                 </View>
                 <View style={styles.viewdoLogin}>

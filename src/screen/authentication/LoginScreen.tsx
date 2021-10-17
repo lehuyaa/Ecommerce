@@ -13,13 +13,14 @@ import { FormProvider, useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import IconLeftInputForm from '../../component/form/IconLeftInputForm';
 import { APP_ROUTE, TAB_NAVIGATION_ROOT } from '../../navigation/config/routes';
+import Feather from 'react-native-vector-icons/Feather';
 
 
 const LoginScreen = () => {
     const navigation = useNavigation();
 
     const loginSchema = yup.object().shape({
-        email: yup.string().required("Email field is required").email('Email is not correct'),
+        username: yup.string().required("Email field is required").email('Email is not correct'),
         password: yup
             .string()
             .required('Password field is required').test('len', 'Must be exactly 6 characters', val => val.length >= 6)
@@ -50,11 +51,11 @@ const LoginScreen = () => {
                 <Text style={styles.smallTittle}>Sign in to continue</Text>
                 <View style={styles.viewInput}>
                     <IconLeftInputForm
-                        name={'email'}
+                        name={'username'}
                         form={form}
-                        label="Your Email"
-                        icon={<Fontisto name="email" size={25} color={errors.email?.message ? Themes.NeutralColors.grey : Themes.PrimaryColor.blue} />}
-                        errorMessage={errors.email?.message}
+                        label="UserName"
+                        icon={<Feather name="user" size={25} color={errors.email?.message ? Themes.NeutralColors.grey : Themes.PrimaryColor.blue} />}
+                        errorMessage={errors.username?.message}
                     />
                     <IconLeftInputForm
                         name={'password'}
