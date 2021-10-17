@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Themes } from '../../assets/themes';
 import Images from '../../assets/images';
-import Fontisto from 'react-native-vector-icons/Fontisto';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import ButtonDefault from '../../component/button/ButtonDefault';
 import { ScaledSheet } from 'react-native-size-matters';
@@ -14,13 +13,19 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import IconLeftInputForm from '../../component/form/IconLeftInputForm';
 import { APP_ROUTE, TAB_NAVIGATION_ROOT } from '../../navigation/config/routes';
 import Feather from 'react-native-vector-icons/Feather';
-
+import { login } from '../../api/module/auth';
+import LoadingScreen from '../../component/LoadingScreen';
+import { useDispatch } from 'react-redux'
+import  { setUser }  from '../../redux/action/userInfoAction'
 
 const LoginScreen = () => {
+
     const navigation = useNavigation();
+    const [loading, setLoading] = useState<boolean>(false);
+    const dispatch = useDispatch()
 
     const loginSchema = yup.object().shape({
-        username: yup.string().required("Email field is required").email('Email is not correct'),
+        username: yup.string().required("Email field is required"),
         password: yup
             .string()
             .required('Password field is required').test('len', 'Must be exactly 6 characters', val => val.length >= 6)
@@ -34,9 +39,24 @@ const LoginScreen = () => {
     });
     const { handleSubmit, formState: { errors } } = form;
 
-    const login = (data) => {
+    const loginFunc = async (data) => {
         console.log('data', data)
-        navigation.navigate(APP_ROUTE.MAIN_TAB);
+        const params = {
+            username: data.username,
+            password: data.password,
+        };
+        setLoading(true);
+        
+        try {
+            const response = await login(params);
+            setLoading(false);
+            console.log('response', response)
+            dispatch(setUser(response));
+        } catch (error) {
+            console.log('error', error)
+            setLoading(false);
+        }
+        // navigation.navigate(APP_ROUTE.MAIN_TAB);
     }
 
     const goRegisterScreen = () => {
@@ -46,6 +66,9 @@ const LoginScreen = () => {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
 
             <View style={styles.container}>
+                {loading && (
+                    <LoadingScreen />
+                )}
                 <Image source={Images.logo} />
                 <Text style={styles.title}>Welcome to Lafyuu</Text>
                 <Text style={styles.smallTittle}>Sign in to continue</Text>
@@ -69,7 +92,7 @@ const LoginScreen = () => {
                 <View style={styles.viewButton}>
                     <ButtonDefault
                         tittle='Sign In'
-                        onPress={handleSubmit(login)}
+                        onPress={handleSubmit(loginFunc)}
                     />
                 </View>
                 <View style={styles.viewdoRegister}>

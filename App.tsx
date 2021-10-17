@@ -1,18 +1,21 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import AuthStack from './src/navigation/stack/AuthStack';
-import AppStack from './src/navigation/stack/AppStack';
 import SplashScreen from 'react-native-splash-screen';
+import { Provider } from 'react-redux';
+import  store from './src/redux/store';
+import RootStack from './src/navigation/stack/RootStack';
 
 const App = () => {
+
   useEffect(() => {
     SplashScreen.hide();
   }, []);
   return (
-    <NavigationContainer>
-      {/* <AppStack /> */}
-      <AuthStack />
-    </NavigationContainer>
+        <Provider store={store}>
+            <NavigationContainer>
+                <RootStack />
+            </NavigationContainer>
+        </Provider>
   )
 }
 
