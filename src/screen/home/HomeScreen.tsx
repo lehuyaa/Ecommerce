@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   Image,
@@ -27,10 +27,10 @@ import {useNavigation} from '@react-navigation/native';
 import {APP_ROUTE} from '../../navigation/config/routes';
 import IconHeart from '../../assets/icons/IconHeart';
 import IconNotification from '../../assets/icons/IconNotification';
+import { getAllProduct } from '../../api/module/product';
 
 const ListHeader = () => {
   const navigation = useNavigation();
-
   return (
     <View style={styles.headerFlatList}>
       <View style={styles.banner}>
@@ -81,6 +81,21 @@ const ListHeader = () => {
 };
 
 const HomeScreen = () => {
+  const [listProduct,setListProduct] = useState<any>([]);
+
+  const getProduct = () => {
+    try {
+        const res = getAllProduct();
+        // setListProduct(res);
+        console.log(res);
+    } catch (error) {
+        console.log('error', error);
+    }
+  }
+
+  useEffect(() => {
+    getProduct();
+  }, []);
   return (
     <View style={styles.container}>
       <Header
@@ -104,7 +119,7 @@ const HomeScreen = () => {
       </Header>
       <View style={styles.viewListProduct}>
         <FlatList
-          data={product}
+          data={listProduct}
           renderItem={({item}) => (
             <ItemBigProduct
               image={item.images}

@@ -3,6 +3,8 @@ import Config from 'react-native-config';
 import TokenProvider from '../utill/TokenProvider';
 import { logger } from '../utill/helper';
 import { apiLogger } from '../utill/logger';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/reducer';
 
 const AUTH_URL_REFRESH_TOKEN = `${Config.API_URL}auth/refresh-token`;
 
@@ -32,11 +34,12 @@ const processQueue = (error: any, token: string | null | undefined = null) => {
 request.interceptors.request.use(
     async (config: any) => {
         // Do something before api is sent
-        // const token = TokenProvider.getToken();
-        // if (token) {
-        //     config.headers.Authorization = `Bearer ${token}`;
+        // const { currentUser } = useSelector((state: RootState) => state);
+
+        // if (currentUser.token) {
+        //     config.headers.Authorization = `Bearer ${currentUser.token}`;
         // }
-        return config;
+        // return config;
     },
     (error: any) => {
         // Do something with api error

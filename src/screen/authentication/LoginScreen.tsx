@@ -53,10 +53,9 @@ const LoginScreen = () => {
             console.log('response', response)
             dispatch(setUser(response));
         } catch (error) {
-            console.log('error', error)
+            console.log('error', error);
             setLoading(false);
         }
-        // navigation.navigate(APP_ROUTE.MAIN_TAB);
     }
 
     const goRegisterScreen = () => {
