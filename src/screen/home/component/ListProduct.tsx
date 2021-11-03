@@ -4,7 +4,7 @@ import ItemProduct from '../../../component/item/ItemProduct'
 import { flashSale } from '../list/ListProduct'
 import ViewTittle from './ViewTittle'
 import { ScaledSheet } from 'react-native-size-matters';
-import { windowWidth, windowHeight } from '../../../utill/Size';
+import { windowWidth, windowHeight } from '../../../utilities/size';
 
 const ListProduct = (props) => {
 

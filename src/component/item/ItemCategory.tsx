@@ -2,7 +2,6 @@ import React from 'react'
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import { ScaledSheet } from 'react-native-size-matters';
 import { Themes } from '../../assets/themes';
-import { windowHeight, windowWidth } from '../../utill/Size';
 
 const ItemCategory = (props) => {
     const { icon, tittle } = props;

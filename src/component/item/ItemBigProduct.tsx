@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import { ScaledSheet } from 'react-native-size-matters';
 import Images from '../../assets/images';
 import { Themes } from '../../assets/themes';
-import { windowWidth, windowHeight } from '../../utill/Size';
+import { windowWidth, windowHeight } from '../../utilities/size';
 
 const ItemBigProduct = (props) => {
 
