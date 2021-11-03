@@ -13,10 +13,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import IconLeftInputForm from '../../component/form/IconLeftInputForm';
 import { APP_ROUTE, TAB_NAVIGATION_ROOT } from '../../navigation/config/routes';
 import Feather from 'react-native-vector-icons/Feather';
-import { login } from '../../api/module/auth';
 import LoadingScreen from '../../component/LoadingScreen';
 import { useDispatch } from 'react-redux'
-import  { setUser }  from '../../redux/action/userInfoAction'
+import { login } from '../../api/modules/api-app/authenticate';
+import { store } from '../../app-redux/store';
+import { userInfoActions } from '../../app-redux/slices/userInfoSlice';
 
 const LoginScreen = () => {
 
@@ -51,12 +52,12 @@ const LoginScreen = () => {
             const response = await login(params);
             setLoading(false);
             console.log('response', response)
-            dispatch(setUser(response));
+            store.dispatch(userInfoActions.setUserInfoSuccess(response));
+
         } catch (error) {
             console.log('error', error)
             setLoading(false);
         }
-        // navigation.navigate(APP_ROUTE.MAIN_TAB);
     }
 
     const goRegisterScreen = () => {

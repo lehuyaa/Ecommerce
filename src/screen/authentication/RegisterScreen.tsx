@@ -13,7 +13,6 @@ import * as yup from 'yup';
 import { FormProvider, useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import IconLeftInputForm from '../../component/form/IconLeftInputForm';
-import { register } from '../../api/module/auth';
 import LoadingScreen from '../../component/LoadingScreen';
 
 const RegisterScreen = () => {
@@ -43,14 +42,6 @@ const RegisterScreen = () => {
             password: data.password,
             role: ["user"]
         };
-        setLoading(true);
-        try {
-            await register(param);
-            navigation.navigate(AUTHENTICATE_ROUTE.LOGIN);
-            setLoading(false);
-        } catch (error) {
-            setLoading(false);
-        }
     }
 
     const goLoginScreen = () => {

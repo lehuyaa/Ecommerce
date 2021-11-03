@@ -2,8 +2,6 @@ import React from 'react'
 import { StyleSheet, Text, View, TextInput } from 'react-native'
 import { ScaledSheet, verticalScale } from 'react-native-size-matters';
 import { Themes } from '../../../assets/themes';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { windowHeight, windowWidth } from '../../../utill/Size';
 import ButtonIcon from '../../../component/button/ButtonIcon';
 import IconSearch from '../../../assets/icons/IconSearch';
 

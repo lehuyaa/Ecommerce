@@ -7,7 +7,6 @@ import ItemServiceAccount from './component/ItemServiceAccount';
 import Images from '../../assets/images';
 import { TAB_NAVIGATION_ROOT } from '../../navigation/config/routes';
 import { useDispatch } from 'react-redux';
-import { logOut } from '../../redux/action/userInfoAction';
 
 const listService = [
     {
@@ -57,7 +56,7 @@ const AccountScreen = () => {
                     navigateName={item.navigateName}
                 />
             ))}
-            <TouchableOpacity onPress={() => dispatch(logOut())} style={styles.item}>
+            <TouchableOpacity style={styles.item}>
                 <Image style={styles.icon} source={Images.icon.back} />
                 <Text style={styles.title}>LogOut</Text>
             </TouchableOpacity>
