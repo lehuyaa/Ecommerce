@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { Themes } from '../../assets/themes';
-import Images from '../../assets/images';
-import Fontisto from 'react-native-vector-icons/Fontisto';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import Feather from 'react-native-vector-icons/Feather';
-import ButtonDefault from '../../component/button/ButtonDefault';
-import { ScaledSheet } from 'react-native-size-matters';
-import { useNavigation } from '@react-navigation/native';
-import { AUTHENTICATE_ROUTE } from '../../navigation/config/routes';
 import * as yup from 'yup';
-import { FormProvider, useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+
+import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { Image, Keyboard, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import React, { useState } from 'react';
+
+import { AUTHENTICATE_ROUTE } from '../../navigation/config/routes';
+import ButtonDefault from '../../component/button/ButtonDefault';
+import Feather from 'react-native-vector-icons/Feather';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 import IconLeftInputForm from '../../component/form/IconLeftInputForm';
+import Images from '../../assets/images';
 import LoadingScreen from '../../component/LoadingScreen';
+import { ScaledSheet } from 'react-native-size-matters';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import { Themes } from '../../assets/themes';
+import { register } from '../../api/modules/api-app/authenticate';
+import { useNavigation } from '@react-navigation/native';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const RegisterScreen = () => {
     const navigation = useNavigation();
@@ -42,6 +45,19 @@ const RegisterScreen = () => {
             password: data.password,
             role: ["user"]
         };
+        console.log('data', data)
+        setLoading(true);
+        
+        try {
+            const response = await register(param);
+            setLoading(false);
+            navigation.navigate(AUTHENTICATE_ROUTE.LOGIN);
+            console.log('response', response)
+
+        } catch (error) {
+            console.log('error', error)
+            setLoading(false);
+        }
     }
 
     const goLoginScreen = () => {
