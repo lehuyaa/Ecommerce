@@ -35,6 +35,14 @@ const Images = {
         product4: require('./images/products/product4.png'),
         product5: require('./images/products/product5.png'),
         product6: require('./images/products/product6.png'),
+    },
+    star: {
+        one: require('./images/star/oneStar.png'),
+        two : require('./images/star/twoStar.png'),
+        three : require('./images/star/threeStar.png'),
+        four : require('./images/star/fourStar.png'),
+        five : require('./images/star/FiveStar.png'),
+
     }
 };
 

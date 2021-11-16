@@ -134,6 +134,7 @@ const HomeScreen = () => {
           data={listProduct}
           renderItem={({item}) => (
             <ItemBigProduct
+              item={item}
               image={item.productImage}
               name={item.productName}
               price={item.productPrice}

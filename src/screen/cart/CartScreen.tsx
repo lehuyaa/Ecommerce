@@ -1,14 +1,15 @@
-import React from 'react';
-import {FlatList, TextInput, TouchableOpacity, View, Text, Button} from 'react-native';
-import {Themes} from '../../assets/themes';
-import {ScaledSheet} from 'react-native-size-matters';
-import Header from '../../component/header/Header';
-import ItemCart from '../../component/item/ItemCart';
-import Images from '../../assets/images';
+import {Button, FlatList, Text, TextInput, TouchableOpacity, View} from 'react-native';
+
 import ButtonDefault from '../../component/button/ButtonDefault';
+import Header from '../../component/header/Header';
+import Images from '../../assets/images';
+import ItemCart from '../../component/item/ItemCart';
+import React from 'react';
+import {ScaledSheet} from 'react-native-size-matters';
+import {Themes} from '../../assets/themes';
 import { useNavigation } from '@react-navigation/native';
 
-const MockCartData: Array<Cart> = [
+const MockCartData: Array<any> = [
   {
     title: 'Nike Air Zoom Pegasus 36 Miami',
     price: '299.36',
