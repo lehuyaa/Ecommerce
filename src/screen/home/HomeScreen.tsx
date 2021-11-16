@@ -1,32 +1,35 @@
-import React from 'react';
 import {
-  Text,
-  Image,
-  View,
-  ScrollView,
-  TouchableOpacity,
   FlatList,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import {Themes} from '../../assets/themes';
-import Header from '../../component/header/Header';
-import FormSearch from './component/FormSearch';
-import ButtonIcon from '../../component/button/ButtonIcon';
-import Images from '../../assets/images';
+import React, { useEffect, useState } from 'react';
 import {ScaledSheet, verticalScale} from 'react-native-size-matters';
-import Swiper from 'react-native-swiper';
-import Dot from './component/Dot';
-import ItemBanner from './component/ItemBanner';
-import ViewTittle from './component/ViewTittle';
-import ItemCategory from '../../component/item/ItemCategory';
-import {ListCategory} from './list/ListCategory';
-import {arrBanner} from './list/ListBanner';
 import {flashSale, megaSale, product} from './list/ListProduct';
-import ListProduct from './component/ListProduct';
-import ItemBigProduct from '../../component/item/ItemBigProduct';
-import {useNavigation} from '@react-navigation/native';
+
 import {APP_ROUTE} from '../../navigation/config/routes';
+import ButtonIcon from '../../component/button/ButtonIcon';
+import Dot from './component/Dot';
+import FormSearch from './component/FormSearch';
+import Header from '../../component/header/Header';
 import IconHeart from '../../assets/icons/IconHeart';
 import IconNotification from '../../assets/icons/IconNotification';
+import Images from '../../assets/images';
+import ItemBanner from './component/ItemBanner';
+import ItemBigProduct from '../../component/item/ItemBigProduct';
+import ItemCategory from '../../component/item/ItemCategory';
+import {ListCategory} from './list/ListCategory';
+import ListProduct from './component/ListProduct';
+import LoadingScreen from '../../component/LoadingScreen';
+import Swiper from 'react-native-swiper';
+import {Themes} from '../../assets/themes';
+import ViewTittle from './component/ViewTittle';
+import {arrBanner} from './list/ListBanner';
+import { getAllProduct } from '../../api/modules/api-app/product';
+import {useNavigation} from '@react-navigation/native';
 
 const ListHeader = () => {
   const navigation = useNavigation();
@@ -81,8 +84,32 @@ const ListHeader = () => {
 };
 
 const HomeScreen = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [listProduct, setListProduct] = useState<any>([]);
+
+  const getAllProductFunc = async () => {
+  
+  setLoading(true);
+  
+  try {
+      const response = await getAllProduct();
+    setLoading(false);
+    setListProduct(response?.data);
+      console.log('response', response)
+
+  } catch (error) {
+      console.log('error', error)
+      setLoading(false);
+  }
+  }
+  useEffect(() => {
+    getAllProductFunc();
+  },[]);
   return (
     <View style={styles.container}>
+      {loading && (
+                    <LoadingScreen />
+                )}
       <Header
         customStyle={styles.header}>
         <FormSearch />
@@ -104,12 +131,12 @@ const HomeScreen = () => {
       </Header>
       <View style={styles.viewListProduct}>
         <FlatList
-          data={product}
+          data={listProduct}
           renderItem={({item}) => (
             <ItemBigProduct
-              image={item.images}
-              name={item.name}
-              price={item.price}
+              image={item.productImage}
+              name={item.productName}
+              price={item.productPrice}
               oldPrice={item.oldPrice}
               percent={item.percent}
             />

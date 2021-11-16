@@ -1,18 +1,20 @@
+import { APP_ROUTE, TAB_NAVIGATION_ROOT } from '../config/routes';
+import { BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React, { Component } from 'react';
+
+import AccountScreen from '../../screen/account/AccountScreen';
+import BottomTab from '../component/BottomTab';
+import CartScreen from '../../screen/cart/CartScreen';
+import ExploreScreen from '../../screen/explore/ExploreScreen';
+import FlashSaleScreen from '../../screen/home/FlashSaleScreen';
+import HomeScreen from '../../screen/home/HomeScreen';
+import Images from '../../assets/images';
+import OfferScreen from '../../screen/offer/OfferScreen';
+import ProfileScreen from '../../screen/account/ProfileScreen';
+import SearchResultScreen from '../../screen/explore/SearchResultScreen';
+import ShippingAddress from '../../screen/cart/ShippingAddress';
 import { createStackNavigator } from '@react-navigation/stack';
 import navigationConfigs from '../config/options';
-import { APP_ROUTE, TAB_NAVIGATION_ROOT } from '../config/routes';
-import HomeScreen from '../../screen/home/HomeScreen';
-import ExploreScreen from '../../screen/explore/ExploreScreen';
-import CartScreen from '../../screen/cart/CartScreen';
-import OfferScreen from '../../screen/offer/OfferScreen';
-import AccountScreen from '../../screen/account/AccountScreen';
-import FlashSaleScreen from '../../screen/home/FlashSaleScreen';
-import { BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import BottomTab from '../component/BottomTab';
-import Images from '../../assets/images';
-import ShippingAddress from '../../screen/cart/ShippingAddress';
-import ProfileScreen from '../../screen/account/ProfileScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -99,7 +101,7 @@ const AppStack = () => (
         <Stack.Screen name={APP_ROUTE.FLASH_SALE} component={FlashSaleScreen} />
         <Stack.Screen name={APP_ROUTE.SHIPPING_ADDRESS} component={ShippingAddress} />
         <Stack.Screen name={TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.PROFILE} component={ProfileScreen} />
-
+        <Stack.Screen name={APP_ROUTE.SEARCH_RESULT} component={SearchResultScreen} />
     </Stack.Navigator>
 );
 

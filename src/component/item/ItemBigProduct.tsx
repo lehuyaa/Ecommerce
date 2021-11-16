@@ -1,9 +1,10 @@
-import React from 'react'
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
-import { ScaledSheet } from 'react-native-size-matters';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { windowHeight, windowWidth } from '../../utilities/size';
+
 import Images from '../../assets/images';
+import React from 'react'
+import { ScaledSheet } from 'react-native-size-matters';
 import { Themes } from '../../assets/themes';
-import { windowWidth, windowHeight } from '../../utilities/size';
 
 const ItemBigProduct = (props) => {
 
@@ -11,8 +12,10 @@ const ItemBigProduct = (props) => {
     return (
         <TouchableOpacity>
             <View style={styles.container}>
-                <Image style={styles.image} source={image} />
-                <Text style={styles.name}>{name}</Text>
+                <Image style={styles.image} source={{
+          uri: image,
+        }} />
+                <Text numberOfLines={2} style={styles.name}>{name}</Text>
                 <Text style={styles.price}>{price}</Text>
                 <View style={styles.discount}>
                     <Text style={styles.oldPrice}>{oldPrice}</Text>
