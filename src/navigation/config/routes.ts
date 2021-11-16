@@ -13,6 +13,7 @@ const APP_ROUTE = {
 const HOME_ROUTE = {
   ROOT: 'HOME_ROOT',
   HOME: 'HOME',
+  PRODUCT_DETAILS: 'PRODUCT_DETAILS',
 };
 
 const EXPLORE_ROUTE = {

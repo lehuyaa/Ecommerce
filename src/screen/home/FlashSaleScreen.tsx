@@ -1,15 +1,16 @@
-import React from 'react'
-import { Text, View, Image, TouchableOpacity, FlatList } from 'react-native'
+import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native'
 import { ScaledSheet, verticalScale } from 'react-native-size-matters';
-import Images from '../../assets/images';
-import { Themes } from '../../assets/themes';
+
 import ButtonIcon from '../../component/button/ButtonIcon';
 import Header from '../../component/header/Header';
-import { useNavigation } from '@react-navigation/native';
-import { flashSale } from './list/ListProduct';
-import ItemBigProduct from '../../component/item/ItemBigProduct';
-import IconSearch from '../../assets/icons/IconSearch';
 import IconBack from '../../assets/icons/IconBack';
+import IconSearch from '../../assets/icons/IconSearch';
+import Images from '../../assets/images';
+import ItemBigProduct from '../../component/item/ItemBigProduct';
+import React from 'react'
+import { Themes } from '../../assets/themes';
+import { flashSale } from './list/ListProduct';
+import { useNavigation } from '@react-navigation/native';
 
 const ChildrenHeaders = () => {
     const navigation = useNavigation();
@@ -60,6 +61,7 @@ const FlashSaleScreen = () => {
                     data={flashSale}
                     renderItem={({ item }) => (
                         <ItemBigProduct
+                            item={item}
                             image={item.images}
                             name={item.name}
                             price={item.price}

@@ -10,6 +10,7 @@ import FlashSaleScreen from '../../screen/home/FlashSaleScreen';
 import HomeScreen from '../../screen/home/HomeScreen';
 import Images from '../../assets/images';
 import OfferScreen from '../../screen/offer/OfferScreen';
+import ProductDetailsScreen from '../../screen/home/ProductDetailsScreen';
 import ProfileScreen from '../../screen/account/ProfileScreen';
 import SearchResultScreen from '../../screen/explore/SearchResultScreen';
 import ShippingAddress from '../../screen/cart/ShippingAddress';
@@ -102,6 +103,8 @@ const AppStack = () => (
         <Stack.Screen name={APP_ROUTE.SHIPPING_ADDRESS} component={ShippingAddress} />
         <Stack.Screen name={TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.PROFILE} component={ProfileScreen} />
         <Stack.Screen name={APP_ROUTE.SEARCH_RESULT} component={SearchResultScreen} />
+        <Stack.Screen name={TAB_NAVIGATION_ROOT.HOME_ROUTE.PRODUCT_DETAILS} component={ProductDetailsScreen} />
+
     </Stack.Navigator>
 );
 

@@ -4,17 +4,22 @@ import { windowHeight, windowWidth } from '../../utilities/size';
 import Images from '../../assets/images';
 import React from 'react'
 import { ScaledSheet } from 'react-native-size-matters';
+import { TAB_NAVIGATION_ROOT } from '../../navigation/config/routes';
 import { Themes } from '../../assets/themes';
+import { useNavigation } from '@react-navigation/native';
 
 const ItemBigProduct = (props) => {
+    const navigation = useNavigation();
 
-    const { image, name, price, oldPrice, percent, style } = props;
+
+    const { image, name, price, oldPrice, percent, style, item } = props;
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate(TAB_NAVIGATION_ROOT.HOME_ROUTE.PRODUCT_DETAILS, {item})
+        }>
             <View style={styles.container}>
                 <Image style={styles.image} source={{
-          uri: image,
-        }} />
+                    uri: image,
+                }} />
                 <Text numberOfLines={2} style={styles.name}>{name}</Text>
                 <Text style={styles.price}>{price}</Text>
                 <View style={styles.discount}>
