@@ -1,21 +1,22 @@
 import * as React from 'react';
-import { Text, StyleProp, ViewStyle, TouchableOpacity } from 'react-native';
-import { Themes } from '../../assets/themes';
-import { ScaledSheet } from 'react-native-size-matters';
+import {Text, StyleProp, ViewStyle, TouchableOpacity} from 'react-native';
+import {Themes} from '../../assets/themes';
+import {ScaledSheet} from 'react-native-size-matters';
 
 interface ButtonDefaultProps {
-  tittle: string;
+  title: string;
   onPress: () => void;
   customStyles?: StyleProp<ViewStyle>;
 }
 
 const ButtonDefault = (props: ButtonDefaultProps) => {
-  const { tittle, onPress, customStyles } = props;
+  const {title, onPress, customStyles} = props;
   return (
-    <TouchableOpacity style={[styles.container, customStyles]} onPress={onPress}>
-        <Text style={styles.tittle}>{tittle}</Text>
+    <TouchableOpacity
+      style={[styles.container, customStyles]}
+      onPress={onPress}>
+      <Text style={styles.tittle}>{title}</Text>
     </TouchableOpacity>
-
   );
 };
 
