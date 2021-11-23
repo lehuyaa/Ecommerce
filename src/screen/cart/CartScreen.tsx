@@ -1,4 +1,11 @@
-import {Button, FlatList, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+  Button,
+  FlatList,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import ButtonDefault from '../../component/button/ButtonDefault';
 import Header from '../../component/header/Header';
@@ -7,7 +14,7 @@ import ItemCart from '../../component/item/ItemCart';
 import React from 'react';
 import {ScaledSheet} from 'react-native-size-matters';
 import {Themes} from '../../assets/themes';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const MockCartData: Array<any> = [
   {
@@ -45,9 +52,7 @@ const CartScreen = () => {
   return (
     <View style={styles.container}>
       <Header>
-        <Text style={styles.headerText}>
-          Your Cart
-        </Text>
+        <Text style={styles.headerText}>Your Cart</Text>
       </Header>
       <View style={styles.contentCart}>
         <FlatList
@@ -91,7 +96,12 @@ const CartScreen = () => {
                 </View>
               </View>
 
-              <ButtonDefault tittle={'Check Out'} onPress={ () => {navigation.navigate('SHIPPING_ADDRESS')}}/>
+              <ButtonDefault
+                title={'Check Out'}
+                onPress={() => {
+                  navigation.navigate('SHIPPING_ADDRESS');
+                }}
+              />
             </View>
           }
         />
@@ -182,10 +192,11 @@ const styles = ScaledSheet.create({
     lineHeight: '18@vs',
     fontWeight: '700',
   },
-  divider: { 
-    borderRadius : 1,
+  divider: {
+    borderRadius: 1,
     borderWidth: 1,
-    borderColor: Themes.PrimaryColor.blue}
+    borderColor: Themes.PrimaryColor.blue,
+  },
 });
 
 export default CartScreen;

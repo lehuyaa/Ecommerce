@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScaledSheet, verticalScale} from 'react-native-size-matters';
 import {flashSale, megaSale, product} from './list/ListProduct';
 
@@ -28,8 +28,8 @@ import Swiper from 'react-native-swiper';
 import {Themes} from '../../assets/themes';
 import ViewTittle from './component/ViewTittle';
 import {arrBanner} from './list/ListBanner';
-import { getAllProduct } from '../../api/modules/api-app/product';
-import {useNavigation} from '@react-navigation/native';
+import {getAllProduct} from '../../api/modules/api-app/product';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 
 const ListHeader = () => {
   const navigation = useNavigation();
@@ -86,32 +86,29 @@ const ListHeader = () => {
 const HomeScreen = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [listProduct, setListProduct] = useState<any>([]);
+  const isFocus = useIsFocused();
 
   const getAllProductFunc = async () => {
-  
-  setLoading(true);
-  
-  try {
-      const response = await getAllProduct();
-    setLoading(false);
-    setListProduct(response?.data);
-      console.log('response', response)
+    setLoading(true);
 
-  } catch (error) {
-      console.log('error', error)
+    try {
+      const response = await getAllProduct();
       setLoading(false);
-  }
-  }
+      setListProduct(response?.data);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    getAllProductFunc();
-  },[]);
+    if (isFocus) {
+      getAllProductFunc();
+    }
+  }, [isFocus]);
   return (
     <View style={styles.container}>
-      {loading && (
-                    <LoadingScreen />
-                )}
-      <Header
-        customStyle={styles.header}>
+      {loading && <LoadingScreen />}
+      <Header customStyle={styles.header}>
         <FormSearch />
         <ButtonIcon
           onPress={() => {}}
