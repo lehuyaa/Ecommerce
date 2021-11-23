@@ -12,6 +12,7 @@ import ExploreScreen from '../../screen/explore/ExploreScreen';
 import FlashSaleScreen from '../../screen/home/FlashSaleScreen';
 import HomeScreen from '../../screen/home/HomeScreen';
 import AddressScreen from '../../screen/account/AddressScreen';
+import AddAddressScreen from '../../screen/account/AddAddressScreen';
 import Images from '../../assets/images';
 import OfferScreen from '../../screen/offer/OfferScreen';
 import ProductDetailsScreen from '../../screen/home/ProductDetailsScreen';
@@ -136,6 +137,10 @@ const AppStack = () => (
     <Stack.Screen
       name={TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.ADDRESS}
       component={AddressScreen}
+    />
+    <Stack.Screen
+      name={TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.ADDADDRESS}
+      component={AddAddressScreen}
     />
   </Stack.Navigator>
 );

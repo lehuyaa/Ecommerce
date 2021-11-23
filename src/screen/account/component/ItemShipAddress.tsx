@@ -6,12 +6,12 @@ import ButtonDefault from '../../../component/button/ButtonDefault';
 
 const ItemShipAddress = (props: any) => {
   const {item} = props;
-  const {nameReceiver, streetAddress, phoneNumber} = item || {};
+  const {nameReceiver, streetAddress, phoneNumber, city} = item || {};
   const editAddress = () => {};
   return (
     <View style={styles.container}>
       <Text style={styles.nameReceiver}>{nameReceiver}</Text>
-      <Text style={styles.streetAddress}>{streetAddress}</Text>
+      <Text style={styles.streetAddress}>{`${streetAddress}-${city}`}</Text>
       <Text style={styles.phoneNumber}>{phoneNumber}</Text>
       <View style={styles.viewButton}>
         <ButtonDefault
