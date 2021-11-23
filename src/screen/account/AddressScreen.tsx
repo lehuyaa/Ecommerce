@@ -9,6 +9,7 @@ import {Themes} from '../../assets/themes';
 import ButtonDefault from '../../component/button/ButtonDefault';
 import Header from '../../component/header/Header';
 import LoadingScreen from '../../component/LoadingScreen';
+import {TAB_NAVIGATION_ROOT} from '../../navigation/config/routes';
 import ItemShipAddress from './component/ItemShipAddress';
 
 const AddressScreen = () => {
@@ -18,7 +19,6 @@ const AddressScreen = () => {
   const isFocus = useIsFocused();
 
   const {userInfo} = store.getState();
-
   const getAllAddressFunc = async () => {
     setLoading(true);
 
@@ -53,7 +53,12 @@ const AddressScreen = () => {
         />
       </View>
       <View style={styles.viewButton}>
-        <ButtonDefault title={'Add Address'} onPress={() => {}} />
+        <ButtonDefault
+          title={'Add Address'}
+          onPress={() =>
+            navigation.navigate(TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.ADDADDRESS)
+          }
+        />
       </View>
     </View>
   );
@@ -77,6 +82,7 @@ const styles = ScaledSheet.create({
   },
   viewMain: {
     paddingHorizontal: '16@s',
+    flex: 1,
   },
   viewButton: {
     paddingHorizontal: '16@s',

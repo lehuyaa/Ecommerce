@@ -1170,6 +1170,11 @@
     color "^3.1.3"
     react-native-iphone-x-helper "^1.3.0"
 
+"@redmin_delishaj/react-native-select@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@redmin_delishaj/react-native-select/-/react-native-select-1.0.6.tgz#37137ed058c016f24af4e0b704003415a9d1fb6e"
+  integrity sha512-YEpA8wEaOWTjkF5VkNXB7k+yuqxzlqQczlL8kaKtV30AS2uURV+0gk7ZPrKrSOEroc8xoWsTv5V4nJcYYiBfZw==
+
 "@reduxjs/toolkit@^1.6.2":
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-1.6.2.tgz#2f2b5365df77dd6697da28fdf44f33501ed9ba37"
@@ -5542,6 +5547,11 @@ react-native-screens@^3.4.0:
   integrity sha512-cg+q9MRnVdeOcJyvJtqffoXLur/C2wHA/7IO2+FAipzTlgHbbM1mTuSM7qG+SeiQjoIs4mHOEf7A0ziPKW04sA==
   dependencies:
     warn-once "^0.1.0"
+
+react-native-select-dropdown@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-select-dropdown/-/react-native-select-dropdown-1.4.0.tgz#34cc2d305950e3dd26a5bc761db5f439ee0b6b17"
+  integrity sha512-CeiFQ8F3lI7SAB9l/uMbGUeJmslUkyz9Vv8DHutOjO1bJpP1/Kfu9lH6QYjJ41DXFGQzT1bw8EGHe8rz/eTC/A==
 
 react-native-size-matters@^0.4.0:
   version "0.4.0"
