@@ -10,6 +10,10 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {Themes} from '../../assets/themes';
 import {starImage} from '../../utilities/staticData';
 import {windowHeight} from '../../utilities/size';
+import {useDispatch, useSelector} from 'react-redux';
+import {addToCart} from '../../app-redux/slices/cartSlice';
+import {useAppSelector} from '../../app-redux/hooks';
+import {store} from '../../app-redux/store';
 
 type ParamList = {
   ProductDetailsScreen: {
@@ -18,9 +22,11 @@ type ParamList = {
 };
 const ProductDetailsScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const route = useRoute<RouteProp<ParamList, 'ProductDetailsScreen'>>();
   const {item} = route.params || {};
   const {productName, productImage, productPrice} = item;
+
   return (
     <View style={styles.container}>
       <Header>
@@ -48,7 +54,12 @@ const ProductDetailsScreen = () => {
         </View>
       </ScrollView>
       <View style={styles.viewButton}>
-        <ButtonDefault title={'Add To Cart'} onPress={() => {}} />
+        <ButtonDefault
+          title={'Add To Cart'}
+          onPress={() => {
+            dispatch(addToCart(item));
+          }}
+        />
       </View>
     </View>
   );

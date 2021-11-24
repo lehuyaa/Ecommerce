@@ -15,40 +15,11 @@ import React from 'react';
 import {ScaledSheet} from 'react-native-size-matters';
 import {Themes} from '../../assets/themes';
 import {useNavigation} from '@react-navigation/native';
-
-const MockCartData: Array<any> = [
-  {
-    title: 'Nike Air Zoom Pegasus 36 Miami',
-    price: '299.36',
-    amount: '1',
-    cover: Images.products.product1,
-    isFavourite: true,
-  },
-  {
-    title: 'Nike Air Zoom Pegasus 36 Miami',
-    price: '399.36',
-    amount: '1',
-    cover: Images.products.product2,
-    isFavourite: false,
-  },
-  {
-    title: 'Nike Air Zoom Pegasus 36 Miami',
-    price: '299.36',
-    amount: '1',
-    cover: Images.products.product3,
-  },
-  {
-    title: 'Nike Air Zoom Pegasus 36 Miami',
-    price: '399.36',
-    amount: '1',
-    isFavourite: false,
-    cover: Images.products.product4,
-  },
-];
+import {useSelector} from 'react-redux';
 
 const CartScreen = () => {
   const navigation = useNavigation();
-
+  const {cart} = useSelector((state: any) => state);
   return (
     <View style={styles.container}>
       <Header>
@@ -56,7 +27,7 @@ const CartScreen = () => {
       </Header>
       <View style={styles.contentCart}>
         <FlatList
-          data={MockCartData}
+          data={cart.listProduct}
           renderItem={({item}) => <ItemCart item={item} />}
           keyExtractor={(_, index) => index.toString()}
           showsVerticalScrollIndicator={false}
