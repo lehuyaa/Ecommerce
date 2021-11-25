@@ -16,10 +16,20 @@ import {ScaledSheet} from 'react-native-size-matters';
 import {Themes} from '../../assets/themes';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
+import {caculatorTotalCart, formatCurrencyVND} from '../../utilities/format';
+import _, {groupBy} from 'lodash';
 
 const CartScreen = () => {
   const navigation = useNavigation();
   const {cart} = useSelector((state: any) => state);
+  // console.log(
+  //   _.chain(fakeData)
+  //     // Group the elements of Array based on `color` property
+  //     .groupBy('idSeller')
+  //     // `key` is group's name (color), `value` is the array of objects
+  //     .map((value, key) => ({idSeller: key, listProduct: value}))
+  //     .value(),
+  // );
   return (
     <View style={styles.container}>
       <Header>
@@ -27,7 +37,7 @@ const CartScreen = () => {
       </Header>
       <View style={styles.contentCart}>
         <FlatList
-          data={cart.listProduct}
+          data={cart?.listProduct}
           renderItem={({item}) => <ItemCart item={item} />}
           keyExtractor={(_, index) => index.toString()}
           showsVerticalScrollIndicator={false}
@@ -46,16 +56,28 @@ const CartScreen = () => {
               <View style={styles.bill}>
                 <View>
                   <View style={styles.eachField}>
-                    <Text style={styles.textLeftBill}>Item(3)</Text>
-                    <Text style={styles.textRighBill}>$123</Text>
+                    <Text style={styles.textLeftBill}>
+                      Item({cart?.numberCart})
+                    </Text>
+                    <Text style={styles.textRighBill}>
+                      {formatCurrencyVND(caculatorTotalCart(cart?.listProduct))}
+                    </Text>
                   </View>
                   <View style={styles.eachField}>
                     <Text style={styles.textLeftBill}>Shipping</Text>
-                    <Text style={styles.textRighBill}>$40</Text>
+                    <Text style={styles.textRighBill}>
+                      {formatCurrencyVND(
+                        caculatorTotalCart(cart?.listProduct) * 0.01,
+                      )}
+                    </Text>
                   </View>
                   <View style={styles.eachField}>
                     <Text style={styles.textLeftBill}>Import charges</Text>
-                    <Text style={styles.textRighBill}>$10</Text>
+                    <Text style={styles.textRighBill}>
+                      {formatCurrencyVND(
+                        caculatorTotalCart(cart?.listProduct) * 0.1,
+                      )}
+                    </Text>
                   </View>
                 </View>
 
@@ -63,14 +85,20 @@ const CartScreen = () => {
 
                 <View style={styles.eachField}>
                   <Text style={styles.textLeftTotalBill}>Total Price</Text>
-                  <Text style={styles.textRightTotalBill}>$1000</Text>
+                  <Text style={styles.textRightTotalBill}>
+                    {formatCurrencyVND(
+                      caculatorTotalCart(cart?.listProduct) * 1.11,
+                    )}
+                  </Text>
                 </View>
               </View>
 
               <ButtonDefault
                 title={'Check Out'}
                 onPress={() => {
-                  navigation.navigate('SHIPPING_ADDRESS');
+                  navigation.navigate('SHIPPING_ADDRESS', {
+                    listProduct: cart?.listProduct,
+                  });
                 }}
               />
             </View>

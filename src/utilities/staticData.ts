@@ -1,6 +1,7 @@
 import Images from '../assets/images';
 import {Themes} from '../assets/themes';
 
+export const REGEX_SALARY = /[.,-]/g;
 export const staticValue = {
   DEFAULT: 1,
   TIME_IMAGE_LOAD: 500,

@@ -1,4 +1,5 @@
-import React from 'react';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   TextInput,
@@ -6,44 +7,58 @@ import {
   View,
   Text,
   Button,
+  ScrollView,
 } from 'react-native';
 import {ScaledSheet, verticalScale} from 'react-native-size-matters';
+import {getAllAddressById} from '../../api/modules/api-app/address';
+import {store} from '../../app-redux/store';
 import IconAdd from '../../assets/icons/IconAdd';
 import IconBack from '../../assets/icons/IconBack';
-import IconTrash from '../../assets/icons/IconTrash';
 import {Themes} from '../../assets/themes';
+import ButtonDefault from '../../component/button/ButtonDefault';
 import ButtonIcon from '../../component/button/ButtonIcon';
 import Header from '../../component/header/Header';
-
-const AddressItem = () => (
-  <TouchableOpacity style={styles.address}>
-    <Text style={styles.name}>Priscekila</Text>
-    <Text style={styles.textDetail}>
-      3711 Spring Hill Rd undefined Tallahassee, Nevada 52874 United States
-    </Text>
-    <Text style={styles.textDetail}>+99 1234567890</Text>
-    <View style={styles.containerButton}>
-      <ButtonIcon
-        customStyle={styles.editButton}
-        children={<Text style={styles.editText}>Edit</Text>}
-      />
-
-      <ButtonIcon
-        customStyle={styles.deleteButton}
-        children={
-          <IconTrash height={verticalScale(24)} width={verticalScale(24)} />
-        }
-      />
-    </View>
-  </TouchableOpacity>
-);
+import LoadingScreen from '../../component/LoadingScreen';
+import {TAB_NAVIGATION_ROOT} from '../../navigation/config/routes';
+import ItemShipAddress from '../account/component/ItemShipAddress';
 
 const ShippingAddress = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const isFocus = useIsFocused();
+  const navigation = useNavigation();
+
+  const [listAddress, setListAddress] = useState<any>([]);
+  const [address, setAddress] = useState<any>({});
+  const {userInfo} = store.getState();
+  const getAllAddressFunc = async () => {
+    setLoading(true);
+
+    try {
+      const response = await getAllAddressById(userInfo?.user?.id);
+      setLoading(false);
+      setListAddress(response?.data);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    if (isFocus) {
+      getAllAddressFunc();
+    }
+  }, [isFocus]);
+  const choiceAddress = item => {
+    setAddress(item);
+  };
   return (
     <View style={styles.container}>
+      {loading && <LoadingScreen />}
+
       <Header customStyle={styles.customHeader}>
         <View style={styles.leftHeader}>
           <ButtonIcon
+            onPress={() => {
+              navigation.goBack();
+            }}
             children={
               <IconBack height={verticalScale(24)} width={verticalScale(24)} />
             }
@@ -52,19 +67,36 @@ const ShippingAddress = () => {
         </View>
 
         <ButtonIcon
+          onPress={() =>
+            navigation.navigate(TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.ADDADDRESS)
+          }
           children={
             <IconAdd height={verticalScale(24)} width={verticalScale(24)} />
           }
         />
       </Header>
 
-      <FlatList
-        style={{flex: 1, marginBottom: 20}}
-        data={[1, 2, 3, 4]}
-        renderItem={AddressItem}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={(_, index) => index + ''}
-      />
+      <ScrollView
+        contentContainerStyle={styles.contentScroll}
+        style={styles.viewMain}>
+        {listAddress.map(item => (
+          <ItemShipAddress
+            key={item.id}
+            item={item}
+            isChoice={item.id === address?.id}
+            onPress={() => choiceAddress(item)}
+          />
+        ))}
+      </ScrollView>
+      <View style={styles.viewButton}>
+        <ButtonDefault
+          title={'Next'}
+          onPress={() =>
+            // navigation.navigate(TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.ADDADDRESS)
+            console.log('address', address)
+          }
+        />
+      </View>
     </View>
   );
 };
@@ -135,6 +167,19 @@ const styles = ScaledSheet.create({
     fontSize: '12@vs',
     color: Themes.NeutralColors.grey,
     lineHeight: '21@vs',
+  },
+  viewMain: {
+    paddingHorizontal: '16@s',
+    flex: 1,
+  },
+  contentScroll: {
+    paddingBottom: '100@vs',
+  },
+  viewButton: {
+    paddingHorizontal: '16@s',
+    position: 'absolute',
+    width: '100%',
+    bottom: '30@vs',
   },
 });
 export default ShippingAddress;

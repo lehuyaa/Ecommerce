@@ -1,15 +1,30 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-import {ScaledSheet} from 'react-native-size-matters';
+import {Text, TouchableOpacity, View} from 'react-native';
+import {ScaledSheet, verticalScale} from 'react-native-size-matters';
+import IconTrash from '../../../assets/icons/IconTrash';
 import {Themes} from '../../../assets/themes';
 import ButtonDefault from '../../../component/button/ButtonDefault';
+import ButtonIcon from '../../../component/button/ButtonIcon';
+
+const areEqual = (prevProps: any, nextProps: any) =>
+  prevProps.isChoice === nextProps.isChoice;
 
 const ItemShipAddress = (props: any) => {
-  const {item} = props;
+  const {item, isChoice, onPress} = props;
   const {nameReceiver, streetAddress, phoneNumber, city} = item || {};
   const editAddress = () => {};
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      onPress={onPress}
+      style={[
+        styles.container,
+        {
+          borderColor: isChoice
+            ? Themes.PrimaryColor.blue
+            : Themes.NeutralColors.light,
+        },
+      ]}>
       <Text style={styles.nameReceiver}>{nameReceiver}</Text>
       <Text style={styles.streetAddress}>{`${streetAddress}-${city}`}</Text>
       <Text style={styles.phoneNumber}>{phoneNumber}</Text>
@@ -19,8 +34,13 @@ const ItemShipAddress = (props: any) => {
           title="Edit"
           customStyles={styles.buttonEdit}
         />
+        <ButtonIcon
+          children={
+            <IconTrash height={verticalScale(24)} width={verticalScale(24)} />
+          }
+        />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -29,7 +49,6 @@ const styles = ScaledSheet.create({
     width: '100%',
     height: '200@vs',
     borderWidth: 1,
-    borderColor: Themes.PrimaryColor.blue,
     borderRadius: 5,
     marginTop: '16@vs',
     paddingHorizontal: '24@s',
@@ -54,11 +73,13 @@ const styles = ScaledSheet.create({
   },
   viewButton: {
     flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: '16@vs',
   },
   buttonEdit: {
     width: '77@s',
-    marginTop: '16@vs',
+    marginRight: '30@s',
   },
 });
 
-export default ItemShipAddress;
+export default React.memo(ItemShipAddress, areEqual);
