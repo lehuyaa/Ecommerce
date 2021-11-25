@@ -87,6 +87,7 @@ const HomeScreen = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [listProduct, setListProduct] = useState<any>([]);
   const isFocus = useIsFocused();
+  const [isFetching, setIsFetching] = useState(false);
 
   const getAllProductFunc = async () => {
     setLoading(true);
@@ -95,6 +96,7 @@ const HomeScreen = () => {
       const response = await getAllProduct();
       setLoading(false);
       setListProduct(response?.data);
+      setIsFetching(false);
     } catch (error) {
       setLoading(false);
     }
@@ -128,6 +130,11 @@ const HomeScreen = () => {
       </Header>
       <View style={styles.viewListProduct}>
         <FlatList
+          onRefresh={() => {
+            getAllProductFunc();
+            setIsFetching(true);
+          }}
+          refreshing={isFetching}
           data={listProduct}
           renderItem={({item}) => (
             <ItemBigProduct

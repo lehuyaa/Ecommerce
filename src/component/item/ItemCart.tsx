@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Image, Text, TouchableOpacity, TextInput} from 'react-native';
 import {ScaledSheet, verticalScale} from 'react-native-size-matters';
-import Images from '../../assets/images';
 import {Themes} from '../../assets/themes';
 import IconHeart from '../../assets/icons/IconHeart';
 import IconTrash from '../../assets/icons/IconTrash';
@@ -13,6 +12,7 @@ import {useDispatch} from 'react-redux';
 import {
   decreaseQuantityToCart,
   increaseQuantityToCart,
+  removeToCart,
 } from '../../app-redux/slices/cartSlice';
 
 type ItemCartProps = {
@@ -21,7 +21,6 @@ type ItemCartProps = {
 
 const ItemCart = ({item}: ItemCartProps) => {
   const dispatch = useDispatch();
-  const [quantity, setQuantity] = useState(item?.quantity);
   return (
     <View style={styles.container}>
       <Image
@@ -52,7 +51,9 @@ const ItemCart = ({item}: ItemCartProps) => {
             }
           />
           <ButtonIcon
-            onPress={() => {}}
+            onPress={() => {
+              dispatch(removeToCart(item));
+            }}
             children={
               <IconTrash height={verticalScale(24)} width={verticalScale(24)} />
             }
@@ -64,8 +65,11 @@ const ItemCart = ({item}: ItemCartProps) => {
           <View style={styles.numberCart}>
             <TouchableOpacity
               onPress={() => {
-                dispatch(decreaseQuantityToCart(item?.id));
-                setQuantity(quantity - 1);
+                if (item?.quantity === 1) {
+                  dispatch(removeToCart(item));
+                } else {
+                  dispatch(decreaseQuantityToCart(item?.id));
+                }
               }}
               style={styles.buttonSubstract}>
               <IconSubstract
@@ -76,12 +80,11 @@ const ItemCart = ({item}: ItemCartProps) => {
             <TextInput
               style={styles.inputNumber}
               keyboardType="number-pad"
-              defaultValue={`${quantity}`}
+              defaultValue={`${item?.quantity}`}
             />
             <TouchableOpacity
               onPress={() => {
                 dispatch(increaseQuantityToCart(item?.id));
-                setQuantity(quantity + 1);
               }}
               style={styles.buttonAdd}>
               <IconAdd height={verticalScale(16)} width={verticalScale(16)} />

@@ -1,6 +1,13 @@
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {Text, TouchableOpacity, View, Image, FlatList} from 'react-native';
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+  FlatList,
+  ScrollView,
+} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 import {getAllAddressById} from '../../api/modules/api-app/address';
 import {store} from '../../app-redux/store';
@@ -44,14 +51,13 @@ const AddressScreen = () => {
         </TouchableOpacity>
         <Text style={styles.textHeader}>Address</Text>
       </Header>
-      <View style={styles.viewMain}>
-        <FlatList
-          data={listAddress}
-          renderItem={({item}) => <ItemShipAddress item={item} />}
-          keyExtractor={(item, index) => index.toString()}
-          showsVerticalScrollIndicator={false}
-        />
-      </View>
+      <ScrollView
+        contentContainerStyle={styles.contentScroll}
+        style={styles.viewMain}>
+        {listAddress.map(item => (
+          <ItemShipAddress key={item.id} item={item} />
+        ))}
+      </ScrollView>
       <View style={styles.viewButton}>
         <ButtonDefault
           title={'Add Address'}
@@ -88,7 +94,10 @@ const styles = ScaledSheet.create({
     paddingHorizontal: '16@s',
     position: 'absolute',
     width: '100%',
-    bottom: '65@vs',
+    bottom: '30@vs',
+  },
+  contentScroll: {
+    paddingBottom: '100@vs',
   },
 });
 

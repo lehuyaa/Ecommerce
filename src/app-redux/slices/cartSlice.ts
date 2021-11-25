@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {generatePersistConfig} from '../../utilities/helper';
 import {persistReducer} from 'redux-persist';
+import {store} from '../store';
 
 interface Cart {
   listProduct: any;
@@ -17,15 +18,16 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, {payload}) => {
-      console.log('payload', payload);
+      const product = {
+        id: payload.id,
+        productName: payload.productName,
+        productPrice: payload.productPrice,
+        productImage: payload.productImage,
+        idSeller: payload?.user?.id,
+        idBuyer: payload?.idUser,
+        quantity: 1,
+      };
       if (state.listProduct.length === 0) {
-        const product = {
-          id: payload.id,
-          productName: payload.productName,
-          productPrice: payload.productPrice,
-          productImage: payload.productImage,
-          quantity: 1,
-        };
         state.listProduct.push(product);
       } else {
         const isCheck =
@@ -37,13 +39,6 @@ const cartSlice = createSlice({
             }
           });
         } else {
-          const product = {
-            id: payload.id,
-            productName: payload.productName,
-            productPrice: payload.productPrice,
-            productImage: payload.productImage,
-            quantity: 1,
-          };
           state.listProduct.push(product);
         }
       }
@@ -66,10 +61,11 @@ const cartSlice = createSlice({
       state.numberCart--;
     },
     removeToCart: (state, {payload}) => {
-      const newCart =
-        state.listProduct.filter(e => e.id !== payload.id).length > 0;
+      const newCart = state.listProduct.filter(e => e.id !== payload.id);
       state.listProduct = newCart;
-      state.numberCart;
+      state.numberCart = state.listProduct.reduce((total, currentValue) => {
+        return total + currentValue.quantity;
+      }, 0);
     },
   },
 });
@@ -78,6 +74,10 @@ const persistConfig = generatePersistConfig('cart', [
   'numberCart',
 ]);
 
-export const {addToCart, increaseQuantityToCart, decreaseQuantityToCart} =
-  cartSlice.actions;
+export const {
+  addToCart,
+  increaseQuantityToCart,
+  decreaseQuantityToCart,
+  removeToCart,
+} = cartSlice.actions;
 export default persistReducer<Cart>(persistConfig, cartSlice.reducer);

@@ -10,9 +10,9 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {Themes} from '../../assets/themes';
 import {starImage} from '../../utilities/staticData';
 import {windowHeight} from '../../utilities/size';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {addToCart} from '../../app-redux/slices/cartSlice';
-import {useAppSelector} from '../../app-redux/hooks';
+import Toast from 'react-native-toast-message';
 import {store} from '../../app-redux/store';
 
 type ParamList = {
@@ -26,7 +26,32 @@ const ProductDetailsScreen = () => {
   const route = useRoute<RouteProp<ParamList, 'ProductDetailsScreen'>>();
   const {item} = route.params || {};
   const {productName, productImage, productPrice} = item;
+  const {userInfo} = store.getState();
 
+  const showSuccessToast = () => {
+    Toast.show({
+      type: 'success',
+      text1: 'Add Product to Cart Success',
+    });
+  };
+  const showFailureToast = () => {
+    Toast.show({
+      type: 'error',
+      text1: `You Can't Buy Your Product`,
+    });
+  };
+  const addToCartFunc = () => {
+    if (item?.user?.id === userInfo?.user?.id) {
+      showFailureToast();
+    } else {
+      const payload = {
+        ...item,
+        idUser: userInfo?.user?.id,
+      };
+      dispatch(addToCart(payload));
+      showSuccessToast();
+    }
+  };
   return (
     <View style={styles.container}>
       <Header>
@@ -54,13 +79,9 @@ const ProductDetailsScreen = () => {
         </View>
       </ScrollView>
       <View style={styles.viewButton}>
-        <ButtonDefault
-          title={'Add To Cart'}
-          onPress={() => {
-            dispatch(addToCart(item));
-          }}
-        />
+        <ButtonDefault title={'Add To Cart'} onPress={() => addToCartFunc()} />
       </View>
+      <Toast />
     </View>
   );
 };
