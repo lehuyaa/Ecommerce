@@ -21,7 +21,7 @@ import SearchResultScreen from '../../screen/explore/SearchResultScreen';
 import ShippingAddress from '../../screen/cart/ShippingAddress';
 import {createStackNavigator} from '@react-navigation/stack';
 import navigationConfigs from '../config/options';
-
+import PaymentMethod from '../../screen/cart/PaymentMethod';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -141,6 +141,10 @@ const AppStack = () => (
     <Stack.Screen
       name={TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.ADDADDRESS}
       component={AddAddressScreen}
+    />
+    <Stack.Screen
+      name={TAB_NAVIGATION_ROOT.CART_ROUTE.PAYMENT_METHOD}
+      component={PaymentMethod}
     />
   </Stack.Navigator>
 );

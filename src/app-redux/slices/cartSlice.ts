@@ -25,6 +25,7 @@ const cartSlice = createSlice({
         productImage: payload.productImage,
         idSeller: payload?.user?.id,
         idBuyer: payload?.idUser,
+        nameSeller: payload?.user?.username,
         quantity: 1,
       };
       if (state.listProduct.length === 0) {
