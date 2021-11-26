@@ -18,18 +18,20 @@ import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {caculatorTotalCart, formatCurrencyVND} from '../../utilities/format';
 import _, {groupBy} from 'lodash';
+import ItemShopCart from './component/ItemShopCart';
 
 const CartScreen = () => {
   const navigation = useNavigation();
   const {cart} = useSelector((state: any) => state);
-  // console.log(
-  //   _.chain(fakeData)
-  //     // Group the elements of Array based on `color` property
-  //     .groupBy('idSeller')
-  //     // `key` is group's name (color), `value` is the array of objects
-  //     .map((value, key) => ({idSeller: key, listProduct: value}))
-  //     .value(),
-  // );
+  const groupCart = listProduct => {
+    return _.chain(listProduct)
+      .groupBy('idSeller')
+      .map((value, key) => ({
+        idSeller: key,
+        listSeller: value,
+      }))
+      .value();
+  };
   return (
     <View style={styles.container}>
       <Header>
@@ -37,8 +39,8 @@ const CartScreen = () => {
       </Header>
       <View style={styles.contentCart}>
         <FlatList
-          data={cart?.listProduct}
-          renderItem={({item}) => <ItemCart item={item} />}
+          data={groupCart(cart?.listProduct)}
+          renderItem={({item}) => <ItemShopCart item={item} />}
           keyExtractor={(_, index) => index.toString()}
           showsVerticalScrollIndicator={false}
           ListFooterComponent={
@@ -97,7 +99,7 @@ const CartScreen = () => {
                 title={'Check Out'}
                 onPress={() => {
                   navigation.navigate('SHIPPING_ADDRESS', {
-                    listProduct: cart?.listProduct,
+                    listSeller: groupCart(cart?.listProduct),
                   });
                 }}
               />

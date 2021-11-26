@@ -1,4 +1,9 @@
-import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {
+  RouteProp,
+  useIsFocused,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
@@ -21,14 +26,22 @@ import Header from '../../component/header/Header';
 import LoadingScreen from '../../component/LoadingScreen';
 import {TAB_NAVIGATION_ROOT} from '../../navigation/config/routes';
 import ItemShipAddress from '../account/component/ItemShipAddress';
+import Toast from 'react-native-toast-message';
 
+type ParamList = {
+  ShippingAddress: {
+    listSeller?: any;
+  };
+};
 const ShippingAddress = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const isFocus = useIsFocused();
   const navigation = useNavigation();
+  const route = useRoute<RouteProp<ParamList, 'ShippingAddress'>>();
+  const {listSeller} = route.params || {};
 
   const [listAddress, setListAddress] = useState<any>([]);
-  const [address, setAddress] = useState<any>({});
+  const [address, setAddress] = useState<any>(null);
   const {userInfo} = store.getState();
   const getAllAddressFunc = async () => {
     setLoading(true);
@@ -48,6 +61,12 @@ const ShippingAddress = () => {
   }, [isFocus]);
   const choiceAddress = item => {
     setAddress(item);
+  };
+  const showFailureToast = () => {
+    Toast.show({
+      type: 'error',
+      text1: `Please Choice Address`,
+    });
   };
   return (
     <View style={styles.container}>
@@ -91,12 +110,22 @@ const ShippingAddress = () => {
       <View style={styles.viewButton}>
         <ButtonDefault
           title={'Next'}
-          onPress={() =>
-            // navigation.navigate(TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.ADDADDRESS)
-            console.log('address', address)
-          }
+          onPress={() => {
+            if (address) {
+              navigation.navigate(
+                TAB_NAVIGATION_ROOT.CART_ROUTE.PAYMENT_METHOD,
+                {
+                  listSeller: listSeller,
+                  address: address,
+                },
+              );
+            } else {
+              showFailureToast();
+            }
+          }}
         />
       </View>
+      <Toast />
     </View>
   );
 };
