@@ -14,6 +14,7 @@ import {
   increaseQuantityToCart,
   removeToCart,
 } from '../../app-redux/slices/cartSlice';
+import {formatCurrencyVND} from '../../utilities/format';
 
 type ItemCartProps = {
   item: any;
@@ -60,7 +61,9 @@ const ItemCart = ({item}: ItemCartProps) => {
           />
         </View>
         <View style={styles.belowCart}>
-          <Text style={styles.textPriceCart}>{`${item?.productPrice}`}</Text>
+          <Text style={styles.textPriceCart}>{`${formatCurrencyVND(
+            item?.productPrice,
+          )}`}</Text>
 
           <View style={styles.numberCart}>
             <TouchableOpacity
