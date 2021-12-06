@@ -19,7 +19,8 @@ const Images = {
         order: require('./images/icon/ic_order.png'),
         address: require('./images/icon/ic_addres.png'),
         payment: require('./images/icon/ic_payment.png'),
-        dropdown: require('./images/icon/ic_drop_down.png')
+        dropdown: require('./images/icon/ic_drop_down.png'),
+        successIcon: require('./images/icon/successIcon.png'),
 
     },
     products: {

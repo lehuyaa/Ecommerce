@@ -1,12 +1,13 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 import {Themes} from '../../../assets/themes';
 
 const ItemPaymentMethod = props => {
-  const {isChoice, item} = props;
+  const {isChoice, item, onPress} = props;
   return (
-    <View
+    <TouchableOpacity
+      onPress={onPress}
       style={[
         styles.container,
         {
@@ -17,7 +18,7 @@ const ItemPaymentMethod = props => {
       ]}>
       {item?.icon}
       <Text style={styles.paymentName}>{item?.name}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -32,6 +33,7 @@ const styles = ScaledSheet.create({
   paymentName: {
     fontSize: '12@ms0.3',
     fontWeight: '700',
+    marginLeft: '20@s',
   },
 });
 

@@ -1,6 +1,6 @@
-import {useNavigation} from '@react-navigation/native';
-import React from 'react';
-import {Text, View} from 'react-native';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import React, { useState } from 'react';
+import {ScrollView, Text, View} from 'react-native';
 import {ScaledSheet, verticalScale} from 'react-native-size-matters';
 import IconAdd from '../../assets/icons/IconAdd';
 import IconBack from '../../assets/icons/IconBack';
@@ -10,10 +10,27 @@ import Header from '../../component/header/Header';
 import {formatCurrencyVND} from '../../utilities/format';
 import ItemPaymentMethod from './component/ItemPaymentMethod';
 import Entypo from 'react-native-vector-icons/Entypo';
+import Toast from 'react-native-toast-message';
+import ButtonDefault from '../../component/button/ButtonDefault';
+import { store } from '../../app-redux/store';
+import { order } from '../../api/modules/api-app/order';
+import LoadingScreen from '../../component/LoadingScreen';
+import { TAB_NAVIGATION_ROOT } from '../../navigation/config/routes';
+import { useDispatch } from 'react-redux';
+import { removeAllCart } from '../../app-redux/slices/cartSlice';
 
+type ParamList = {
+  PaymentMethod: {
+    listSeller?: any;
+    address?: any;
+  };
+};
 const PaymentMethod = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
+  const route = useRoute<RouteProp<ParamList, 'PaymentMethod'>>();
+  const {listSeller, address} = route.params || {};
   const listPaymentMethod = [
     {
       id: 1,
@@ -21,8 +38,44 @@ const PaymentMethod = () => {
       icon: <Entypo name="home" size={30} color={Themes.PrimaryColor.blue} />,
     },
   ];
+  const [paymentMethod, setPaymentMethod] = useState<any>(null)
+
+  const showFailureToast = () => {
+    Toast.show({
+      type: 'error',
+      text1: `Please Choice Payment Method`,
+    });
+  };
+
+  const choicePayment = item => {
+    const payment = {
+      id : item?.id,
+      name: item?.name,
+    };
+    setPaymentMethod(payment);
+  };
+  const {userInfo} = store.getState();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const orderFunc = async () => {
+      const params = {
+        payment: paymentMethod,
+        address,
+        listSeller,
+        userID:  userInfo?.user?.id
+      }
+      try {
+        const response = await order(params);
+        setLoading(false);
+        navigation.navigate(TAB_NAVIGATION_ROOT.CART_ROUTE.ORDER_SUCCESS);
+        dispatch(removeAllCart());
+      } catch (error) {
+        setLoading(false);
+      }
+  }
   return (
     <View style={styles.container}>
+      {loading && <LoadingScreen />}
       <Header customStyle={styles.customHeader}>
         <View style={styles.leftHeader}>
           <ButtonIcon
@@ -36,11 +89,26 @@ const PaymentMethod = () => {
           <Text style={styles.textHeader}>Payment</Text>
         </View>
       </Header>
-      <View style={styles.viewMain}>
+      <ScrollView style={styles.viewMain}>
         {listPaymentMethod.map(item => (
-          <ItemPaymentMethod key={item.id} item={item} />
+          <ItemPaymentMethod key={item.id} item={item}                 isChoice={item.id === paymentMethod?.id}
+          onPress={() => choicePayment(item)}
+          />
         ))}
+      </ScrollView>
+      <View style={styles.viewButton}>
+        <ButtonDefault
+          title={'Next'}
+          onPress={() => {
+            if (paymentMethod) {
+              orderFunc();
+            } else {
+              showFailureToast();
+            }
+          }}
+        />
       </View>
+      <Toast />
     </View>
   );
 };
@@ -67,6 +135,14 @@ const styles = ScaledSheet.create({
     flex: 1,
     height: '100%',
   },
+  viewButton: {
+    paddingHorizontal: '16@s',
+    position: 'absolute',
+    width: '100%',
+    bottom: '30@vs',
+  },
 });
 
 export default PaymentMethod;
+
+
