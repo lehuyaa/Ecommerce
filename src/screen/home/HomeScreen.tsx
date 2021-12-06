@@ -103,10 +103,8 @@ const HomeScreen = () => {
   };
 
   useEffect(() => {
-    if (isFocus) {
-      getAllProductFunc();
-    }
-  }, [isFocus]);
+    getAllProductFunc();
+  }, []);
   return (
     <View style={styles.container}>
       {loading && <LoadingScreen />}
@@ -130,6 +128,7 @@ const HomeScreen = () => {
       </Header>
       <View style={styles.viewListProduct}>
         <FlatList
+          style={styles.flatList}
           onRefresh={() => {
             getAllProductFunc();
             setIsFetching(true);
@@ -147,7 +146,8 @@ const HomeScreen = () => {
             />
           )}
           columnWrapperStyle={styles.columnWrapperStyle}
-          ListHeaderComponent={ListHeader}
+          ListEmptyComponent={<Text>NO DATA</Text>}
+          // ListHeaderComponent={ListHeader}
           numColumns={2}
           keyExtractor={(item, index) => index.toString()}
           showsVerticalScrollIndicator={false}
@@ -223,14 +223,19 @@ const styles = ScaledSheet.create({
     bottom: '60@s',
   },
   viewListProduct: {
+    width: '100%',
     alignItems: 'center',
     marginBottom: '80@vs',
+    paddingTop: '10@vs',
   },
   columnWrapperStyle: {
     flex: 1,
     justifyContent: 'space-between',
     paddingHorizontal: '16@s',
     marginBottom: '15@vs',
+  },
+  flatList: {
+    width: '100%',
   },
 });
 export default HomeScreen;
