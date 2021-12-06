@@ -173,6 +173,7 @@ const styles = ScaledSheet.create({
     backgroundColor: Themes.NeutralColors.light,
     width: '40@s',
     textAlign: 'center',
+    color: Themes.NeutralColors.Dark,
   },
 });
 

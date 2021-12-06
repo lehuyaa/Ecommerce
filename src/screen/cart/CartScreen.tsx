@@ -27,8 +27,8 @@ const CartScreen = () => {
     return _.chain(listProduct)
       .groupBy('idSeller')
       .map((value, key) => ({
-        idSeller: key,
-        listSeller: value,
+        idSeller: Number(key),
+        listProduct: value,
       }))
       .value();
   };

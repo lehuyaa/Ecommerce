@@ -22,6 +22,9 @@ import ShippingAddress from '../../screen/cart/ShippingAddress';
 import {createStackNavigator} from '@react-navigation/stack';
 import navigationConfigs from '../config/options';
 import PaymentMethod from '../../screen/cart/PaymentMethod';
+import OrderSuccessScreen from '../../screen/cart/OrderSuccessScreen';
+
+import ListOrderScreen from '../../screen/account/ListOrderScreen';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -126,6 +129,10 @@ const AppStack = () => (
       name={TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.PROFILE}
       component={ProfileScreen}
     />
+     <Stack.Screen
+      name={TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.LIST_ORDER}
+      component={ListOrderScreen}
+    />
     <Stack.Screen
       name={APP_ROUTE.SEARCH_RESULT}
       component={SearchResultScreen}
@@ -145,6 +152,10 @@ const AppStack = () => (
     <Stack.Screen
       name={TAB_NAVIGATION_ROOT.CART_ROUTE.PAYMENT_METHOD}
       component={PaymentMethod}
+    />
+    <Stack.Screen
+      name={TAB_NAVIGATION_ROOT.CART_ROUTE.ORDER_SUCCESS}
+      component={OrderSuccessScreen}
     />
   </Stack.Navigator>
 );

@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {generatePersistConfig} from '../../utilities/helper';
 import {persistReducer} from 'redux-persist';
 import {store} from '../store';
+import { formatStringCurrency } from '../../utilities/format';
 
 interface Cart {
   listProduct: any;
@@ -21,7 +22,7 @@ const cartSlice = createSlice({
       const product = {
         id: payload.id,
         productName: payload.productName,
-        productPrice: payload.productPrice,
+        productPrice: formatStringCurrency(payload.productPrice),
         productImage: payload.productImage,
         idSeller: payload?.user?.id,
         idBuyer: payload?.idUser,
@@ -68,6 +69,10 @@ const cartSlice = createSlice({
         return total + currentValue.quantity;
       }, 0);
     },
+    removeAllCart:(state) => {
+      state.listProduct = [];
+     state.numberCart = 0;
+    },
   },
 });
 const persistConfig = generatePersistConfig('cart', [
@@ -80,5 +85,6 @@ export const {
   increaseQuantityToCart,
   decreaseQuantityToCart,
   removeToCart,
+  removeAllCart,
 } = cartSlice.actions;
 export default persistReducer<Cart>(persistConfig, cartSlice.reducer);

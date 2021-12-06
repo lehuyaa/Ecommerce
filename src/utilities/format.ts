@@ -15,9 +15,9 @@ export const formatStringCurrency = (currency: string) => {
   return Number(number.replace(REGEX_SALARY, ''));
 };
 
-export const caculatorTotalCart = arrayProduct => {
+export const caculatorTotalCart = (arrayProduct: any[]) => {
   const totalPrice = arrayProduct.reduce((total, item) => {
-    return total + item?.quantity * formatStringCurrency(item?.productPrice);
+    return total + item?.quantity * item?.productPrice;
   }, 0);
   return totalPrice;
 };

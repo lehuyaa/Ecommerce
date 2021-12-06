@@ -21,7 +21,7 @@ const listService = [
     id: 2,
     title: 'Order',
     icon: Images.icon.order,
-    navigateName: TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.PROFILE,
+    navigateName:TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.LIST_ORDER,
   },
   {
     id: 3,

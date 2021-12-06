@@ -9,13 +9,13 @@ const ItemShopCart = (props: any) => {
   return (
     <View style={styles.container}>
       <View style={styles.viewInfoSeller}>
-        <Text style={styles.text}>{item.listSeller[0].nameSeller}</Text>
+        <Text style={styles.text}>{item.listProduct[0].nameSeller}</Text>
         <TouchableOpacity>
           <Text style={styles.text}>View</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.viewListProduct}>
-        {item.listSeller.map(item => (
+        {item.listProduct.map(item => (
           <ItemCart key={item.id} item={item} />
         ))}
       </View>
