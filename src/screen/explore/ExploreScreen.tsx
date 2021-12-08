@@ -9,18 +9,35 @@ import IconHeart from '../../assets/icons/IconHeart';
 import IconNotification from '../../assets/icons/IconNotification';
 import ItemCategory from '../../component/item/ItemCategory';
 import { ListCategory } from '../home/list/ListCategory';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Themes } from '../../assets/themes';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { searchProduct } from '../../api/modules/api-app/product';
+import { product } from '../home/list/ListProduct';
+import LoadingScreen from '../../component/LoadingScreen';
 
 const ExploreScreen = () => {
     const navigation = useNavigation();
+    const [loading, setLoading] = useState<boolean>(false);
+    const [searchKey, setSearchKey] = useState('');
 
+    const onSearch = async () => {
+        setLoading(true);
+        try {
+          const response = await searchProduct(searchKey);
+          navigation.navigate(APP_ROUTE.SEARCH_RESULT, {searchResult : response?.data})
+          setLoading(false);
+        } catch (error) {
+          setLoading(false);
+        }
+    }
+  
     return (
         <View style={styles.container}>
+            {loading && <LoadingScreen />}
             <Header
                 customStyle={styles.header}>
-                <FormSearch />
+                <FormSearch onSubmitEditing={()=>onSearch()} setSearchKey={setSearchKey} />
                 <ButtonIcon
                     onPress={() => { }}
                     children={
@@ -45,7 +62,7 @@ const ExploreScreen = () => {
                         <ItemCategory
                             icon={item.icon}
                             tittle={item.tittle}
-                            onPress={() =>navigation.navigate(APP_ROUTE.SEARCH_RESULT)
+                            onPress={() =>navigation.navigate(APP_ROUTE.SEARCH_RESULT,  {searchResult :product })
                             }
                         />
                     )}
