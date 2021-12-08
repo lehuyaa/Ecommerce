@@ -38,7 +38,7 @@ const ExploreScreen = () => {
             <Header
                 customStyle={styles.header}>
                 <FormSearch onSubmitEditing={()=>onSearch()} setSearchKey={setSearchKey} />
-                <ButtonIcon
+                {/* <ButtonIcon
                     onPress={() => { }}
                     children={
                         <IconHeart height={verticalScale(24)} width={verticalScale(24)} />
@@ -52,7 +52,7 @@ const ExploreScreen = () => {
                             width={verticalScale(24)}
                         />
                     }
-                />
+                /> */}
             </Header>
             <View style={styles.main}>
                 <Text style={styles.titleCategory}>Category</Text>

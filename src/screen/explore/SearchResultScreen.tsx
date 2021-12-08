@@ -14,6 +14,8 @@ import { product } from '../home/list/ListProduct';
 import IconBack from '../../assets/icons/IconBack';
 import { useNavigation } from '@react-navigation/core';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { searchProduct } from '../../api/modules/api-app/product';
+import LoadingScreen from '../../component/LoadingScreen';
 
 type ParamList = {
     SearchResultScreen: {
@@ -25,7 +27,20 @@ const SearchResultScreen = () => {
     const route = useRoute<RouteProp<ParamList, 'SearchResultScreen'>>();
     const {searchResult} = route.params || {};
 
+    const [loading, setLoading] = useState<boolean>(false);
+    const [searchKey, setSearchKey] = useState('');
     const [listProduct, setListProduct] = useState(searchResult);
+
+    const onSearch = async () => {
+        setLoading(true);
+        try {
+          const response = await searchProduct(searchKey);
+          setListProduct(response?.data)
+          setLoading(false);
+        } catch (error) {
+          setLoading(false);
+        }
+    }
     return (
         <View style={styles.container}>
             <Header
@@ -38,7 +53,7 @@ const SearchResultScreen = () => {
               <IconBack height={verticalScale(24)} width={verticalScale(24)} />
             }
           />
-                <FormSearch />
+                <FormSearch onSubmitEditing={()=>onSearch()} setSearchKey={setSearchKey} />
                 <ButtonIcon
                     onPress={() => { }}
                     children={
@@ -56,8 +71,10 @@ const SearchResultScreen = () => {
                 />
             </Header>
             <View style={styles.main}>
+            {loading && <LoadingScreen />}
+
                 <View style={styles.viewTopMain}>
-                    <Text style={styles.textNumberSearchResult}>{searchResult.length} Result</Text>
+                    <Text style={styles.textNumberSearchResult}>{listProduct.length} Result</Text>
                     <View style={styles.viewDropDown}>
                         <Text style={styles.textCategoryName}>Man Shoes</Text>
                         <Image source={Images.icon.dropdown} style={styles.iconDropDown} />

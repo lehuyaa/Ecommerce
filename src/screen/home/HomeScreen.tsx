@@ -156,6 +156,7 @@ const HomeScreen = () => {
               price={item.productPrice}
               oldPrice={item.oldPrice}
               percent={item.percent}
+              rate={item.rate}
             />
           )}
           columnWrapperStyle={styles.columnWrapperStyle}
