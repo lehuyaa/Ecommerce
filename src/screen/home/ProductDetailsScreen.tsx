@@ -5,7 +5,7 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import ButtonDefault from '../../component/button/ButtonDefault';
 import Header from '../../component/header/Header';
 import Images from '../../assets/images';
-import {ScaledSheet} from 'react-native-size-matters';
+import {ScaledSheet, verticalScale} from 'react-native-size-matters';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Themes} from '../../assets/themes';
 import {starImage} from '../../utilities/staticData';
@@ -14,6 +14,7 @@ import {useDispatch} from 'react-redux';
 import {addToCart} from '../../app-redux/slices/cartSlice';
 import Toast from 'react-native-toast-message';
 import {store} from '../../app-redux/store';
+import { convertRate } from '../../utilities/format';
 
 type ParamList = {
   ProductDetailsScreen: {
@@ -25,9 +26,9 @@ const ProductDetailsScreen = () => {
   const dispatch = useDispatch();
   const route = useRoute<RouteProp<ParamList, 'ProductDetailsScreen'>>();
   const {item} = route.params || {};
-  const {productName, productImage, productPrice} = item;
+  const {productName, productImage, productPrice, quantity} = item;
   const {userInfo} = store.getState();
-
+  
   const showSuccessToast = () => {
     Toast.show({
       type: 'success',
@@ -74,8 +75,10 @@ const ProductDetailsScreen = () => {
 
         <View style={styles.viewInfo}>
           <Text style={styles.textProductName}>{productName}</Text>
-          <Image style={styles.star} source={starImage[3]} />
+          <Image style={styles.star} source={starImage[convertRate(item?.rate)-1]} />
           <Text style={styles.textProductPrice}>{productPrice}</Text>
+          <Text style={[styles.textProductName, {marginTop: verticalScale(5)}]}>Quantity: {quantity}</Text>
+
         </View>
       </ScrollView>
       <View style={styles.viewButton}>

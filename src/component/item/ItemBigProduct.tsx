@@ -7,11 +7,14 @@ import {ScaledSheet} from 'react-native-size-matters';
 import {TAB_NAVIGATION_ROOT} from '../../navigation/config/routes';
 import {Themes} from '../../assets/themes';
 import {useNavigation} from '@react-navigation/native';
+import { convertRate } from '../../utilities/format';
+import { starImage } from '../../utilities/staticData';
 
 const ItemBigProduct = props => {
   const navigation = useNavigation();
 
   const {image, name, price, oldPrice, percent, style, item} = props;
+  console.log(item)
   return (
     <TouchableOpacity
       onPress={() =>
@@ -30,9 +33,13 @@ const ItemBigProduct = props => {
           {name}
         </Text>
         <Text style={styles.price}>{price}</Text>
+        <Image style={styles.star} source={starImage[convertRate(item?.rate)-1]} />
+        <Text style={styles.sellerName}>Name Seller: {item?.user?.username}</Text>
+
         <View style={styles.discount}>
           <Text style={styles.oldPrice}>{oldPrice}</Text>
           <Text style={styles.percent}>{percent}</Text>
+
         </View>
       </View>
     </TouchableOpacity>
@@ -52,6 +59,12 @@ const styles = ScaledSheet.create({
     paddingBottom: '16@vs',
     marginHorizontal: '10@s',
   },
+  star: {
+    resizeMode: 'contain',
+    width: '100@s',
+    height: '16@vs',
+    marginTop: '10@vs',
+  },
   image: {
     width: '120@s',
     height: '120@s',
@@ -66,6 +79,12 @@ const styles = ScaledSheet.create({
   },
   price: {
     fontSize: '12@ms0.3',
+    fontWeight: '700',
+    marginTop: '8@vs',
+    color: Themes.PrimaryColor.blue,
+  },
+  sellerName: {
+    fontSize: '10@ms0.3',
     fontWeight: '700',
     marginTop: '8@vs',
     color: Themes.PrimaryColor.blue,
