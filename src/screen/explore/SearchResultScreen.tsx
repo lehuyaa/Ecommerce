@@ -8,15 +8,36 @@ import IconFilter from '../../assets/icons/IconFilter';
 import IconSort from '../../assets/icons/IconSort';
 import Images from '../../assets/images';
 import ItemBigProduct from '../../component/item/ItemBigProduct';
-import React from 'react';
+import React, { useState } from 'react';
 import { Themes } from '../../assets/themes';
 import { product } from '../home/list/ListProduct';
+import IconBack from '../../assets/icons/IconBack';
+import { useNavigation } from '@react-navigation/core';
+import { RouteProp, useRoute } from '@react-navigation/native';
 
+type ParamList = {
+    SearchResultScreen: {
+      searchResult?: any;
+    };
+  };
 const SearchResultScreen = () => {
+    const navigation = useNavigation();
+    const route = useRoute<RouteProp<ParamList, 'SearchResultScreen'>>();
+    const {searchResult} = route.params || {};
+
+    const [listProduct, setListProduct] = useState(searchResult);
     return (
         <View style={styles.container}>
             <Header
                 customStyle={styles.header}>
+            <ButtonIcon
+                onPress={() => {
+                navigation.goBack();
+            }}
+            children={
+              <IconBack height={verticalScale(24)} width={verticalScale(24)} />
+            }
+          />
                 <FormSearch />
                 <ButtonIcon
                     onPress={() => { }}
@@ -36,7 +57,7 @@ const SearchResultScreen = () => {
             </Header>
             <View style={styles.main}>
                 <View style={styles.viewTopMain}>
-                    <Text style={styles.textNumberSearchResult}>145 Result</Text>
+                    <Text style={styles.textNumberSearchResult}>{searchResult.length} Result</Text>
                     <View style={styles.viewDropDown}>
                         <Text style={styles.textCategoryName}>Man Shoes</Text>
                         <Image source={Images.icon.dropdown} style={styles.iconDropDown} />
@@ -44,7 +65,7 @@ const SearchResultScreen = () => {
                 </View>
                 <View style={styles.viewListProduct}>
                     <FlatList
-                        data={product}
+                        data={listProduct}
                         renderItem={({ item }) => (
                             <ItemBigProduct
                                 item={item}

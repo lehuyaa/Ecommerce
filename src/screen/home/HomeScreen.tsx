@@ -28,7 +28,7 @@ import Swiper from 'react-native-swiper';
 import {Themes} from '../../assets/themes';
 import ViewTittle from './component/ViewTittle';
 import {arrBanner} from './list/ListBanner';
-import {getAllProduct} from '../../api/modules/api-app/product';
+import {getAllProduct, searchProduct} from '../../api/modules/api-app/product';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 
 const ListHeader = () => {
@@ -88,7 +88,7 @@ const HomeScreen = () => {
   const [listProduct, setListProduct] = useState<any>([]);
   const isFocus = useIsFocused();
   const [isFetching, setIsFetching] = useState(false);
-
+  const [searchKey, setSearchKey] = useState('');
   const getAllProductFunc = async () => {
     setLoading(true);
 
@@ -96,12 +96,24 @@ const HomeScreen = () => {
       const response = await getAllProduct();
       setLoading(false);
       setListProduct(response?.data);
+      console.log('response', response)
       setIsFetching(false);
     } catch (error) {
       setLoading(false);
     }
   };
 
+  const onSearch = async () => {
+    setLoading(true);
+
+    try {
+      const response = await searchProduct(searchKey);
+      setLoading(false);
+      setListProduct(response?.data);
+    } catch (error) {
+      setLoading(false);
+    }
+  }
   useEffect(() => {
     getAllProductFunc();
   }, []);
@@ -109,7 +121,7 @@ const HomeScreen = () => {
     <View style={styles.container}>
       {loading && <LoadingScreen />}
       <Header customStyle={styles.header}>
-        <FormSearch />
+        <FormSearch onSubmitEditing={()=>onSearch()} setSearchKey={setSearchKey}/>
         <ButtonIcon
           onPress={() => {}}
           children={
@@ -132,6 +144,7 @@ const HomeScreen = () => {
           onRefresh={() => {
             getAllProductFunc();
             setIsFetching(true);
+            setSearchKey('');
           }}
           refreshing={isFetching}
           data={listProduct}

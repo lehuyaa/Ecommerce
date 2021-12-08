@@ -5,7 +5,12 @@ import { Themes } from '../../../assets/themes';
 import ButtonIcon from '../../../component/button/ButtonIcon';
 import IconSearch from '../../../assets/icons/IconSearch';
 
-const FormSearch = () => {
+const FormSearch = (props: any) => {
+    const {onSubmitEditing, setSearchKey} = props; 
+    const onSubmit = () => {
+        
+        onSubmitEditing();
+    }
     return (
         <View style={styles.container}>
             <ButtonIcon onPress={() => {}} children={<IconSearch height={verticalScale(16)} width={verticalScale(16)} color={Themes.PrimaryColor.blue}  />} />
@@ -13,6 +18,8 @@ const FormSearch = () => {
                 style={styles.textInput}
                 placeholder='Search Product'
                 placeholderTextColor={Themes.NeutralColors.grey}
+                onSubmitEditing={() => onSubmit()}
+                onChangeText={(text)=> setSearchKey(text)}
             />
         </View>
     )
