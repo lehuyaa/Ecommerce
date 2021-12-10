@@ -88,7 +88,7 @@ const styles = ScaledSheet.create({
   },
   viewMain: {
     paddingHorizontal: '16@s',
-    flex: 1,
+    height: '80%',
   },
   viewButton: {
     paddingHorizontal: '16@s',

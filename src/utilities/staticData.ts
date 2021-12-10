@@ -1,7 +1,7 @@
 import Images from '../assets/images';
 import {Themes} from '../assets/themes';
 
-export const REGEX_SALARY = /[.,-]/g;
+export const REGEX_SALARY = /[.,-/]/g;
 export const staticValue = {
   DEFAULT: 1,
   TIME_IMAGE_LOAD: 500,
@@ -11,6 +11,14 @@ export const ERRORS = {
   default: 'common.error.unknown',
   network: 'common.error.network',
 };
+export const listSuggest = [
+  'Laptop',
+  'Màn hình',
+  'PC',
+  'Máy tính',
+  'RAM',
+  'Card',
+];
 
 export const dataPicker = [
   'label1',

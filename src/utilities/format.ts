@@ -31,17 +31,24 @@ export const formatCurrencyVND = (currency: number) => {
 };
 
 export const convertRate = (rate: number) => {
-    if (rate < 1000) {
-      return 1;
-    } 
-    if (rate > 1000 && rate< 2000) {
-      return 2;
-    }
-    if (rate>2000&&rate<3000) {
-      return 3;
-    }
-    if (rate>3000 && rate < 4000) {
-      return 4;
-    }
-    return 5;
-}
+  if (rate < 1000) {
+    return 1;
+  }
+  if (rate > 1000 && rate < 2000) {
+    return 2;
+  }
+  if (rate > 2000 && rate < 3000) {
+    return 3;
+  }
+  if (rate > 3000 && rate < 4000) {
+    return 4;
+  }
+  return 5;
+};
+
+export const sortArrayProductByRate = (array: any) => {
+  const newArray = array?.sort((a, b) => {
+    return Number(b.rate) - Number(a.rate);
+  });
+  return newArray;
+};
