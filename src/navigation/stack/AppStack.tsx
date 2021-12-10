@@ -24,6 +24,7 @@ import navigationConfigs from '../config/options';
 import PaymentMethod from '../../screen/cart/PaymentMethod';
 import OrderSuccessScreen from '../../screen/cart/OrderSuccessScreen';
 import OrderDetails from '../../screen/account/OrderDetails';
+import SortScreen from '../../screen/explore/SortScreen';
 
 import ListOrderScreen from '../../screen/account/ListOrderScreen';
 const Stack = createStackNavigator();
@@ -161,6 +162,10 @@ const AppStack = () => (
     <Stack.Screen
       name={TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.ORDER_DETAILS}
       component={OrderDetails}
+    />
+    <Stack.Screen
+      name={TAB_NAVIGATION_ROOT.EXPLORE_ROUTE.SORT_SCREEN}
+      component={SortScreen}
     />
   </Stack.Navigator>
 );

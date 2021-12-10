@@ -12,9 +12,11 @@ import {
 
 import userInfoReducer from './slices/userInfoSlice';
 import cartReducer from './slices/cartSlice';
+import suggestReducer from './slices/suggestionsSlice';
 const rootReducer = {
   userInfo: userInfoReducer,
   cart: cartReducer,
+  suggest: suggestReducer,
 };
 
 const store = configureStore({

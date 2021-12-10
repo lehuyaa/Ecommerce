@@ -1,9 +1,11 @@
 import {
   FlatList,
   Image,
+  Keyboard,
   ScrollView,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
@@ -30,6 +32,10 @@ import ViewTittle from './component/ViewTittle';
 import {arrBanner} from './list/ListBanner';
 import {getAllProduct, searchProduct} from '../../api/modules/api-app/product';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {sortArrayProductByRate} from '../../utilities/format';
+import {addToSuggest} from '../../app-redux/slices/suggestionsSlice';
+import {useDispatch} from 'react-redux';
+import ListSuggest from '../explore/component/ListSuggest';
 
 const ListHeader = () => {
   const navigation = useNavigation();
@@ -87,6 +93,9 @@ const HomeScreen = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [listProduct, setListProduct] = useState<any>([]);
   const isFocus = useIsFocused();
+  const dispatch = useDispatch();
+  const [filteredList, setFilteredList] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [searchKey, setSearchKey] = useState('');
   const getAllProductFunc = async () => {
@@ -96,13 +105,14 @@ const HomeScreen = () => {
       const response = await getAllProduct();
       setLoading(false);
       setListProduct(response?.data);
-      console.log('response', response)
+      // setListProduct([]);
+      dispatch(addToSuggest(response?.data));
+
       setIsFetching(false);
     } catch (error) {
       setLoading(false);
     }
   };
-
   const onSearch = async () => {
     setLoading(true);
 
@@ -113,61 +123,83 @@ const HomeScreen = () => {
     } catch (error) {
       setLoading(false);
     }
-  }
+  };
+  const NoDataView = () => {
+    return (
+      <View style={styles.viewNodata}>
+        <Text>NO DATA</Text>
+      </View>
+    );
+  };
   useEffect(() => {
     getAllProductFunc();
   }, []);
   return (
-    <View style={styles.container}>
-      {loading && <LoadingScreen />}
-      <Header customStyle={styles.header}>
-        <FormSearch onSubmitEditing={()=>onSearch()} setSearchKey={setSearchKey}/>
-        <ButtonIcon
-          onPress={() => {}}
-          children={
-            <IconHeart height={verticalScale(24)} width={verticalScale(24)} />
-          }
-        />
-        <ButtonIcon
-          onPress={() => {}}
-          children={
-            <IconNotification
-              height={verticalScale(24)}
-              width={verticalScale(24)}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
+        {loading && <LoadingScreen />}
+        <Header customStyle={styles.header}>
+          <FormSearch
+            searchKey={searchKey}
+            onSubmitEditing={() => onSearch()}
+            setSearchKey={setSearchKey}
+            setIsSearching={setIsSearching}
+            setFilteredList={setFilteredList}
+          />
+          <ButtonIcon
+            onPress={() => {}}
+            children={
+              <IconHeart height={verticalScale(24)} width={verticalScale(24)} />
+            }
+          />
+          <ButtonIcon
+            onPress={() => {}}
+            children={
+              <IconNotification
+                height={verticalScale(24)}
+                width={verticalScale(24)}
+              />
+            }
+          />
+        </Header>
+        <View style={styles.viewListProduct}>
+          {isSearching ? (
+            <ListSuggest
+              listSuggest={filteredList}
+              setSearchKey={setSearchKey}
             />
-          }
-        />
-      </Header>
-      <View style={styles.viewListProduct}>
-        <FlatList
-          style={styles.flatList}
-          onRefresh={() => {
-            getAllProductFunc();
-            setIsFetching(true);
-            setSearchKey('');
-          }}
-          refreshing={isFetching}
-          data={listProduct}
-          renderItem={({item}) => (
-            <ItemBigProduct
-              item={item}
-              image={item.productImage}
-              name={item.productName}
-              price={item.productPrice}
-              oldPrice={item.oldPrice}
-              percent={item.percent}
-              rate={item.rate}
+          ) : (
+            <FlatList
+              style={styles.flatList}
+              onRefresh={() => {
+                getAllProductFunc();
+                setIsFetching(true);
+                setSearchKey('');
+              }}
+              refreshing={isFetching}
+              // data={sortArrayProductByRate(listProduct)}
+              data={listProduct}
+              renderItem={({item}) => (
+                <ItemBigProduct
+                  item={item}
+                  image={item.productImage}
+                  name={item.productName}
+                  price={item.productPrice}
+                  oldPrice={item.oldPrice}
+                  percent={item.percent}
+                  rate={item.rate}
+                />
+              )}
+              columnWrapperStyle={styles.columnWrapperStyle}
+              ListEmptyComponent={NoDataView()}
+              numColumns={2}
+              keyExtractor={(item, index) => index.toString()}
+              showsVerticalScrollIndicator={false}
             />
           )}
-          columnWrapperStyle={styles.columnWrapperStyle}
-          ListEmptyComponent={<Text>NO DATA</Text>}
-          // ListHeaderComponent={ListHeader}
-          numColumns={2}
-          keyExtractor={(item, index) => index.toString()}
-          showsVerticalScrollIndicator={false}
-        />
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -250,6 +282,11 @@ const styles = ScaledSheet.create({
   },
   flatList: {
     width: '100%',
+  },
+  viewNodata: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '500@vs',
   },
 });
 export default HomeScreen;

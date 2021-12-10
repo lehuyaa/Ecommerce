@@ -19,6 +19,7 @@ const HOME_ROUTE = {
 const EXPLORE_ROUTE = {
   ROOT: 'SETTING_ROOT',
   EXPLORE: 'EXPLORE',
+  SORT_SCREEN: 'SORT_SCREEN',
 };
 
 const CART_ROUTE = {
