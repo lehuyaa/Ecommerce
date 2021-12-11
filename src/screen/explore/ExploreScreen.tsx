@@ -7,29 +7,29 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {ScaledSheet, verticalScale} from 'react-native-size-matters';
+import { ScaledSheet, verticalScale } from 'react-native-size-matters';
 
-import {APP_ROUTE} from '../../navigation/config/routes';
+import { APP_ROUTE } from '../../navigation/config/routes';
 import ButtonIcon from '../../component/button/ButtonIcon';
 import FormSearch from '../home/component/FormSearch';
 import Header from '../../component/header/Header';
 import IconHeart from '../../assets/icons/IconHeart';
 import IconNotification from '../../assets/icons/IconNotification';
 import ItemCategory from '../../component/item/ItemCategory';
-import {ListCategory} from '../home/list/ListCategory';
-import React, {useEffect, useState} from 'react';
-import {Themes} from '../../assets/themes';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
+import { ListCategory } from '../home/list/ListCategory';
+import React, { useEffect, useState } from 'react';
+import { Themes } from '../../assets/themes';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import {
   getProductByCategory,
   searchProduct,
 } from '../../api/modules/api-app/product';
-import {product} from '../home/list/ListProduct';
+import { product } from '../home/list/ListProduct';
 import LoadingScreen from '../../component/LoadingScreen';
-import {getAllCategory} from '../../api/modules/api-app/category';
-import {useDispatch} from 'react-redux';
+import { getAllCategory } from '../../api/modules/api-app/category';
+import { useDispatch } from 'react-redux';
 import ListSuggest from './component/ListSuggest';
-import {REGEX_SALARY} from '../../utilities/staticData';
+import { REGEX_SALARY } from '../../utilities/staticData';
 
 const ExploreScreen = () => {
   const navigation = useNavigation();
@@ -54,6 +54,20 @@ const ExploreScreen = () => {
     }
   };
 
+
+  const searchByTextSuggest = async (textSuggest) => {
+    setLoading(true);
+    try {
+      const response = await searchProduct(textSuggest);
+
+      navigation.navigate(APP_ROUTE.SEARCH_RESULT, {
+        searchResult: response?.data,
+      });
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  }
   const getProductByCategoryFunc = async (categoryId: number) => {
     setLoading(true);
     try {
@@ -80,6 +94,7 @@ const ExploreScreen = () => {
   };
   useEffect(() => {
     getAllCategoryFunc();
+    return setSearchKey('')
   }, []);
 
   return (
@@ -122,7 +137,7 @@ const ExploreScreen = () => {
                   setIsFetching(true);
                   setSearchKey('');
                 }}
-                renderItem={({item}) => (
+                renderItem={({ item }) => (
                   <ItemCategory
                     icon={item.icon}
                     tittle={item.categoryName}
@@ -138,6 +153,7 @@ const ExploreScreen = () => {
             <ListSuggest
               listSuggest={filteredList}
               setSearchKey={setSearchKey}
+              searchByTextSuggest={searchByTextSuggest}
             />
           )}
         </View>

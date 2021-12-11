@@ -12,17 +12,17 @@ import Header from '../../component/header/Header';
 import Images from '../../assets/images';
 import ItemCart from '../../component/item/ItemCart';
 import React from 'react';
-import {ScaledSheet} from 'react-native-size-matters';
-import {Themes} from '../../assets/themes';
-import {useNavigation} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
-import {caculatorTotalCart, formatCurrencyVND} from '../../utilities/format';
-import _, {groupBy} from 'lodash';
+import { ScaledSheet } from 'react-native-size-matters';
+import { Themes } from '../../assets/themes';
+import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import { caculatorTotalCart, formatCurrencyVND } from '../../utilities/format';
+import _, { groupBy } from 'lodash';
 import ItemShopCart from './component/ItemShopCart';
 
 const CartScreen = () => {
   const navigation = useNavigation();
-  const {cart} = useSelector((state: any) => state);
+  const { cart } = useSelector((state: any) => state);
   const groupCart = listProduct => {
     return _.chain(listProduct)
       .groupBy('idSeller')
@@ -40,11 +40,11 @@ const CartScreen = () => {
       <View style={styles.contentCart}>
         <FlatList
           data={groupCart(cart?.listProduct)}
-          renderItem={({item}) => <ItemShopCart item={item} />}
+          renderItem={({ item }) => <ItemShopCart item={item} />}
           keyExtractor={(_, index) => index.toString()}
           showsVerticalScrollIndicator={false}
           ListFooterComponent={
-            <View style={{marginTop: 16}}>
+            <View style={{ marginTop: 16 }}>
               <View style={styles.buttonVoucher}>
                 <TextInput
                   placeholder={'Enter Cupon Code'}
@@ -96,6 +96,7 @@ const CartScreen = () => {
               </View>
 
               <ButtonDefault
+                disabled={cart?.isNotEnought}
                 title={'Check Out'}
                 onPress={() => {
                   navigation.navigate('SHIPPING_ADDRESS', {
@@ -126,7 +127,7 @@ const styles = ScaledSheet.create({
     paddingVertical: '16@vs',
     paddingHorizontal: '16@s',
   },
-  listCart: {height: '240@vs'},
+  listCart: { height: '240@vs' },
   buttonVoucher: {
     height: '55@s',
     width: '100%',

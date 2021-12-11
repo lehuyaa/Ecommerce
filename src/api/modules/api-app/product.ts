@@ -7,3 +7,8 @@ export const getProductByCategory = (categoryId: any) =>
 
 export const searchProduct = (searchKey: any) =>
   request.get(`api/product/search/${searchKey}`);
+
+
+export const getProductByUserId = (userId: any) => request.get(`api/product/getByUserId/${userId}`);
+
+export const getProfileByUserId = (userId: any) => request.get(`api/product/getProfileByUserId/${userId}`);

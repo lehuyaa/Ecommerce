@@ -1,14 +1,14 @@
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/core';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 import * as React from 'react';
-import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {ScaledSheet} from 'react-native-size-matters';
+import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 import Images from '../../assets/images';
-import {Themes} from '../../assets/themes';
+import { Themes } from '../../assets/themes';
 import Header from '../../component/header/Header';
-import {APP_ROUTE} from '../../navigation/config/routes';
-import {formatStringCurrency} from '../../utilities/format';
+import { APP_ROUTE } from '../../navigation/config/routes';
+import { formatStringCurrency } from '../../utilities/format';
 
-interface SortScreenProps {}
+interface SortScreenProps { }
 
 type ParamList = {
   SortScreen: {
@@ -19,14 +19,14 @@ type ParamList = {
 const SortScreen = (props: SortScreenProps) => {
   const navigation = useNavigation();
   const route = useRoute<RouteProp<ParamList, 'SortScreen'>>();
-  const {setListProduct, listProduct} = route.params || {};
+  const { setListProduct, listProduct } = route.params || {};
 
   const ListSort = [
-    {id: 1, name: 'Price: lowest first'},
-    {id: 2, name: 'Price: highest first'},
+    { id: 1, name: 'Price: lowest first' },
+    { id: 2, name: 'Price: highest first' },
   ];
   const ItemSort = (props: any) => {
-    const {item, onPress} = props;
+    const { item, onPress } = props;
     return (
       <TouchableOpacity onPress={onPress} style={styles.itemSort}>
         <Text style={styles.title}>{item?.name}</Text>

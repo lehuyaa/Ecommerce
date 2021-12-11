@@ -1,29 +1,32 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {generatePersistConfig} from '../../utilities/helper';
-import {persistReducer} from 'redux-persist';
-import {store} from '../store';
+import { createSlice } from '@reduxjs/toolkit';
+import { generatePersistConfig } from '../../utilities/helper';
+import { persistReducer } from 'redux-persist';
+import { store } from '../store';
 import { formatStringCurrency } from '../../utilities/format';
 
 interface Cart {
   listProduct: any;
   numberCart: number;
+  isNotEnought: boolean;
 }
 
 const initialState: Cart = {
   listProduct: [],
   numberCart: 0,
+  isNotEnought: false,
 };
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addToCart: (state, {payload}) => {
+    addToCart: (state, { payload }) => {
       const product = {
         id: payload.id,
         productName: payload.productName,
         productPrice: formatStringCurrency(payload.productPrice),
         productImage: payload.productImage,
+        productQuantity: payload.quantity,
         idSeller: payload?.user?.id,
         idBuyer: payload?.idUser,
         nameSeller: payload?.user?.username,
@@ -46,7 +49,7 @@ const cartSlice = createSlice({
       }
       state.numberCart++;
     },
-    increaseQuantityToCart: (state, {payload}) => {
+    increaseQuantityToCart: (state, { payload }) => {
       state.listProduct.map((item, key) => {
         if (item.id === payload) {
           state.listProduct[key].quantity++;
@@ -54,7 +57,7 @@ const cartSlice = createSlice({
       });
       state.numberCart++;
     },
-    decreaseQuantityToCart: (state, {payload}) => {
+    decreaseQuantityToCart: (state, { payload }) => {
       state.listProduct.map((item, key) => {
         if (item.id === payload) {
           state.listProduct[key].quantity--;
@@ -62,16 +65,19 @@ const cartSlice = createSlice({
       });
       state.numberCart--;
     },
-    removeToCart: (state, {payload}) => {
+    removeToCart: (state, { payload }) => {
       const newCart = state.listProduct.filter(e => e.id !== payload.id);
       state.listProduct = newCart;
       state.numberCart = state.listProduct.reduce((total, currentValue) => {
         return total + currentValue.quantity;
       }, 0);
     },
-    removeAllCart:(state) => {
+    removeAllCart: (state) => {
       state.listProduct = [];
-     state.numberCart = 0;
+      state.numberCart = 0;
+    },
+    updateStatus: (state, { payload }) => {
+      state.isNotEnought = payload;
     },
   },
 });
@@ -86,5 +92,6 @@ export const {
   decreaseQuantityToCart,
   removeToCart,
   removeAllCart,
+  updateStatus,
 } = cartSlice.actions;
 export default persistReducer<Cart>(persistConfig, cartSlice.reducer);

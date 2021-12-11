@@ -1,18 +1,20 @@
 import * as React from 'react';
-import {Text, StyleProp, ViewStyle, TouchableOpacity} from 'react-native';
-import {Themes} from '../../assets/themes';
-import {ScaledSheet} from 'react-native-size-matters';
+import { Text, StyleProp, ViewStyle, TouchableOpacity } from 'react-native';
+import { Themes } from '../../assets/themes';
+import { ScaledSheet } from 'react-native-size-matters';
 
 interface ButtonDefaultProps {
   title: string;
   onPress: () => void;
   customStyles?: StyleProp<ViewStyle>;
+  disabled?: boolean;
 }
 
 const ButtonDefault = (props: ButtonDefaultProps) => {
-  const {title, onPress, customStyles} = props;
+  const { title, onPress, customStyles, disabled } = props;
   return (
     <TouchableOpacity
+      disabled={disabled}
       style={[styles.container, customStyles]}
       onPress={onPress}>
       <Text style={styles.tittle}>{title}</Text>

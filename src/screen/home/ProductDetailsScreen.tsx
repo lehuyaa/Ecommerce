@@ -1,3 +1,6 @@
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import React, { Component } from 'react';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import {
   Image as DefaultImage,
   Text,
@@ -10,14 +13,16 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import ButtonDefault from '../../component/button/ButtonDefault';
 import Header from '../../component/header/Header';
 import Images from '../../assets/images';
-import {ScaledSheet, verticalScale} from 'react-native-size-matters';
-import {ScrollView} from 'react-native-gesture-handler';
-import {Themes} from '../../assets/themes';
-import {starImage} from '../../utilities/staticData';
-import {windowHeight} from '../../utilities/size';
-import {useDispatch} from 'react-redux';
-import {addToCart} from '../../app-redux/slices/cartSlice';
+import { ScaledSheet, verticalScale } from 'react-native-size-matters';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Themes } from '../../assets/themes';
+import { starImage } from '../../utilities/staticData';
+import { windowHeight } from '../../utilities/size';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../../app-redux/slices/cartSlice';
 import Toast from 'react-native-toast-message';
+import { store } from '../../app-redux/store';
+import { convertRate } from '../../utilities/format';
 import {store} from '../../app-redux/store';
 import {convertRate} from '../../utilities/format';
 import Review from './component/Review';
@@ -32,6 +37,10 @@ const ProductDetailsScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const route = useRoute<RouteProp<ParamList, 'ProductDetailsScreen'>>();
+  const { item } = route.params || {};
+  const { productName, productImage, productPrice, quantity, id } = item;
+  const { userInfo } = store.getState();
+  const { cart } = useSelector((state: any) => state);
   const {item} = route.params || {};
   const {productName, productImage, productPrice, quantity} = item;
   const {userInfo} = store.getState();
@@ -42,6 +51,12 @@ const ProductDetailsScreen = () => {
       text1: 'Add Product to Cart Success',
     });
   };
+  const showFailureNotEnoughtToast = () => {
+    Toast.show({
+      type: 'error',
+      text1: 'Not Enought Product',
+    });
+  };
   const showFailureToast = () => {
     Toast.show({
       type: 'error',
@@ -49,6 +64,10 @@ const ProductDetailsScreen = () => {
     });
   };
   const addToCartFunc = () => {
+    if ((quantity - cart?.listProduct?.filter(x => x.id === id)[0]?.quantity) < 1) {
+      showFailureNotEnoughtToast();
+      return
+    }
     if (item?.user?.id === userInfo?.user?.id) {
       showFailureToast();
     } else {
@@ -87,6 +106,10 @@ const ProductDetailsScreen = () => {
 
         <View style={styles.viewInfo}>
           <Text style={styles.textProductName}>{productName}</Text>
+          <Image style={styles.star} source={starImage[convertRate(item?.rate) - 1]} />
+          <Text style={styles.textProductPrice}>{productPrice}</Text>
+          <Text style={[styles.textProductName, { marginTop: verticalScale(5) }]}>Quantity: {quantity}</Text>
+
           <DefaultImage
             style={styles.star}
             source={starImage[convertRate(item?.rate) - 1]}
@@ -108,7 +131,7 @@ const ProductDetailsScreen = () => {
         </View>
       </ScrollView>
       <View style={styles.viewButton}>
-        <ButtonDefault title={'Add To Cart'} onPress={() => addToCartFunc()} />
+        <ButtonDefault title={quantity === 0 ? 'Sold out' : 'Add To Cart'} onPress={() => addToCartFunc()} />
       </View>
       <Toast />
     </View>

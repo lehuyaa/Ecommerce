@@ -8,11 +8,11 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {ScaledSheet, verticalScale} from 'react-native-size-matters';
-import {flashSale, megaSale, product} from './list/ListProduct';
+import React, { useEffect, useState } from 'react';
+import { ScaledSheet, verticalScale } from 'react-native-size-matters';
+import { flashSale, megaSale, product } from './list/ListProduct';
 
-import {APP_ROUTE} from '../../navigation/config/routes';
+import { APP_ROUTE } from '../../navigation/config/routes';
 import ButtonIcon from '../../component/button/ButtonIcon';
 import Dot from './component/Dot';
 import FormSearch from './component/FormSearch';
@@ -23,18 +23,18 @@ import Images from '../../assets/images';
 import ItemBanner from './component/ItemBanner';
 import ItemBigProduct from '../../component/item/ItemBigProduct';
 import ItemCategory from '../../component/item/ItemCategory';
-import {ListCategory} from './list/ListCategory';
+import { ListCategory } from './list/ListCategory';
 import ListProduct from './component/ListProduct';
 import LoadingScreen from '../../component/LoadingScreen';
 import Swiper from 'react-native-swiper';
-import {Themes} from '../../assets/themes';
+import { Themes } from '../../assets/themes';
 import ViewTittle from './component/ViewTittle';
-import {arrBanner} from './list/ListBanner';
-import {getAllProduct, searchProduct} from '../../api/modules/api-app/product';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
-import {sortArrayProductByRate} from '../../utilities/format';
-import {addToSuggest} from '../../app-redux/slices/suggestionsSlice';
-import {useDispatch} from 'react-redux';
+import { arrBanner } from './list/ListBanner';
+import { getAllProduct, searchProduct } from '../../api/modules/api-app/product';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { sortArrayProductByRate } from '../../utilities/format';
+import { addToSuggest } from '../../app-redux/slices/suggestionsSlice';
+import { useDispatch } from 'react-redux';
 import ListSuggest from '../explore/component/ListSuggest';
 
 const ListHeader = () => {
@@ -92,8 +92,6 @@ const ListHeader = () => {
 const HomeScreen = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [listProduct, setListProduct] = useState<any>([]);
-  const isFocus = useIsFocused();
-  const dispatch = useDispatch();
   const [filteredList, setFilteredList] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
@@ -105,8 +103,6 @@ const HomeScreen = () => {
       const response = await getAllProduct();
       setLoading(false);
       setListProduct(response?.data);
-      // setListProduct([]);
-      dispatch(addToSuggest(response?.data));
 
       setIsFetching(false);
     } catch (error) {
@@ -146,21 +142,21 @@ const HomeScreen = () => {
             setIsSearching={setIsSearching}
             setFilteredList={setFilteredList}
           />
-          <ButtonIcon
-            onPress={() => {}}
+          {/* <ButtonIcon
+            onPress={() => { }}
             children={
               <IconHeart height={verticalScale(24)} width={verticalScale(24)} />
             }
           />
           <ButtonIcon
-            onPress={() => {}}
+            onPress={() => { }}
             children={
               <IconNotification
                 height={verticalScale(24)}
                 width={verticalScale(24)}
               />
             }
-          />
+          /> */}
         </Header>
         <View style={styles.viewListProduct}>
           {isSearching ? (
@@ -177,9 +173,9 @@ const HomeScreen = () => {
                 setSearchKey('');
               }}
               refreshing={isFetching}
-              // data={sortArrayProductByRate(listProduct)}
-              data={listProduct}
-              renderItem={({item}) => (
+              data={sortArrayProductByRate(listProduct)}
+              // data={listProduct}
+              renderItem={({ item }) => (
                 <ItemBigProduct
                   item={item}
                   image={item.productImage}

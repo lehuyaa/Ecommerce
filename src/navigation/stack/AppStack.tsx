@@ -1,9 +1,9 @@
-import {APP_ROUTE, TAB_NAVIGATION_ROOT} from '../config/routes';
+import { APP_ROUTE, TAB_NAVIGATION_ROOT } from '../config/routes';
 import {
   BottomTabBarProps,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import AccountScreen from '../../screen/account/AccountScreen';
 import BottomTab from '../component/BottomTab';
@@ -19,13 +19,13 @@ import ProductDetailsScreen from '../../screen/home/ProductDetailsScreen';
 import ProfileScreen from '../../screen/account/ProfileScreen';
 import SearchResultScreen from '../../screen/explore/SearchResultScreen';
 import ShippingAddress from '../../screen/cart/ShippingAddress';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import navigationConfigs from '../config/options';
 import PaymentMethod from '../../screen/cart/PaymentMethod';
 import OrderSuccessScreen from '../../screen/cart/OrderSuccessScreen';
 import OrderDetails from '../../screen/account/OrderDetails';
 import SortScreen from '../../screen/explore/SortScreen';
-
+import ShopSellerScreen from '../../screen/account/ShopSellerScreen';
 import ListOrderScreen from '../../screen/account/ListOrderScreen';
 import Rating from '../../screen/home/Rating';
 import NewReview from '../../screen/home/NewReview';
@@ -95,12 +95,12 @@ const ArrayTabs = [
     component: CartStack,
     icon: Images.icon.cart,
   },
-  {
-    name: TAB_NAVIGATION_ROOT.OFFER_ROUTE.ROOT,
-    title: 'Offer',
-    component: OfferStack,
-    icon: Images.icon.offer,
-  },
+  // {
+  //   name: TAB_NAVIGATION_ROOT.OFFER_ROUTE.ROOT,
+  //   title: 'Offer',
+  //   component: OfferStack,
+  //   icon: Images.icon.offer,
+  // },
   {
     name: TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.ROOT,
     title: 'Account',
@@ -115,7 +115,7 @@ const AppTab = () => {
       tabBar={(props: BottomTabBarProps) => <BottomTab {...props} />}
       initialRouteName="Cart">
       {ArrayTabs.map((item, index) => (
-        <Tab.Screen key={`${index}`} options={{...item}} {...item} />
+        <Tab.Screen key={`${index}`} options={{ ...item }} {...item} />
       ))}
     </Tab.Navigator>
   );
@@ -176,6 +176,10 @@ const AppStack = () => (
     <Stack.Screen
       name={TAB_NAVIGATION_ROOT.EXPLORE_ROUTE.SORT_SCREEN}
       component={SortScreen}
+    />
+    <Stack.Screen
+      name={TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.SHOP_SELLER}
+      component={ShopSellerScreen}
     />
   </Stack.Navigator>
 );
