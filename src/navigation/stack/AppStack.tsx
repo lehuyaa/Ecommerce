@@ -27,6 +27,8 @@ import OrderDetails from '../../screen/account/OrderDetails';
 import SortScreen from '../../screen/explore/SortScreen';
 import ShopSellerScreen from '../../screen/account/ShopSellerScreen';
 import ListOrderScreen from '../../screen/account/ListOrderScreen';
+import Rating from '../../screen/home/Rating';
+import NewReview from '../../screen/home/NewReview';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -142,6 +144,14 @@ const AppStack = () => (
     <Stack.Screen
       name={TAB_NAVIGATION_ROOT.HOME_ROUTE.PRODUCT_DETAILS}
       component={ProductDetailsScreen}
+    />
+    <Stack.Screen
+      name={TAB_NAVIGATION_ROOT.HOME_ROUTE.RATING}
+      component={Rating}
+    />
+    <Stack.Screen
+      name={TAB_NAVIGATION_ROOT.HOME_ROUTE.NEW_REVIEW}
+      component={NewReview}
     />
     <Stack.Screen
       name={TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.ADDRESS}
