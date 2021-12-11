@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {Component} from 'react';
+import React from 'react';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 
 import ButtonDefault from '../../component/button/ButtonDefault';
@@ -20,8 +20,8 @@ import {addToCart} from '../../app-redux/slices/cartSlice';
 import Toast from 'react-native-toast-message';
 import {store} from '../../app-redux/store';
 import {convertRate} from '../../utilities/format';
-import Image from '../../assets/images';
 import Review from './component/Review';
+import {TAB_NAVIGATION_ROOT} from '../../navigation/config/routes';
 
 type ParamList = {
   ProductDetailsScreen: {
@@ -60,6 +60,11 @@ const ProductDetailsScreen = () => {
       showSuccessToast();
     }
   };
+
+  const navigateToReview = () => {
+    navigation.navigate(TAB_NAVIGATION_ROOT.HOME_ROUTE.RATING);
+  };
+
   return (
     <View style={styles.container}>
       <Header>
@@ -82,13 +87,25 @@ const ProductDetailsScreen = () => {
 
         <View style={styles.viewInfo}>
           <Text style={styles.textProductName}>{productName}</Text>
-          <DefaultImage style={styles.star} source={starImage[convertRate(item?.rate)-1]} />
+          <DefaultImage
+            style={styles.star}
+            source={starImage[convertRate(item?.rate) - 1]}
+          />
           <Text style={styles.textProductPrice}>{productPrice}</Text>
-          <Text style={[styles.textProductName, { marginTop: verticalScale(5) }]}>Quantity: {quantity}</Text>
+          <Text style={[styles.textProductName, {marginTop: verticalScale(5)}]}>
+            Quantity: {quantity}
+          </Text>
         </View>
 
-        <Review item={item}/>
-      
+        <View>
+          <View style={styles.reviewProduct}>
+            <Text style={styles.textReview}>Review Product</Text>
+            <TouchableOpacity onPress={navigateToReview}>
+              <Text style={styles.textSeeMore}>See More</Text>
+            </TouchableOpacity>
+          </View>
+          <Review item={item} />
+        </View>
       </ScrollView>
       <View style={styles.viewButton}>
         <ButtonDefault title={'Add To Cart'} onPress={() => addToCartFunc()} />
@@ -159,6 +176,19 @@ const styles = ScaledSheet.create({
     borderTopColor: Themes.NeutralColors.light,
     borderTopWidth: 1,
   },
+  reviewProduct: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: '16@s',
+    marginTop: 16,
+  },
+  textReview: {
+    fontSize: '14@vs',
+    lineHeight: '21@vs',
+    fontWeight: '700',
+    color: '#223263',
+  },
+  textSeeMore: {fontSize: '14@vs', lineHeight: '21@vs', color: '#40BFFF'},
 });
 
 export default ProductDetailsScreen;

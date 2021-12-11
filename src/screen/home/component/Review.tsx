@@ -1,25 +1,26 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image as DefaultImage} from 'react-native';
-import { ScaledSheet } from 'react-native-size-matters';
-import { starImage } from '../../../utilities/staticData';
-import { convertRate } from '../../../utilities/format';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image as DefaultImage,
+  TouchableOpacity,
+} from 'react-native';
+import {ScaledSheet} from 'react-native-size-matters';
+import {starImage} from '../../../utilities/staticData';
+import {convertRate} from '../../../utilities/format';
 import Image from '../../../assets/images';
 
 const Review = ({item}) => {
   return (
     <View style={styles.review}>
-      <View style={styles.reviewProduct}>
-        <Text style={styles.textReview}>Review Product</Text>
-        <Text style={styles.textSeeMore}>See More</Text>
-      </View>
-
       <View style={styles.ratingView}>
         <DefaultImage
           style={[styles.star, {marginTop: 0, marginRight: 8}]}
           source={starImage[convertRate(item?.rate) - 1]}
         />
         <Text style={styles.textStar}>4.5</Text>
-        <Text style={styles.reviewQuantity}>See More</Text>
+        <Text style={styles.reviewQuantity}>5 reviews</Text>
       </View>
 
       <View style={styles.profile}>
@@ -40,23 +41,29 @@ const Review = ({item}) => {
         bit, not sure if the box was always this small but the 90s are and will
         always be one of my favorites.
       </Text>
-        <View style={styles.profile}>
+      <View style={styles.profile}>
         <DefaultImage
           style={styles.reviewImage}
           source={{
-            uri: item?.productImage,
+            uri:
+              item?.productImage ||
+              'https://laptoptcc.com/wp-content/uploads/2021/04/AZZ02208-DELL-PRECISION-5510-LAPTOPTCC-1-1.jpg',
           }}
         />
         <DefaultImage
           style={styles.reviewImage}
           source={{
-            uri: item?.productImage,
+            uri:
+              item?.productImage ||
+              'https://laptoptcc.com/wp-content/uploads/2021/04/AZZ02208-DELL-PRECISION-5510-LAPTOPTCC-1-1.jpg',
           }}
         />
         <DefaultImage
           style={styles.reviewImage}
           source={{
-            uri: item?.productImage,
+            uri:
+              item?.productImage ||
+              'https://laptoptcc.com/wp-content/uploads/2021/04/AZZ02208-DELL-PRECISION-5510-LAPTOPTCC-1-1.jpg',
           }}
         />
       </View>
@@ -74,7 +81,7 @@ const styles = ScaledSheet.create({
     height: '16@vs',
     marginTop: '10@vs',
   },
-  review: {marginTop: '16@vs', paddingHorizontal: '16@s'},
+  review: {paddingHorizontal: '16@s'},
   reviewProduct: {flexDirection: 'row', justifyContent: 'space-between'},
   textReview: {
     fontSize: '14@vs',
