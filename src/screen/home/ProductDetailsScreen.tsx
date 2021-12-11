@@ -1,4 +1,9 @@
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image as DefaultImage,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {Component} from 'react';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 
@@ -14,7 +19,9 @@ import {useDispatch} from 'react-redux';
 import {addToCart} from '../../app-redux/slices/cartSlice';
 import Toast from 'react-native-toast-message';
 import {store} from '../../app-redux/store';
-import { convertRate } from '../../utilities/format';
+import {convertRate} from '../../utilities/format';
+import Image from '../../assets/images';
+import Review from './component/Review';
 
 type ParamList = {
   ProductDetailsScreen: {
@@ -28,7 +35,7 @@ const ProductDetailsScreen = () => {
   const {item} = route.params || {};
   const {productName, productImage, productPrice, quantity} = item;
   const {userInfo} = store.getState();
-  
+
   const showSuccessToast = () => {
     Toast.show({
       type: 'success',
@@ -57,7 +64,7 @@ const ProductDetailsScreen = () => {
     <View style={styles.container}>
       <Header>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image style={styles.iconHeader} source={Images.icon.back} />
+          <DefaultImage style={styles.iconHeader} source={Images.icon.back} />
         </TouchableOpacity>
         <Text numberOfLines={1} style={styles.textHeader}>
           {productName}
@@ -65,7 +72,7 @@ const ProductDetailsScreen = () => {
       </Header>
       <ScrollView style={styles.viewMain}>
         <View style={styles.viewImage}>
-          <Image
+          <DefaultImage
             style={styles.imageProduct}
             source={{
               uri: productImage,
@@ -75,11 +82,13 @@ const ProductDetailsScreen = () => {
 
         <View style={styles.viewInfo}>
           <Text style={styles.textProductName}>{productName}</Text>
-          <Image style={styles.star} source={starImage[convertRate(item?.rate)-1]} />
+          <DefaultImage style={styles.star} source={starImage[convertRate(item?.rate)-1]} />
           <Text style={styles.textProductPrice}>{productPrice}</Text>
-          <Text style={[styles.textProductName, {marginTop: verticalScale(5)}]}>Quantity: {quantity}</Text>
-
+          <Text style={[styles.textProductName, { marginTop: verticalScale(5) }]}>Quantity: {quantity}</Text>
         </View>
+
+        <Review item={item}/>
+      
       </ScrollView>
       <View style={styles.viewButton}>
         <ButtonDefault title={'Add To Cart'} onPress={() => addToCartFunc()} />
@@ -106,8 +115,8 @@ const styles = ScaledSheet.create({
     marginRight: '20@s',
   },
   viewMain: {
-    width: '100%',
-    height: '100%',
+    flex: 1,
+    marginBottom: '100@vs',
   },
   imageProduct: {
     width: '100%',
@@ -137,9 +146,12 @@ const styles = ScaledSheet.create({
   },
   viewButton: {
     paddingHorizontal: '16@s',
+    paddingTop: '16@vs',
     position: 'absolute',
     width: '100%',
-    bottom: '30@vs',
+    bottom: 0,
+    backgroundColor: '#FFFFFF',
+    height: '100@vs',
   },
   viewImage: {
     borderBottomColor: Themes.NeutralColors.light,
