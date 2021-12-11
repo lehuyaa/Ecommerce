@@ -1,14 +1,15 @@
 import React from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import Header from '../../component/header/Header';
-import {ScaledSheet} from 'react-native-size-matters';
-import {Themes} from '../../assets/themes';
+import { ScaledSheet } from 'react-native-size-matters';
+import { Themes } from '../../assets/themes';
 import ItemServiceAccount from './component/ItemServiceAccount';
 import Images from '../../assets/images';
-import {TAB_NAVIGATION_ROOT} from '../../navigation/config/routes';
-import {useDispatch} from 'react-redux';
-import {store} from '../../app-redux/store';
-import {userInfoActions} from '../../app-redux/slices/userInfoSlice';
+import { TAB_NAVIGATION_ROOT } from '../../navigation/config/routes';
+import { useDispatch } from 'react-redux';
+import { store } from '../../app-redux/store';
+import { userInfoActions } from '../../app-redux/slices/userInfoSlice';
+import { removeAllCart } from '../../app-redux/slices/cartSlice';
 
 const listService = [
   {
@@ -21,7 +22,7 @@ const listService = [
     id: 2,
     title: 'Order',
     icon: Images.icon.order,
-    navigateName:TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.LIST_ORDER,
+    navigateName: TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.LIST_ORDER,
   },
   {
     id: 3,
@@ -29,12 +30,12 @@ const listService = [
     icon: Images.icon.address,
     navigateName: TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.ADDRESS,
   },
-  {
-    id: 4,
-    title: 'Payment',
-    icon: Images.icon.payment,
-    navigateName: TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.PROFILE,
-  },
+  // {
+  //   id: 4,
+  //   title: 'Payment',
+  //   icon: Images.icon.payment,
+  //   navigateName: TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.PROFILE,
+  // },
 ];
 
 const AccountScreen = () => {
@@ -42,6 +43,8 @@ const AccountScreen = () => {
 
   const logOut = () => {
     store.dispatch(userInfoActions.logOut());
+    dispatch(removeAllCart());
+
   };
   return (
     <View style={styles.container}>

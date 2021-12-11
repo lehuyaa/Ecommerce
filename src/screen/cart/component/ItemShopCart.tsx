@@ -1,16 +1,20 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {ScaledSheet} from 'react-native-size-matters';
-import {Themes} from '../../../assets/themes';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
+import { Themes } from '../../../assets/themes';
 import ItemCart from '../../../component/item/ItemCart';
+import { TAB_NAVIGATION_ROOT } from '../../../navigation/config/routes';
 
 const ItemShopCart = (props: any) => {
-  const {item} = props;
+  const { item } = props;
+  const navigation = useNavigation();
+  console.log('item', item)
   return (
     <View style={styles.container}>
       <View style={styles.viewInfoSeller}>
         <Text style={styles.text}>{item.listProduct[0].nameSeller}</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate(TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.SHOP_SELLER, { idSeller: item?.idSeller })}>
           <Text style={styles.text}>View</Text>
         </TouchableOpacity>
       </View>

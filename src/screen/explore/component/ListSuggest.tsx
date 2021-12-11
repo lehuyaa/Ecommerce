@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import {ScaledSheet} from 'react-native-size-matters';
-import {useSelector} from 'react-redux';
-import {Themes} from '../../../assets/themes';
-import {sortArrayProductByRate} from '../../../utilities/format';
-import {windowHeight, windowWidth} from '../../../utilities/size';
-import {REGEX_SALARY} from '../../../utilities/staticData';
+import React, { useEffect, useState } from 'react';
+import { FlatList, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
+import { useSelector } from 'react-redux';
+import { Themes } from '../../../assets/themes';
+import { sortArrayProductByRate } from '../../../utilities/format';
+import { windowHeight, windowWidth } from '../../../utilities/size';
+import { REGEX_SALARY } from '../../../utilities/staticData';
 
 const ItemSuggest = (props: any) => {
-  const {item, onPress} = props;
+  const { item, onPress } = props;
   return (
     <TouchableOpacity
       activeOpacity={0.8}
@@ -20,7 +20,7 @@ const ItemSuggest = (props: any) => {
 };
 
 const ListSuggest = (props: any) => {
-  const {listSuggest = [], setSearchKey} = props;
+  const { listSuggest = [], setSearchKey, searchByTextSuggest } = props;
   const [list, setList] = useState(listSuggest);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const ListSuggest = (props: any) => {
   return (
     <View style={styles.container}>
       {sortArrayProductByRate(list).map(item => (
-        <ItemSuggest onPress={() => setSearchKey(item)} item={item} />
+        <ItemSuggest key={item} onPress={() => searchByTextSuggest(item)} item={item} />
       ))}
     </View>
   );

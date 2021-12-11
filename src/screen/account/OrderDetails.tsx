@@ -1,22 +1,18 @@
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
-import {Text, View, Image, ScrollView} from 'react-native';
-import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
+import { Text, View, Image, ScrollView } from 'react-native';
+import { scale, ScaledSheet, verticalScale } from 'react-native-size-matters';
 import IconBack from '../../assets/icons/IconBack';
 import Images from '../../assets/images';
-import {Themes} from '../../assets/themes';
+import { Themes } from '../../assets/themes';
 import ButtonIcon from '../../component/button/ButtonIcon';
 import Header from '../../component/header/Header';
-import {formatCurrencyVND} from '../../utilities/format';
+import { formatCurrencyVND } from '../../utilities/format';
 import ItemProduct from './component/ItemProduct';
 
-type ParamList = {
-  OrderDetails: {
-    item?: any;
-  };
-};
+
 const ItemStatus = (props: any) => {
-  const {title, isDone, isLeft, isRight} = props;
+  const { title, isDone, isLeft, isRight } = props;
   return (
     <View style={styles.viewItemStatus}>
       <View style={styles.viewImage}>
@@ -51,7 +47,7 @@ const ItemStatus = (props: any) => {
   );
 };
 const ItemInfo = (props: any) => {
-  const {title, content} = props;
+  const { title, content } = props;
   return (
     <View style={styles.itemInfo}>
       <Text style={styles.textTitle}>{title}</Text>
@@ -60,16 +56,20 @@ const ItemInfo = (props: any) => {
   );
 };
 const listStatus = [
-  {title: 'Packing'},
-  {title: 'Shipping'},
-  {title: 'Success'},
+  { title: 'Packing' },
+  { title: 'Shipping' },
+  { title: 'Success' },
 ];
-
+type ParamList = {
+  OrderDetails: {
+    item?: any;
+  };
+};
 const OrderDetails = () => {
   const route = useRoute<RouteProp<ParamList, 'OrderDetails'>>();
   const navigation = useNavigation();
 
-  const {item} = route.params || {};
+  const { item } = route.params || {};
   console.log(item);
   const calculatorTotalProduct = (list: any) => {
     const totalPrice = list.reduce((total, item) => {
@@ -78,7 +78,7 @@ const OrderDetails = () => {
     return totalPrice;
   };
   const listInfo = [
-    {title: 'Name Receiver', content: item?.shipAddress?.nameReceiver},
+    { title: 'Name Receiver', content: item?.shipAddress?.nameReceiver },
     {
       title: 'Phone Number',
       content: item?.shipAddress?.phoneNumber,
@@ -152,7 +152,7 @@ const OrderDetails = () => {
           ))}
         </View>
         <View style={styles.viewListProduct}>
-          <Text style={[styles.title, {marginBottom: verticalScale(10)}]}>
+          <Text style={[styles.title, { marginBottom: verticalScale(10) }]}>
             Product
           </Text>
           {item?.orderDetails.map(item => (

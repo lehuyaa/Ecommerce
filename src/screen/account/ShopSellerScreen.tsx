@@ -1,9 +1,9 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View, Image, FlatList } from 'react-native'
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import { Text, View, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
-import { getProductByUserId } from '../../api/modules/api-app/product';
-import { store } from '../../app-redux/store';
+import { getProfileByUserId } from '../../api/modules/api-app/product';
 import Images from '../../assets/images';
 import { Themes } from '../../assets/themes';
 import Header from '../../component/header/Header';
@@ -11,22 +11,29 @@ import ItemBigProduct from '../../component/item/ItemBigProduct';
 import LoadingScreen from '../../component/LoadingScreen';
 import { sortArrayProductByRate } from '../../utilities/format';
 
-
-
-const ProfileScreen = () => {
-    const navigation = useNavigation();
-    const { userInfo } = store.getState();
+type ParamList = {
+    ShopSellerScreen: {
+        idSeller?: any;
+    };
+};
+const ShopSellerScreen = () => {
+    const route = useRoute<RouteProp<ParamList, 'ShopSellerScreen'>>();
     const [loading, setLoading] = useState<boolean>(false);
     const [listProduct, setListProduct] = useState<any>([]);
+    const [user, setUser] = useState<any>({});
+    const { idSeller } = route.params || {}
+    const navigation = useNavigation();
 
     const getProductFunc = async () => {
         setLoading(true);
 
         try {
-            const response = await getProductByUserId(userInfo?.user?.id);
+            const response: any = await getProfileByUserId(idSeller);
             setLoading(false);
-            setListProduct(response?.data);
-
+            // setListProduct(response?.data);
+            setUser(response?.data?.user)
+            setListProduct(response?.data?.productList)
+            console.log(response?.data)
         } catch (error) {
             setLoading(false);
         }
@@ -41,25 +48,21 @@ const ProfileScreen = () => {
     useEffect(() => {
         getProductFunc();
     }, []);
+
     return (
         <View style={styles.container}>
             {loading && <LoadingScreen />}
-            <Header>
+            <View style={styles.viewAvatar}>
                 <TouchableOpacity onPress={() => navigation.goBack()} >
                     <Image style={styles.iconHeader} source={Images.icon.back} />
                 </TouchableOpacity>
-                <Text style={styles.textHeader}>
-                    Profile
-                </Text>
-            </Header>
-            <View style={styles.viewAvatar}>
-                <Image source={Images.avatar} style={styles.avatar} />
+                {!loading && <Image source={Images.avatar} style={styles.avatar} />}
                 <View style={styles.viewName}>
                     <Text style={styles.textHeader}>
-                        {userInfo?.user?.username}
+                        {user?.username}
                     </Text>
                     <Text style={styles.normalText}>
-                        {userInfo?.user?.email}
+                        {user?.email}
                     </Text>
                 </View>
             </View>
@@ -87,8 +90,8 @@ const ProfileScreen = () => {
                 />
             </View>
         </View>
-    )
-}
+    );
+};
 
 
 const styles = ScaledSheet.create({
@@ -96,22 +99,12 @@ const styles = ScaledSheet.create({
         flex: 1,
         backgroundColor: Themes.BackgroundColor.white,
     },
-    textHeader: {
-        fontSize: '16@ms0.3',
-        fontWeight: '700',
-        color: Themes.NeutralColors.Dark,
-    },
-    iconHeader: {
-        width: '6@s',
-        height: '12@vs',
-        resizeMode: 'contain',
-        marginRight: '21@s',
-    },
     viewAvatar: {
         flexDirection: 'row',
         paddingLeft: '16@s',
         paddingTop: '24@vs',
         paddingBottom: '32@vs',
+        alignItems: 'center',
     },
     avatar: {
         width: '72@vs',
@@ -129,8 +122,19 @@ const styles = ScaledSheet.create({
         marginTop: '5@vs',
     },
     listProduct: {
-        paddingBottom: '250@vs'
-
+        // paddingBottom: '250@vs',
+        flex: 1,
+    },
+    iconHeader: {
+        width: '6@s',
+        height: '12@vs',
+        resizeMode: 'contain',
+        marginRight: '21@s',
+    },
+    textHeader: {
+        fontSize: '16@ms0.3',
+        fontWeight: '700',
+        color: Themes.NeutralColors.Dark,
     },
     viewNodata: {
         justifyContent: 'center',
@@ -145,7 +149,8 @@ const styles = ScaledSheet.create({
     },
     flatList: {
         width: '100%',
+        height: '100%',
     },
-})
+});
 
-export default ProfileScreen
+export default ShopSellerScreen;

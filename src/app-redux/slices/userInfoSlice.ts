@@ -5,13 +5,14 @@ import {
   PayloadAction,
   Action,
 } from '@reduxjs/toolkit';
-import {persistReducer} from 'redux-persist';
-import {generatePersistConfig} from '../../utilities/helper';
-import {CommonStatus} from './types';
+import { persistReducer } from 'redux-persist';
+import { generatePersistConfig } from '../../utilities/helper';
+import { CommonStatus } from './types';
 
 interface IUser {
   id: number;
   username: string;
+  email: string;
   // ...
 }
 
@@ -39,25 +40,25 @@ const getUserInfoRequest: Reducer<PayloadAction<string>> = state => {
 
 const getUserInfoSuccess: Reducer<PayloadAction<IUser>> = (
   state,
-  {payload},
+  { payload },
 ) => {
   state.status = CommonStatus.SUCCESS;
   state.user = payload;
 };
 
-const getUserInfoFailed: Reducer<PayloadAction<any>> = (state, {payload}) => {
+const getUserInfoFailed: Reducer<PayloadAction<any>> = (state, { payload }) => {
   state.status = CommonStatus.ERROR;
   state.error = payload;
 };
 
 const updateToken: Reducer<
   PayloadAction<Pick<IUserInfoState, 'token' | 'refreshToken'>>
-> = (state, {payload}) => {
+> = (state, { payload }) => {
   state.token = payload.token;
   state.refreshToken = payload.refreshToken;
 };
 
-const setUserInfoSuccess: Reducer<PayloadAction<any>> = (state, {payload}) => {
+const setUserInfoSuccess: Reducer<PayloadAction<any>> = (state, { payload }) => {
   state.status = CommonStatus.SUCCESS;
   state.token = payload?.data?.token;
   state.user = payload?.data?.user;
