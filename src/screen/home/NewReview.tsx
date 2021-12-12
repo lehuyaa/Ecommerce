@@ -1,11 +1,13 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useState, useEffect, useMemo} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   TouchableOpacity,
   View,
   Image as DefaultImage,
   TextInput,
+  FlatList,
+  Image,
 } from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 import Images from '../../assets/images';
@@ -13,10 +15,23 @@ import {Themes} from '../../assets/themes';
 import ButtonDefault from '../../component/button/ButtonDefault';
 import Header from '../../component/header/Header';
 import {Rating} from 'react-native-ratings';
+import IconAdd from '../../assets/icons/IconAdd';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 const NewReview = () => {
   const [rate, setRating] = useState(3);
+  const [image, setImage] = useState([]);
   const navigation = useNavigation();
+
+  const getImage = async () => {
+    await launchImageLibrary(
+      {selectionLimit: 0, mediaType: 'photo', quality: 0.5},
+      res => {
+        const listImg = res?.assets?.map(item => item?.uri, {});
+        setImage(img => [...listImg, ...img]);
+      },
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -60,9 +75,25 @@ const NewReview = () => {
           style={styles.textInput}
           returnKeyType="done"
         />
+
+        <Text style={styles.writeReview}>Add Photo</Text>
+
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={image}
+          renderItem={({item}) => {
+            return <Image style={styles.localImage} source={{uri: item}} />;
+          }}
+          ListFooterComponent={
+            <TouchableOpacity style={styles.imgPicker} onPress={getImage}>
+              <IconAdd height={24} width={24} />
+            </TouchableOpacity>
+          }
+        />
       </View>
       <View style={styles.viewButton}>
-        <ButtonDefault title={'Write Review'} />
+        <ButtonDefault onPress={() => {}} title={'Write Review'} />
       </View>
     </View>
   );
@@ -118,7 +149,7 @@ const styles = ScaledSheet.create({
     fontSize: 14,
     color: '#223263',
     fontWeight: '700',
-    marginBottom: 16,
+    marginVertical: 16,
   },
   textInput: {
     textAlignVertical: 'top',
@@ -130,5 +161,21 @@ const styles = ScaledSheet.create({
     fontSize: 12,
     fontWeight: '700',
     color: '#9098B1',
+  },
+  imgPicker: {
+    height: 72,
+    width: 72,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#EBF0FF',
+  },
+  localImage: {
+    height: 72,
+    width: 72,
+    resizeMode: 'stretch',
+    marginRight: 12,
+    borderRadius: 5,
   },
 });

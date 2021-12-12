@@ -92,7 +92,7 @@ const Rating = () => {
 
         <View>
           {starArray.map(item => (
-            <Review key={item.toString()} />
+            <Review item={item} key={item.toString()} />
           ))}
         </View>
       </ScrollView>
