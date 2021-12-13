@@ -21,6 +21,7 @@ import {addReview} from '../../api/modules/api-app/product';
 import {TAB_NAVIGATION_ROOT} from '../../navigation/config/routes';
 import LoadingScreen from '../../component/LoadingScreen';
 import {launchImageLibrary} from 'react-native-image-picker';
+import IconAdd from '../../assets/icons/IconAdd';
 
 type ParamList = {
   ProductDetailsScreen: {
@@ -62,8 +63,10 @@ const NewReview = () => {
     await launchImageLibrary(
       {selectionLimit: 0, mediaType: 'photo', quality: 0.5},
       res => {
-        const listImg = res?.assets?.map(item => item?.uri, {});
-        setImage(img => [...listImg, ...img]);
+        if (!res?.didCancel) {
+          const listImg = res?.assets?.map(item => item?.uri, {});
+          setImage(img => [...listImg, ...img]);
+        }
       },
     );
   };
