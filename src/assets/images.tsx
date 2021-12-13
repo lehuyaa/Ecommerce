@@ -23,6 +23,8 @@ const Images = {
     successIcon: require('./images/icon/successIcon.png'),
     iconDone: require('./images/icon/IconDone.png'),
     iconUnDone: require('./images/icon/IconUnDone.png'),
+    feed: require('./images/icon/Feed.png'),
+    transaction: require('./images/icon/Transaction.png'),
   },
   products: {
     manShirt: require('./images/icon/Manshirt.png'),

@@ -20,7 +20,6 @@ const styles = ScaledSheet.create({
     paddingHorizontal: '16@s',
     paddingBottom: '14@vs',
     alignItems: 'flex-end',
-    // justifyContent: 'space-between'
   },
   icon: {
     flexDirection: 'row',
