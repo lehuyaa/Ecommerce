@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   Keyboard,
@@ -94,17 +95,15 @@ const HomeScreen = () => {
   const [listProduct, setListProduct] = useState<any>([]);
   const [filteredList, setFilteredList] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
   const [searchKey, setSearchKey] = useState('');
+  const [pageIndex, setPageIndex] = useState(0);
   const getAllProductFunc = async () => {
     setLoading(true);
 
     try {
-      const response = await getAllProduct();
+      const response: any = await getAllProduct(pageIndex);
       setLoading(false);
-      setListProduct(response?.data);
-
-      setIsFetching(false);
+      setListProduct([...listProduct, ...response?.data]);
     } catch (error) {
       setLoading(false);
     }
@@ -130,10 +129,28 @@ const HomeScreen = () => {
   useEffect(() => {
     getAllProductFunc();
   }, []);
+
+  const renderFooter = () => {
+    return (
+      //Footer View with Load More button
+      <View style={styles.footer}>
+        {loading ? (
+          <ActivityIndicator
+            color={Themes.NeutralColors.Dark}
+            style={{ marginLeft: 8 }} />
+        ) : null}
+      </View>
+    );
+  };
+  const handleLoadmore = () => {
+    setPageIndex(pageIndex + 1);
+    getAllProductFunc();
+    console.log('listProduct', listProduct)
+  }
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
-        {loading && <LoadingScreen />}
+        {/* {loading && <LoadingScreen />} */}
         <Header customStyle={styles.header}>
           <FormSearch
             searchKey={searchKey}
@@ -167,12 +184,6 @@ const HomeScreen = () => {
           ) : (
             <FlatList
               style={styles.flatList}
-              onRefresh={() => {
-                getAllProductFunc();
-                setIsFetching(true);
-                setSearchKey('');
-              }}
-              refreshing={isFetching}
               data={sortArrayProductByRate(listProduct)}
               // data={listProduct}
               renderItem={({ item }) => (
@@ -191,6 +202,9 @@ const HomeScreen = () => {
               numColumns={2}
               keyExtractor={(item, index) => index.toString()}
               showsVerticalScrollIndicator={false}
+              ListFooterComponent={renderFooter}
+              onEndReachedThreshold={0}
+              onEndReached={() => handleLoadmore()}
             />
           )}
         </View>
@@ -228,6 +242,12 @@ const styles = ScaledSheet.create({
   },
   swiper: {
     marginBottom: '-15@vs',
+  },
+  footer: {
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   CategoryView: {
     paddingLeft: '16@s',
