@@ -78,11 +78,11 @@ const styles = ScaledSheet.create({
     marginRight: '16@s',
   },
   offer: {
-    marginHorizontal: 16,
-    marginBottom: 16,
+    marginHorizontal: '16@s',
+    marginBottom: '16@vs',
     flexDirection: 'row',
   },
-  left: {paddingRight: 16},
+  left: {paddingRight: '16@s'},
   title: {
     fontWeight: '700',
     fontSize: 14,

@@ -40,14 +40,12 @@ const Rating = () => {
       text1: `You can't review your product`,
     });
   };
-  console.log('item', item);
   const customSelectFilterStyle = useMemo(
     () => [
       styles.rowReview,
       {
         backgroundColor: rate === 0 ? 'rgba(64, 191, 255, 0.1)' : '#FFFFFF',
         borderWidth: rate === 0 ? 0 : 1,
-        borderColor: '#EBF0FF',
       },
     ],
     [rate],
@@ -69,7 +67,7 @@ const Rating = () => {
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={{padding: 16, marginRight: 16}}>
+          style={styles.listRating}>
           {starArray?.map(item => {
             if (item === 0) {
               return (
@@ -77,10 +75,7 @@ const Rating = () => {
                   onPress={() => onFilterItem(item)}
                   key={item.toString()}
                   style={customSelectFilterStyle}>
-                  <Text
-                    style={{fontSize: 12, color: '#40BFFF', fontWeight: '700'}}>
-                    All Review
-                  </Text>
+                  <Text style={styles.review}>All Review</Text>
                 </TouchableOpacity>
               );
             }
@@ -94,13 +89,9 @@ const Rating = () => {
                     backgroundColor:
                       rate === item ? 'rgba(64, 191, 255, 0.1)' : '#FFFFFF',
                     borderWidth: rate === item ? 0 : 1,
-                    borderColor: '#EBF0FF',
                   },
                 ]}>
-                <Text
-                  style={{fontSize: 12, color: '#9098B1', fontWeight: '700'}}>
-                  {item} Star
-                </Text>
+                <Text style={styles.star}>{item} Star</Text>
               </TouchableOpacity>
             );
           })}
@@ -153,11 +144,12 @@ const styles = ScaledSheet.create({
   rowReview: {
     height: 50,
     alignSelf: 'flex-start',
-    padding: 16,
+    padding: '16@s',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 5,
-    marginRight: 12,
+    borderRadius: '5@s',
+    borderColor: Themes.NeutralColors.light,
+    marginRight: '12@s',
   },
   viewButton: {
     paddingHorizontal: '16@s',
@@ -172,4 +164,7 @@ const styles = ScaledSheet.create({
     flex: 1,
     marginBottom: '100@vs',
   },
+  star: {fontSize: 12, color: Themes.NeutralColors.grey, fontWeight: '700'},
+  review: {fontSize: 12, color: Themes.PrimaryColor.blue, fontWeight: '700'},
+  listRating: {padding: '16@s', marginRight: '16@s'},
 });
