@@ -109,13 +109,16 @@ const HomeScreen = () => {
       setLoading(false);
     }
   };
+
   const onSearch = async () => {
     setLoading(true);
-
     try {
       const response = await searchProduct(searchKey);
+
+      navigation.navigate(APP_ROUTE.SEARCH_RESULT, {
+        searchResult: response?.data,
+      });
       setLoading(false);
-      setListProduct(response?.data);
     } catch (error) {
       setLoading(false);
     }
@@ -134,24 +137,20 @@ const HomeScreen = () => {
   const renderFooter = () => {
     return (
       //Footer View with Load More button
-      <View style={styles.footer}>
-        {loading ? (
-          <ActivityIndicator
-            color={Themes.NeutralColors.Dark}
-            style={{ marginLeft: 8 }} />
-        ) : null}
-      </View>
+      <TouchableOpacity onPress={() => handleLoadmore()} style={styles.footer}>
+        <Text>Load More</Text>
+      </TouchableOpacity>
     );
   };
   const handleLoadmore = () => {
     setPageIndex(pageIndex + 1);
     getAllProductFunc();
-    console.log('listProduct', listProduct)
-  }
+    console.log('listProduct', listProduct);
+  };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
-        {/* {loading && <LoadingScreen />} */}
+        {loading && <LoadingScreen />}
         <Header customStyle={styles.header}>
           <FormSearch
             searchKey={searchKey}
@@ -206,8 +205,6 @@ const HomeScreen = () => {
               keyExtractor={(item, index) => index.toString()}
               showsVerticalScrollIndicator={false}
               ListFooterComponent={renderFooter}
-              onEndReachedThreshold={0}
-              onEndReached={() => handleLoadmore()}
             />
           )}
         </View>

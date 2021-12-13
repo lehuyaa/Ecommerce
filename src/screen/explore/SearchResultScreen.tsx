@@ -7,7 +7,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { ScaledSheet, verticalScale } from 'react-native-size-matters';
+import {ScaledSheet, verticalScale} from 'react-native-size-matters';
 
 import ButtonIcon from '../../component/button/ButtonIcon';
 import FormSearch from '../home/component/FormSearch';
@@ -16,19 +16,19 @@ import IconFilter from '../../assets/icons/IconFilter';
 import IconSort from '../../assets/icons/IconSort';
 import Images from '../../assets/images';
 import ItemBigProduct from '../../component/item/ItemBigProduct';
-import React, { useEffect, useState } from 'react';
-import { Themes } from '../../assets/themes';
-import { product } from '../home/list/ListProduct';
+import React, {useEffect, useState} from 'react';
+import {Themes} from '../../assets/themes';
+import {product} from '../home/list/ListProduct';
 import IconBack from '../../assets/icons/IconBack';
-import { useNavigation } from '@react-navigation/core';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import { searchProduct } from '../../api/modules/api-app/product';
+import {useNavigation} from '@react-navigation/core';
+import {RouteProp, useRoute} from '@react-navigation/native';
+import {searchProduct} from '../../api/modules/api-app/product';
 import LoadingScreen from '../../component/LoadingScreen';
-import { APP_ROUTE, TAB_NAVIGATION_ROOT } from '../../navigation/config/routes';
-import { sortArrayProductByRate } from '../../utilities/format';
-import { useDispatch } from 'react-redux';
+import {APP_ROUTE, TAB_NAVIGATION_ROOT} from '../../navigation/config/routes';
+import {sortArrayProductByRate} from '../../utilities/format';
+import {useDispatch} from 'react-redux';
 import ListSuggest from './component/ListSuggest';
-import { REGEX_SALARY } from '../../utilities/staticData';
+import {REGEX_SALARY} from '../../utilities/staticData';
 
 type ParamList = {
   SearchResultScreen: {
@@ -39,7 +39,7 @@ type ParamList = {
 const SearchResultScreen = () => {
   const navigation = useNavigation();
   const route = useRoute<RouteProp<ParamList, 'SearchResultScreen'>>();
-  const { searchResult, isSort = false } = route.params || {};
+  const {searchResult, isSort = false} = route.params || {};
   const dispatch = useDispatch();
   const [filteredList, setFilteredList] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -47,6 +47,7 @@ const SearchResultScreen = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [searchKey, setSearchKey] = useState('');
   const [listProduct, setListProduct] = useState(searchResult);
+
   const onSearch = async () => {
     setLoading(true);
     try {
@@ -58,13 +59,14 @@ const SearchResultScreen = () => {
       setLoading(false);
     }
   };
-  console.log('filteredList', filteredList);
   useEffect(() => {
     setListProduct(searchResult);
   }, [searchResult]);
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
+        {loading && <LoadingScreen />}
+
         <Header customStyle={styles.header}>
           <ButtonIcon
             onPress={() => {
@@ -106,7 +108,6 @@ const SearchResultScreen = () => {
           /> */}
         </Header>
         <View style={styles.main}>
-          {loading && <LoadingScreen />}
           {isSearching ? (
             <ListSuggest
               listSuggest={filteredList}
@@ -125,7 +126,7 @@ const SearchResultScreen = () => {
                   data={
                     isSort ? listProduct : sortArrayProductByRate(listProduct)
                   }
-                  renderItem={({ item }) => (
+                  renderItem={({item}) => (
                     <ItemBigProduct
                       item={item}
                       image={item.productImage}
