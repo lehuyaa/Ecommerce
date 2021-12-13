@@ -1,5 +1,5 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useState, useEffect, useMemo} from 'react';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Text,
   TouchableOpacity,
@@ -7,24 +7,40 @@ import {
   Image as DefaultImage,
   ScrollView,
 } from 'react-native';
-import {ScaledSheet} from 'react-native-size-matters';
+import { ScaledSheet } from 'react-native-size-matters';
+import { store } from '../../app-redux/store';
 import Images from '../../assets/images';
-import {Themes} from '../../assets/themes';
+import { Themes } from '../../assets/themes';
 import ButtonDefault from '../../component/button/ButtonDefault';
 import Header from '../../component/header/Header';
-import {TAB_NAVIGATION_ROOT} from '../../navigation/config/routes';
+import { TAB_NAVIGATION_ROOT } from '../../navigation/config/routes';
 import Review from './component/Review';
+import Toast from 'react-native-toast-message';
 
 const starArray = [0, 1, 2, 3, 4, 5];
 
+type ParamList = {
+  Rating: {
+    item?: any;
+    listReview?: any;
+  };
+};
 const Rating = () => {
   const [rate, setRating] = useState(0);
   const navigation = useNavigation();
-
+  const route = useRoute<RouteProp<ParamList, 'Rating'>>();
+  const { item, listReview } = route.params || {};
   const onFilterItem = item => {
     setRating(item);
   };
-
+  const { userInfo } = store.getState();
+  const showFailureNotEnoughtToast = () => {
+    Toast.show({
+      type: 'error',
+      text1: `You can't review your product`,
+    });
+  };
+  console.log('item', item)
   const customSelectFilterStyle = useMemo(
     () => [
       styles.rowReview,
@@ -44,7 +60,7 @@ const Rating = () => {
           <DefaultImage style={styles.iconHeader} source={Images.icon.back} />
         </TouchableOpacity>
         <Text numberOfLines={1} style={styles.textHeader}>
-          5 Reviews
+          {listReview.length} Reviews
         </Text>
       </Header>
       <ScrollView
@@ -53,7 +69,7 @@ const Rating = () => {
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={{padding: 16, marginRight: 16}}>
+          style={{ padding: 16, marginRight: 16 }}>
           {starArray?.map(item => {
             if (item === 0) {
               return (
@@ -62,7 +78,7 @@ const Rating = () => {
                   key={item.toString()}
                   style={customSelectFilterStyle}>
                   <Text
-                    style={{fontSize: 12, color: '#40BFFF', fontWeight: '700'}}>
+                    style={{ fontSize: 12, color: '#40BFFF', fontWeight: '700' }}>
                     All Review
                   </Text>
                 </TouchableOpacity>
@@ -82,7 +98,7 @@ const Rating = () => {
                   },
                 ]}>
                 <Text
-                  style={{fontSize: 12, color: '#9098B1', fontWeight: '700'}}>
+                  style={{ fontSize: 12, color: '#9098B1', fontWeight: '700' }}>
                   {item} Star
                 </Text>
               </TouchableOpacity>
@@ -91,19 +107,27 @@ const Rating = () => {
         </ScrollView>
 
         <View>
-          {starArray.map(item => (
-            <Review key={item.toString()} />
+          {listReview.map(item => (
+            <Review key={item.toString()} itemReview={item} />
           ))}
         </View>
       </ScrollView>
       <View style={styles.viewButton}>
         <ButtonDefault
           title={'Write Review'}
-          onPress={() =>
-            navigation.navigate(TAB_NAVIGATION_ROOT.HOME_ROUTE.NEW_REVIEW)
+          onPress={() => {
+            if (item?.user?.id === userInfo?.user?.id) {
+              showFailureNotEnoughtToast();
+            } else {
+              navigation.navigate(TAB_NAVIGATION_ROOT.HOME_ROUTE.NEW_REVIEW, { item })
+            }
+          }
+
           }
         />
       </View>
+      <Toast />
+
     </View>
   );
 };

@@ -1,47 +1,36 @@
 import React from 'react';
 import {
-  StyleSheet,
   Text,
   View,
   Image as DefaultImage,
-  TouchableOpacity,
 } from 'react-native';
-import {ScaledSheet} from 'react-native-size-matters';
-import {starImage} from '../../../utilities/staticData';
-import {convertRate} from '../../../utilities/format';
+import { scale, ScaledSheet, verticalScale } from 'react-native-size-matters';
+import { starImage } from '../../../utilities/staticData';
 import Image from '../../../assets/images';
+import { Themes } from '../../../assets/themes';
 
-const Review = ({item}) => {
+const Review = (props: any) => {
+  const { item, itemReview = {} } = props;
+  console.log('itemReview', itemReview)
   return (
     <View style={styles.review}>
-      <View style={styles.ratingView}>
-        <DefaultImage
-          style={[styles.star, {marginTop: 0, marginRight: 8}]}
-          source={starImage[convertRate(item?.rate) - 1]}
-        />
-        <Text style={styles.textStar}>4.5</Text>
-        <Text style={styles.reviewQuantity}>5 reviews</Text>
-      </View>
 
       <View style={styles.profile}>
         <DefaultImage style={styles.avatar} source={Image.avatar} />
         <View>
-          <Text style={[styles.textReview, {marginRight: 8}]}>
-            James Lawson
+          <Text style={[styles.textReview, { marginRight: scale(8) }]}>
+            {itemReview?.user?.username}
           </Text>
           <DefaultImage
-            style={[styles.star, {marginTop: 4, marginRight: 8}]}
-            source={starImage[convertRate(item?.rate) - 1]}
+            style={[styles.star, { marginTop: verticalScale(4), marginRight: scale(8) }]}
+            source={starImage[itemReview?.starNumber - 1]}
           />
         </View>
       </View>
       <Text style={styles.reviewContent}>
-        air max are always very comfortable fit, clean and just perfect in every
-        way. just the box was too small and scrunched the sneakers up a little
-        bit, not sure if the box was always this small but the 90s are and will
-        always be one of my favorites.
+        {itemReview?.content}
       </Text>
-      <View style={styles.profile}>
+      {/* <View style={styles.profile}>
         <DefaultImage
           style={styles.reviewImage}
           source={{
@@ -66,8 +55,8 @@ const Review = ({item}) => {
               'https://laptoptcc.com/wp-content/uploads/2021/04/AZZ02208-DELL-PRECISION-5510-LAPTOPTCC-1-1.jpg',
           }}
         />
-      </View>
-      <Text style={styles.dateReview}>December 10, 2016</Text>
+      </View> */}
+      <Text style={styles.dateReview}>{itemReview?.createdTime}</Text>
     </View>
   );
 };
@@ -81,24 +70,29 @@ const styles = ScaledSheet.create({
     height: '16@vs',
     marginTop: '10@vs',
   },
-  review: {paddingHorizontal: '16@s'},
-  reviewProduct: {flexDirection: 'row', justifyContent: 'space-between'},
+  review: {
+    paddingHorizontal: '16@s'
+  },
+  reviewProduct: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
   textReview: {
     fontSize: '14@vs',
     lineHeight: '21@vs',
     fontWeight: '700',
-    color: '#223263',
+    color: Themes.NeutralColors.Dark,
   },
-  textSeeMore: {fontSize: '14@vs', lineHeight: '21@vs', color: '#40BFFF'},
-  ratingView: {flexDirection: 'row', alignItems: 'center', marginTop: 16},
-  textStar: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#9098B1',
-    marginRight: 8,
+  textSeeMore: {
+    fontSize: '14@vs',
+    lineHeight: '21@vs',
+    color: Themes.PrimaryColor.blue,
   },
-  reviewQuantity: {fontSize: 14, color: '#9098B1'},
-  profile: {flexDirection: 'row', marginTop: 16},
+
+  profile: {
+    flexDirection: 'row',
+    marginTop: '16@vs'
+  },
   avatar: {
     width: '72@s',
     height: '72@vs',
@@ -108,7 +102,7 @@ const styles = ScaledSheet.create({
   reviewContent: {
     marginVertical: '16@s',
     textAlign: 'justify',
-    color: '#9098B1',
+    color: Themes.NeutralColors.grey,
   },
   reviewImage: {
     width: '72@s',
@@ -117,5 +111,9 @@ const styles = ScaledSheet.create({
     borderRadius: 4,
     marginRight: '12@s',
   },
-  dateReview: {marginTop: '16@vs', fontSize: '10@vs', color: '#9098B1'},
+  dateReview: {
+    marginTop: '16@vs',
+    fontSize: '10@vs',
+    color: Themes.NeutralColors.grey,
+  },
 });

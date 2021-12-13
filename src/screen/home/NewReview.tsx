@@ -1,5 +1,5 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useState, useEffect, useMemo} from 'react';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Text,
   TouchableOpacity,
@@ -7,19 +7,55 @@ import {
   Image as DefaultImage,
   TextInput,
 } from 'react-native';
-import {ScaledSheet} from 'react-native-size-matters';
+import { ScaledSheet } from 'react-native-size-matters';
 import Images from '../../assets/images';
-import {Themes} from '../../assets/themes';
+import { Themes } from '../../assets/themes';
 import ButtonDefault from '../../component/button/ButtonDefault';
 import Header from '../../component/header/Header';
-import {Rating} from 'react-native-ratings';
+import { Rating } from 'react-native-ratings';
+import { store } from '../../app-redux/store';
+import dayjs from 'dayjs'
+import { addReview } from '../../api/modules/api-app/product';
+import { TAB_NAVIGATION_ROOT } from '../../navigation/config/routes';
+import LoadingScreen from '../../component/LoadingScreen';
 
+type ParamList = {
+  ProductDetailsScreen: {
+    item?: any;
+  };
+};
 const NewReview = () => {
   const [rate, setRating] = useState(3);
+  const [content, setContent] = useState<string>('');
   const navigation = useNavigation();
+  const route = useRoute<RouteProp<ParamList, 'ProductDetailsScreen'>>();
+  const { item } = route.params || {};
+  const { userInfo } = store.getState();
+  const [loading, setLoading] = useState<boolean>(false);
 
+  const addReviewFunc = async () => {
+    const params = {
+      content: content,
+      starNumber: rate,
+      productId: item?.id,
+      userId: userInfo?.user?.id,
+      createdTime: dayjs(new Date()).format('DD/MM/YYYY'),
+    };
+    setLoading(true);
+
+    try {
+      const response: any = await addReview(params);
+      navigation.navigate(TAB_NAVIGATION_ROOT.HOME_ROUTE.PRODUCT_DETAILS, {
+        item,
+      })
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  }
   return (
     <View style={styles.container}>
+      {loading && <LoadingScreen />}
       <Header>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <DefaultImage style={styles.iconHeader} source={Images.icon.back} />
@@ -53,16 +89,18 @@ const NewReview = () => {
         <Text style={styles.writeReview}>Write Your Review</Text>
 
         <TextInput
+          value={content}
           multiline
           numberOfLines={5}
           placeholder="Write your review here"
           blurOnSubmit
           style={styles.textInput}
           returnKeyType="done"
+          onChangeText={(text) => setContent(text)}
         />
       </View>
       <View style={styles.viewButton}>
-        <ButtonDefault title={'Write Review'} />
+        <ButtonDefault onPress={() => addReviewFunc()} title={'Write Review'} />
       </View>
     </View>
   );
@@ -96,7 +134,7 @@ const styles = ScaledSheet.create({
     backgroundColor: '#FFFFFF',
     height: '100@vs',
   },
-  title: {paddingHorizontal: 16, marginTop: 16},
+  title: { paddingHorizontal: 16, marginTop: 16 },
   textTitle: {
     fontSize: 14,
     color: '#223263',
@@ -108,7 +146,7 @@ const styles = ScaledSheet.create({
     marginBottom: 16,
     alignItems: 'center',
   },
-  customRating: {marginRight: 12},
+  customRating: { marginRight: 12 },
   rate: {
     fontSize: 14,
     color: '#9098B1',
