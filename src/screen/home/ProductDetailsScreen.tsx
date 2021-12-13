@@ -1,12 +1,18 @@
+import React, {Component, useEffect, useState} from 'react';
 import {
   FlatList,
   Image as DefaultImage,
   Text,
   TouchableOpacity,
   View,
+  Image,
 } from 'react-native';
-import React from 'react';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {
+  RouteProp,
+  useIsFocused,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 
 import ButtonDefault from '../../component/button/ButtonDefault';
 import Header from '../../component/header/Header';
@@ -23,6 +29,8 @@ import {store} from '../../app-redux/store';
 import {convertRate} from '../../utilities/format';
 import Review from './component/Review';
 import {TAB_NAVIGATION_ROOT} from '../../navigation/config/routes';
+import LoadingScreen from '../../component/LoadingScreen';
+import {getReviewProduct} from '../../api/modules/api-app/product';
 import ItemProduct from '../../component/item/ItemProduct';
 
 type ParamList = {
@@ -38,7 +46,9 @@ const ProductDetailsScreen = () => {
   const {productName, productImage, productPrice, quantity, id} = item;
   const {userInfo} = store.getState();
   const {cart} = useSelector((state: any) => state);
-
+  const [loading, setLoading] = useState<boolean>(false);
+  const [listReview, setListReview] = useState<any>([]);
+  const isFocus = useIsFocused();
   const showSuccessToast = () => {
     Toast.show({
       type: 'success',
@@ -57,6 +67,23 @@ const ProductDetailsScreen = () => {
       text1: `You Can't Buy Your Product`,
     });
   };
+  const getListReview = async () => {
+    setLoading(true);
+
+    try {
+      const response: any = await getReviewProduct(id);
+      setLoading(false);
+      setListReview(response?.data);
+      console.log('response?.data', response?.data);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    if (isFocus) {
+      getListReview();
+    }
+  }, [isFocus]);
   const addToCartFunc = () => {
     if (
       quantity - cart?.listProduct?.filter(x => x.id === id)[0]?.quantity <
@@ -78,11 +105,15 @@ const ProductDetailsScreen = () => {
   };
 
   const navigateToReview = () => {
-    navigation.navigate(TAB_NAVIGATION_ROOT.HOME_ROUTE.RATING);
+    navigation.navigate(TAB_NAVIGATION_ROOT.HOME_ROUTE.RATING, {
+      listReview,
+      item,
+    });
   };
 
   return (
     <View style={styles.container}>
+      {loading && <LoadingScreen />}
       <Header>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <DefaultImage style={styles.iconHeader} source={Images.icon.back} />
@@ -103,11 +134,6 @@ const ProductDetailsScreen = () => {
 
         <View style={styles.viewInfo}>
           <Text style={styles.textProductName}>{productName}</Text>
-
-          <DefaultImage
-            style={styles.star}
-            source={starImage[convertRate(item?.rate) - 1]}
-          />
           <Text style={styles.textProductPrice}>{productPrice}</Text>
           <Text style={[styles.textProductName, {marginTop: verticalScale(5)}]}>
             Quantity: {quantity}
@@ -121,7 +147,19 @@ const ProductDetailsScreen = () => {
               <Text style={styles.textSeeMore}>See More</Text>
             </TouchableOpacity>
           </View>
-          <Review item={item} />
+          <View style={styles.ratingView}>
+            <DefaultImage
+              style={[styles.star, {marginTop: 0, marginRight: 8}]}
+              source={starImage[convertRate(item?.rate) - 1]}
+            />
+            <Text style={styles.textStar}>{convertRate(item?.rate)}</Text>
+            <Text style={styles.reviewQuantity}>
+              {listReview.length} reviews
+            </Text>
+          </View>
+          {listReview.length > 0 ? (
+            <Review item={item} itemReview={listReview[0]} />
+          ) : null}
         </View>
 
         <View>
@@ -202,7 +240,7 @@ const styles = ScaledSheet.create({
     position: 'absolute',
     width: '100%',
     bottom: 0,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Themes.BackgroundColor.white,
     height: '100@vs',
   },
   viewImage: {
@@ -215,15 +253,36 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: '16@s',
-    marginTop: 16,
+    marginTop: '16@vs',
   },
   textReview: {
     fontSize: '14@vs',
     lineHeight: '21@vs',
     fontWeight: '700',
-    color: '#223263',
+    color: Themes.NeutralColors.Dark,
   },
-  textSeeMore: {fontSize: '14@vs', lineHeight: '21@vs', color: '#40BFFF'},
+  textSeeMore: {
+    fontSize: '14@vs',
+    lineHeight: '21@vs',
+    color: Themes.PrimaryColor.blue,
+    fontWeight: '700',
+  },
+  ratingView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: '16@vs',
+    paddingLeft: '16@s',
+  },
+  textStar: {
+    fontSize: '14@ms0.3',
+    fontWeight: '700',
+    color: Themes.NeutralColors.grey,
+    marginRight: '8@s',
+  },
+  reviewQuantity: {
+    fontSize: '14@ms0.3',
+    color: Themes.NeutralColors.grey,
+  },
   suggestProduct: {
     flexDirection: 'row',
     justifyContent: 'space-between',
