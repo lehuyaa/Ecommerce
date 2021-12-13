@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import {
   FlatList,
   Image as DefaultImage,
@@ -17,20 +17,20 @@ import {
 import ButtonDefault from '../../component/button/ButtonDefault';
 import Header from '../../component/header/Header';
 import Images from '../../assets/images';
-import {ScaledSheet, verticalScale} from 'react-native-size-matters';
-import {ScrollView} from 'react-native-gesture-handler';
-import {Themes} from '../../assets/themes';
-import {starImage} from '../../utilities/staticData';
-import {windowHeight} from '../../utilities/size';
-import {useDispatch, useSelector} from 'react-redux';
-import {addToCart} from '../../app-redux/slices/cartSlice';
+import { ScaledSheet, verticalScale } from 'react-native-size-matters';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Themes } from '../../assets/themes';
+import { starImage } from '../../utilities/staticData';
+import { windowHeight } from '../../utilities/size';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../../app-redux/slices/cartSlice';
 import Toast from 'react-native-toast-message';
-import {store} from '../../app-redux/store';
-import {convertRate} from '../../utilities/format';
+import { store } from '../../app-redux/store';
+import { convertRate } from '../../utilities/format';
 import Review from './component/Review';
-import {TAB_NAVIGATION_ROOT} from '../../navigation/config/routes';
+import { TAB_NAVIGATION_ROOT } from '../../navigation/config/routes';
 import LoadingScreen from '../../component/LoadingScreen';
-import {getReviewProduct} from '../../api/modules/api-app/product';
+import { getReviewProduct } from '../../api/modules/api-app/product';
 import ItemProduct from '../../component/item/ItemProduct';
 
 type ParamList = {
@@ -42,10 +42,10 @@ const ProductDetailsScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const route = useRoute<RouteProp<ParamList, 'ProductDetailsScreen'>>();
-  const {item} = route.params || {};
-  const {productName, productImage, productPrice, quantity, id} = item;
-  const {userInfo} = store.getState();
-  const {cart} = useSelector((state: any) => state);
+  const { item } = route.params || {};
+  const { productName, productImage, productPrice, quantity, id } = item;
+  const { userInfo } = store.getState();
+  const { cart } = useSelector((state: any) => state);
   const [loading, setLoading] = useState<boolean>(false);
   const [listReview, setListReview] = useState<any>([]);
   const isFocus = useIsFocused();
@@ -135,7 +135,7 @@ const ProductDetailsScreen = () => {
         <View style={styles.viewInfo}>
           <Text style={styles.textProductName}>{productName}</Text>
           <Text style={styles.textProductPrice}>{productPrice}</Text>
-          <Text style={[styles.textProductName, {marginTop: verticalScale(5)}]}>
+          <Text style={[styles.textProductName, { marginTop: verticalScale(5) }]}>
             Quantity: {quantity}
           </Text>
         </View>
@@ -149,7 +149,7 @@ const ProductDetailsScreen = () => {
           </View>
           <View style={styles.ratingView}>
             <DefaultImage
-              style={[styles.star, {marginTop: 0, marginRight: 8}]}
+              style={[styles.star, { marginTop: 0, marginRight: 8 }]}
               source={starImage[convertRate(item?.rate) - 1]}
             />
             <Text style={styles.textStar}>{convertRate(item?.rate)}</Text>
@@ -179,6 +179,7 @@ const ProductDetailsScreen = () => {
       </ScrollView>
       <View style={styles.viewButton}>
         <ButtonDefault
+          disabled={quantity === 0}
           title={quantity === 0 ? 'Sold out' : 'Add To Cart'}
           onPress={() => addToCartFunc()}
         />
@@ -289,7 +290,7 @@ const styles = ScaledSheet.create({
     paddingHorizontal: '16@s',
     marginTop: '32@s',
   },
-  listView: {marginHorizontal: '16@s'},
+  listView: { marginHorizontal: '16@s' },
 });
 
 export default ProductDetailsScreen;

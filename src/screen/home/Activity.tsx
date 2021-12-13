@@ -1,4 +1,4 @@
-import {useNavigation} from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
 import {
   Text,
@@ -7,14 +7,19 @@ import {
   Image as DefaultImage,
   ScrollView,
 } from 'react-native';
-import {ScaledSheet} from 'react-native-size-matters';
+import { ScaledSheet } from 'react-native-size-matters';
 import Images from '../../assets/images';
-import {Themes} from '../../assets/themes';
+import { Themes } from '../../assets/themes';
 import Header from '../../component/header/Header';
-
+type ParamList = {
+  Activity: {
+    listNotification?: any;
+  };
+};
 const Activity = () => {
   const navigation = useNavigation();
-
+  const route = useRoute<RouteProp<ParamList, 'Activity'>>();
+  const { listNotification } = route.params || {};
   return (
     <View style={styles.container}>
       <Header>
@@ -27,7 +32,7 @@ const Activity = () => {
       </Header>
 
       <ScrollView style={styles.content}>
-        {[1, 2, 3, 4, 5].map(item => (
+        {listNotification.map(item => (
           <TouchableOpacity style={styles.offer} key={`${item}`}>
             <DefaultImage
               source={Images.icon.transaction}
@@ -35,14 +40,12 @@ const Activity = () => {
             />
             <View style={styles.left}>
               <Text numberOfLines={2} style={styles.title}>
-                Transaction Nike Air Zoom Product
+                {item?.title}
               </Text>
               <Text style={styles.contentText} numberOfLines={3}>
-                Culpa cillum consectetur labore nulla nulla magna irure. Id
-                veniam culpa officia aute dolor amet deserunt ex proident
-                commodo
+                {item?.content}
               </Text>
-              <Text style={styles.date}>April 30, 2014 1:01 PM</Text>
+              <Text style={styles.date}>{item?.createTime}</Text>
             </View>
           </TouchableOpacity>
         ))}
@@ -70,7 +73,7 @@ const styles = ScaledSheet.create({
     color: Themes.NeutralColors.Dark,
     marginRight: '20@s',
   },
-  content: {flex: 1, paddingVertical: '16@vs'},
+  content: { flex: 1, paddingVertical: '16@vs' },
   icon: {
     width: '20@s',
     height: '20@vs',
@@ -82,7 +85,7 @@ const styles = ScaledSheet.create({
     marginBottom: '16@vs',
     flexDirection: 'row',
   },
-  left: {paddingRight: '16@s'},
+  left: { paddingRight: '16@s' },
   title: {
     fontWeight: '700',
     fontSize: 14,

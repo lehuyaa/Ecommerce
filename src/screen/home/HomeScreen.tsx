@@ -9,11 +9,11 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {ScaledSheet, verticalScale} from 'react-native-size-matters';
-import {flashSale, megaSale, product} from './list/ListProduct';
+import React, { useEffect, useState } from 'react';
+import { ScaledSheet, verticalScale } from 'react-native-size-matters';
+import { flashSale, megaSale, product } from './list/ListProduct';
 
-import {APP_ROUTE, TAB_NAVIGATION_ROOT} from '../../navigation/config/routes';
+import { APP_ROUTE, TAB_NAVIGATION_ROOT } from '../../navigation/config/routes';
 import ButtonIcon from '../../component/button/ButtonIcon';
 import Dot from './component/Dot';
 import FormSearch from './component/FormSearch';
@@ -24,19 +24,20 @@ import Images from '../../assets/images';
 import ItemBanner from './component/ItemBanner';
 import ItemBigProduct from '../../component/item/ItemBigProduct';
 import ItemCategory from '../../component/item/ItemCategory';
-import {ListCategory} from './list/ListCategory';
+import { ListCategory } from './list/ListCategory';
 import ListProduct from './component/ListProduct';
 import LoadingScreen from '../../component/LoadingScreen';
 import Swiper from 'react-native-swiper';
-import {Themes} from '../../assets/themes';
+import { Themes } from '../../assets/themes';
 import ViewTittle from './component/ViewTittle';
-import {arrBanner} from './list/ListBanner';
-import {getAllProduct, searchProduct} from '../../api/modules/api-app/product';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
-import {sortArrayProductByRate} from '../../utilities/format';
-import {addToSuggest} from '../../app-redux/slices/suggestionsSlice';
-import {useDispatch} from 'react-redux';
+import { arrBanner } from './list/ListBanner';
+import { getAllProduct, searchProduct } from '../../api/modules/api-app/product';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { sortArrayProductByRate } from '../../utilities/format';
+import { addToSuggest } from '../../app-redux/slices/suggestionsSlice';
+import { useDispatch } from 'react-redux';
 import ListSuggest from '../explore/component/ListSuggest';
+import { windowWidth } from '../../utilities/size';
 
 const ListHeader = () => {
   const navigation = useNavigation();
@@ -98,6 +99,7 @@ const HomeScreen = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [searchKey, setSearchKey] = useState('');
   const [pageIndex, setPageIndex] = useState(0);
+  const isFocus = useIsFocused();
   const getAllProductFunc = async () => {
     setLoading(true);
 
@@ -110,6 +112,18 @@ const HomeScreen = () => {
     }
   };
 
+  const resetProduct = async () => {
+    setLoading(true);
+
+    try {
+      const response: any = await getAllProduct(0);
+      setLoading(false);
+      setListProduct(response?.data);
+      setPageIndex(0);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
   const onSearch = async () => {
     setLoading(true);
     try {
@@ -132,19 +146,26 @@ const HomeScreen = () => {
   };
   useEffect(() => {
     getAllProductFunc();
-  }, []);
+  }, [pageIndex]);
 
+  useEffect(() => {
+    if (isFocus) {
+      resetProduct();
+    }
+  }, [isFocus]);
   const renderFooter = () => {
     return (
       //Footer View with Load More button
-      <TouchableOpacity onPress={() => handleLoadmore()} style={styles.footer}>
-        <Text>Load More</Text>
-      </TouchableOpacity>
+      <View style={{ width: windowWidth, alignItems: 'center' }}>
+        <TouchableOpacity onPress={() => handleLoadmore()} style={styles.footer}>
+          <Text style={{ color: Themes.PrimaryColor.blue }}>Load More</Text>
+        </TouchableOpacity>
+      </View>
+
     );
   };
   const handleLoadmore = () => {
     setPageIndex(pageIndex + 1);
-    getAllProductFunc();
     console.log('listProduct', listProduct);
   };
   return (
@@ -159,12 +180,12 @@ const HomeScreen = () => {
             setIsSearching={setIsSearching}
             setFilteredList={setFilteredList}
           />
-          <ButtonIcon
-            onPress={() => {}}
+          {/* <ButtonIcon
+            onPress={() => { }}
             children={
               <IconHeart height={verticalScale(24)} width={verticalScale(24)} />
             }
-          />
+          /> */}
           <ButtonIcon
             onPress={() => {
               navigation.navigate(TAB_NAVIGATION_ROOT.HOME_ROUTE.NOTIFICATION);
@@ -188,7 +209,7 @@ const HomeScreen = () => {
               style={styles.flatList}
               data={sortArrayProductByRate(listProduct)}
               // data={listProduct}
-              renderItem={({item}) => (
+              renderItem={({ item }) => (
                 <ItemBigProduct
                   item={item}
                   image={item.productImage}
@@ -244,10 +265,14 @@ const styles = ScaledSheet.create({
     marginBottom: '-15@vs',
   },
   footer: {
-    padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row',
+    width: '100@s',
+    height: '50@vs',
+    borderRadius: 5,
+    borderColor: Themes.PrimaryColor.blue,
+    marginBottom: '30@vs',
+    borderWidth: 1,
   },
   CategoryView: {
     paddingLeft: '16@s',
