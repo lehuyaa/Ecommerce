@@ -1,23 +1,23 @@
-import {useIsFocused, useNavigation} from '@react-navigation/core';
+import { useIsFocused, useNavigation } from '@react-navigation/core';
 import * as React from 'react';
-import {useEffect} from 'react';
-import {ScrollView, Text, View} from 'react-native';
-import {ScaledSheet, verticalScale} from 'react-native-size-matters';
-import {getOrderByUserId} from '../../api/modules/api-app/order';
-import {store} from '../../app-redux/store';
+import { useEffect } from 'react';
+import { ScrollView, Text, View } from 'react-native';
+import { ScaledSheet, verticalScale } from 'react-native-size-matters';
+import { getOrderByUserId } from '../../api/modules/api-app/order';
+import { store } from '../../app-redux/store';
 import IconBack from '../../assets/icons/IconBack';
-import {Themes} from '../../assets/themes';
+import { Themes } from '../../assets/themes';
 import ButtonIcon from '../../component/button/ButtonIcon';
 import Header from '../../component/header/Header';
 import LoadingScreen from '../../component/LoadingScreen';
-import {TAB_NAVIGATION_ROOT} from '../../navigation/config/routes';
+import { TAB_NAVIGATION_ROOT } from '../../navigation/config/routes';
 import ItemOrder from './component/ItemOrder';
 
-interface ListOrderScreenNameProps {}
+interface ListOrderScreenNameProps { }
 
 const ListOrderScreen = (props: ListOrderScreenNameProps) => {
   const [loading, setLoading] = React.useState<boolean>(false);
-  const {userInfo} = store.getState();
+  const { userInfo } = store.getState();
   const [listOrder, setListOrder] = React.useState<any>([]);
   const navigation = useNavigation();
   const isFocus = useIsFocused();
@@ -27,7 +27,6 @@ const ListOrderScreen = (props: ListOrderScreenNameProps) => {
     try {
       const response = await getOrderByUserId(userInfo?.user?.id);
       setListOrder(response?.data);
-      console.log(response?.data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -57,7 +56,7 @@ const ListOrderScreen = (props: ListOrderScreenNameProps) => {
       <ScrollView
         contentContainerStyle={styles.contentScroll}
         style={styles.viewMain}>
-        {listOrder.map(item => (
+        {listOrder.reverse().map(item => (
           <ItemOrder key={item.id} item={item} />
         ))}
       </ScrollView>

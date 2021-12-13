@@ -1,12 +1,15 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View, Image, ScrollView } from 'react-native';
 import { scale, ScaledSheet, verticalScale } from 'react-native-size-matters';
+import { receivedOrder } from '../../api/modules/api-app/order';
 import IconBack from '../../assets/icons/IconBack';
 import Images from '../../assets/images';
 import { Themes } from '../../assets/themes';
+import ButtonDefault from '../../component/button/ButtonDefault';
 import ButtonIcon from '../../component/button/ButtonIcon';
 import Header from '../../component/header/Header';
+import LoadingScreen from '../../component/LoadingScreen';
 import { formatCurrencyVND } from '../../utilities/format';
 import ItemProduct from './component/ItemProduct';
 
@@ -68,6 +71,7 @@ type ParamList = {
 const OrderDetails = () => {
   const route = useRoute<RouteProp<ParamList, 'OrderDetails'>>();
   const navigation = useNavigation();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { item } = route.params || {};
   console.log(item);
@@ -107,8 +111,21 @@ const OrderDetails = () => {
     },
   ];
 
+  const receivedOrderFunc = async () => {
+    setLoading(true);
+
+    try {
+      const response: any = await receivedOrder(item?.id);
+      setLoading(false);
+      navigation.goBack();
+    } catch (error) {
+      setLoading(false);
+    }
+  }
   return (
     <View style={styles.container}>
+      {loading && <LoadingScreen />}
+
       <Header customStyle={styles.customHeader}>
         <View style={styles.leftHeader}>
           <ButtonIcon
@@ -128,14 +145,14 @@ const OrderDetails = () => {
         showsVerticalScrollIndicator={false}>
         <View style={styles.viewStatus}>
           <ItemStatus
-            isDone={item?.statusOrder?.id === 1}
-            isRight={item?.statusOrder?.id === 2}
+            isDone={item?.statusOrder?.id === 1 || item?.statusOrder?.id === 2 || item?.statusOrder?.id === 3}
+            isRight={item?.statusOrder?.id === 2 || item?.statusOrder?.id === 3}
             title={'Packing'}
           />
           <ItemStatus
-            isLeft={item?.statusOrder?.id === 2}
+            isLeft={item?.statusOrder?.id === 2 || item?.statusOrder?.id === 3}
             isRight={item?.statusOrder?.id === 3}
-            isDone={item?.statusOrder?.id === 2}
+            isDone={item?.statusOrder?.id === 2 || item?.statusOrder?.id === 3}
             title={'Shipping'}
           />
           <ItemStatus
@@ -200,6 +217,13 @@ const OrderDetails = () => {
             </Text>
           </View>
         </View>
+        {item?.statusOrder?.id === 2 ? <View style={styles.viewButton}>
+          <ButtonDefault
+            title={'Received Order'}
+            onPress={() => receivedOrderFunc()}
+          />
+        </View> : null}
+
       </ScrollView>
     </View>
   );
@@ -297,6 +321,15 @@ const styles = ScaledSheet.create({
   },
   contentScroll: {
     paddingBottom: verticalScale(100),
+  },
+  viewButton: {
+    paddingHorizontal: '16@s',
+    paddingTop: '16@vs',
+    position: 'absolute',
+    width: '100%',
+    bottom: 0,
+    backgroundColor: Themes.BackgroundColor.white,
+    height: '100@vs',
   },
 });
 

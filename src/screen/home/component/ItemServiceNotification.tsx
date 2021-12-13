@@ -1,31 +1,33 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {Text, View, Image, TouchableOpacity} from 'react-native';
-import {ScaledSheet} from 'react-native-size-matters';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 import Images from '../../../assets/images';
-import {Themes} from '../../../assets/themes';
+import { Themes } from '../../../assets/themes';
 
 interface ItemServiceNotificationProps {
   title: string;
   icon: any;
   navigateName: string;
+  onPress?: any;
+  lengthList?: number
 }
 const ItemServiceNotification = (props: ItemServiceNotificationProps) => {
-  const {title, icon, navigateName} = props;
-  const navigation = useNavigation();
+  const { title, icon, onPress, lengthList } = props;
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate(navigateName)}
+      onPress={onPress}
       style={styles.container}>
       <View style={styles.leftRow}>
         <Image style={styles.icon} source={icon} />
         <Text style={styles.title}>{title}</Text>
       </View>
 
-      <View style={styles.badge}>
-        <Text style={styles.badgeText}>2</Text>
-      </View>
+      {lengthList > 0 ? <View style={styles.badge}>
+        <Text style={styles.badgeText}>{lengthList}</Text>
+      </View> : null}
+
     </TouchableOpacity>
   );
 };
@@ -63,7 +65,7 @@ const styles = ScaledSheet.create({
     fontWeight: '700',
     color: Themes.BackgroundColor.white,
   },
-  leftRow: {flexDirection: 'row', alignItems: 'center'},
+  leftRow: { flexDirection: 'row', alignItems: 'center' },
 });
 
 export default ItemServiceNotification;

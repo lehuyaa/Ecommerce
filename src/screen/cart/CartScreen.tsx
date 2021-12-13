@@ -45,7 +45,7 @@ const CartScreen = () => {
           showsVerticalScrollIndicator={false}
           ListFooterComponent={
             <View style={{ marginTop: 16 }}>
-              <View style={styles.buttonVoucher}>
+              {/* <View style={styles.buttonVoucher}>
                 <TextInput
                   placeholder={'Enter Cupon Code'}
                   style={styles.buttonInput}
@@ -53,7 +53,7 @@ const CartScreen = () => {
                 <TouchableOpacity style={styles.buttonApply}>
                   <Text style={styles.textApply}>Apply</Text>
                 </TouchableOpacity>
-              </View>
+              </View> */}
 
               <View style={styles.bill}>
                 <View>
