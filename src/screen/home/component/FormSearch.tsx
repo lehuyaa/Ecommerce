@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, TextInput} from 'react-native';
-import {ScaledSheet, verticalScale} from 'react-native-size-matters';
-import {Themes} from '../../../assets/themes';
+import { View, TextInput } from 'react-native';
+import { ScaledSheet, verticalScale } from 'react-native-size-matters';
+import { Themes } from '../../../assets/themes';
 import ButtonIcon from '../../../component/button/ButtonIcon';
 import IconSearch from '../../../assets/icons/IconSearch';
-import {useSelector} from 'react-redux';
-import {listSuggest, REGEX_SALARY} from '../../../utilities/staticData';
+import { useSelector } from 'react-redux';
+import { listSuggest, REGEX_SALARY } from '../../../utilities/staticData';
 const listTest = ['laptop', 'PC', 'ram'];
 
 const FormSearch = (props: any) => {
@@ -16,7 +16,7 @@ const FormSearch = (props: any) => {
     setIsSearching,
     setFilteredList,
   } = props;
-  const {suggest} = useSelector((state: any) => state);
+  const { suggest } = useSelector((state: any) => state);
   const onSubmit = () => {
     onSubmitEditing();
   };
@@ -34,7 +34,7 @@ const FormSearch = (props: any) => {
   return (
     <View style={styles.container}>
       <ButtonIcon
-        onPress={() => {}}
+        onPress={() => { }}
         children={
           <IconSearch
             height={verticalScale(16)}
@@ -55,7 +55,6 @@ const FormSearch = (props: any) => {
         }}
         onFocus={() => {
           setIsSearching(true);
-          console.log('aaaa');
         }}
         onBlur={() => setIsSearching(false)}
       />

@@ -104,3 +104,5 @@ export const starImage = [
   Images.star.four,
   Images.star.five,
 ];
+
+export const listIconCategory = [Images.icon.laptop, Images.icon.display, Images.icon.pc, Images.icon.ram, Images.icon.vga];

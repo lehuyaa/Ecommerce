@@ -1,10 +1,10 @@
 import React from 'react';
-import {Text, View, Image, TouchableOpacity} from 'react-native';
-import {ScaledSheet} from 'react-native-size-matters';
-import {Themes} from '../../assets/themes';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
+import { Themes } from '../../assets/themes';
 
 const ItemProduct = props => {
-  const {image, name, price, oldPrice, percent, style} = props;
+  const { item } = props;
   return (
     <TouchableOpacity>
       <View style={styles.container}>
@@ -12,18 +12,14 @@ const ItemProduct = props => {
           style={styles.image}
           source={{
             uri:
-              image ||
-              'https://lh3.googleusercontent.com/jKndbh-fBd-5W8n_yoN14NSHxkcjqBWiRAvG23pir2zRSDDTmH3CCGqvx8Oy6clWFN5ky7Ha5cZILkWHOCc=rw-w300',
+              item?.item?.productImage
           }}
         />
         <Text style={styles.name} numberOfLines={2}>
-          {name || 'FS - Nike Air Max 270 React...'}
+          {item?.item?.productName}
         </Text>
-        <Text style={styles.price}>{price || '$299,43'}</Text>
-        <View style={styles.discount}>
-          <Text style={styles.oldPrice}>{oldPrice}</Text>
-          <Text style={styles.percent}>{percent}</Text>
-        </View>
+        <Text style={styles.price}>{item?.item?.productPrice}</Text>
+
       </View>
     </TouchableOpacity>
   );
