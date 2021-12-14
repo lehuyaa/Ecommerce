@@ -20,3 +20,6 @@ export const getReviewProduct = (productId: number) =>
 
 export const addReview = (params: any) =>
   request.post(`api/product/addReview`, params);
+
+export const getRandomProductByUserId = (userId: any) =>
+  request.get(`api/product/getRandomProduct/${userId}`);

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,24 +8,24 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import {Themes} from '../../assets/themes';
+import { Themes } from '../../assets/themes';
 import Images from '../../assets/images';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import ButtonDefault from '../../component/button/ButtonDefault';
-import {ScaledSheet} from 'react-native-size-matters';
-import {useNavigation} from '@react-navigation/native';
-import {AUTHENTICATE_ROUTE} from '../../navigation/config/routes';
+import { ScaledSheet } from 'react-native-size-matters';
+import { useNavigation } from '@react-navigation/native';
+import { AUTHENTICATE_ROUTE } from '../../navigation/config/routes';
 import * as yup from 'yup';
-import {FormProvider, useForm, Controller} from 'react-hook-form';
-import {yupResolver} from '@hookform/resolvers/yup';
+import { FormProvider, useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import IconLeftInputForm from '../../component/form/IconLeftInputForm';
-import {APP_ROUTE, TAB_NAVIGATION_ROOT} from '../../navigation/config/routes';
+import { APP_ROUTE, TAB_NAVIGATION_ROOT } from '../../navigation/config/routes';
 import Feather from 'react-native-vector-icons/Feather';
 import LoadingScreen from '../../component/LoadingScreen';
-import {useDispatch} from 'react-redux';
-import {login} from '../../api/modules/api-app/authenticate';
-import {store} from '../../app-redux/store';
-import {userInfoActions} from '../../app-redux/slices/userInfoSlice';
+import { useDispatch } from 'react-redux';
+import { login } from '../../api/modules/api-app/authenticate';
+import { store } from '../../app-redux/store';
+import { userInfoActions } from '../../app-redux/slices/userInfoSlice';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -46,7 +46,7 @@ const LoginScreen = () => {
   });
   const {
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = form;
 
   const loginFunc = async data => {
@@ -61,7 +61,6 @@ const LoginScreen = () => {
       setLoading(false);
       store.dispatch(userInfoActions.setUserInfoSuccess(response));
     } catch (error) {
-      console.log('error', error);
       setLoading(false);
     }
   };

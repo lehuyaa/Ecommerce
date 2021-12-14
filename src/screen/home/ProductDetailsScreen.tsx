@@ -30,7 +30,7 @@ import { convertRate } from '../../utilities/format';
 import Review from './component/Review';
 import { TAB_NAVIGATION_ROOT } from '../../navigation/config/routes';
 import LoadingScreen from '../../component/LoadingScreen';
-import { getReviewProduct } from '../../api/modules/api-app/product';
+import { getRandomProductByUserId, getReviewProduct } from '../../api/modules/api-app/product';
 import ItemProduct from '../../component/item/ItemProduct';
 
 type ParamList = {
@@ -48,6 +48,7 @@ const ProductDetailsScreen = () => {
   const { cart } = useSelector((state: any) => state);
   const [loading, setLoading] = useState<boolean>(false);
   const [listReview, setListReview] = useState<any>([]);
+  const [listRandomProduct, setListRandomPorduct] = useState<any>([]);
   const isFocus = useIsFocused();
   const showSuccessToast = () => {
     Toast.show({
@@ -72,9 +73,10 @@ const ProductDetailsScreen = () => {
 
     try {
       const response: any = await getReviewProduct(id);
+      const randomProduct: any = await getRandomProductByUserId(item?.user?.id);
       setLoading(false);
       setListReview(response?.data);
-      console.log('response?.data', response?.data);
+      setListRandomPorduct(randomProduct?.data)
     } catch (error) {
       setLoading(false);
     }
@@ -165,15 +167,19 @@ const ProductDetailsScreen = () => {
         <View>
           <View style={styles.suggestProduct}>
             <Text style={styles.textReview}>You Might Also Like</Text>
+            <TouchableOpacity onPress={() => navigation.navigate(TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.SHOP_SELLER, { idSeller: item?.user?.id })}>
+              <Text style={styles.textReview}>View Shop</Text>
+            </TouchableOpacity>
+
           </View>
 
           <FlatList
             horizontal
             //fake data
-            data={[1, 2, 3, 4, 5]}
+            data={listRandomProduct}
             showsHorizontalScrollIndicator={false}
             style={styles.listView}
-            renderItem={item => <ItemProduct />}
+            renderItem={item => <ItemProduct item={item} />}
           />
         </View>
       </ScrollView>
@@ -294,3 +300,5 @@ const styles = ScaledSheet.create({
 });
 
 export default ProductDetailsScreen;
+
+

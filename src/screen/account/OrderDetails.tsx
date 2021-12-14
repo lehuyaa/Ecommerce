@@ -74,7 +74,6 @@ const OrderDetails = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const { item } = route.params || {};
-  console.log(item);
   const calculatorTotalProduct = (list: any) => {
     const totalPrice = list.reduce((total, item) => {
       return total + item?.total;

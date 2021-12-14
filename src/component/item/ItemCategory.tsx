@@ -3,14 +3,15 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { ScaledSheet } from 'react-native-size-matters';
 import { Themes } from '../../assets/themes';
+import { listIconCategory } from '../../utilities/staticData';
 
 const ItemCategory = (props) => {
-    const { icon, tittle, onPress } = props;
+    const { icon, tittle, onPress, index } = props;
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={onPress}>
                 <View style={styles.viewImage}>
-                    <Image style={styles.icon} source={icon} />
+                    <Image style={styles.icon} source={listIconCategory[index]} />
                 </View>
             </TouchableOpacity>
             <Text style={styles.title}>{tittle}</Text>

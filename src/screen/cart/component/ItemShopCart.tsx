@@ -9,7 +9,6 @@ import { TAB_NAVIGATION_ROOT } from '../../../navigation/config/routes';
 const ItemShopCart = (props: any) => {
   const { item } = props;
   const navigation = useNavigation();
-  console.log('item', item)
   return (
     <View style={styles.container}>
       <View style={styles.viewInfoSeller}>

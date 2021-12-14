@@ -25,6 +25,11 @@ const Images = {
     iconUnDone: require('./images/icon/IconUnDone.png'),
     feed: require('./images/icon/Feed.png'),
     transaction: require('./images/icon/Transaction.png'),
+    laptop: require('./images/icon/laptop.png'),
+    display: require('./images/icon/display.png'),
+    ram: require('./images/icon/ram.png'),
+    pc: require('./images/icon/pc.png'),
+    vga: require('./images/icon/vga.png'),
   },
   products: {
     manShirt: require('./images/icon/Manshirt.png'),

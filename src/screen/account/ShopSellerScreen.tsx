@@ -33,7 +33,6 @@ const ShopSellerScreen = () => {
             // setListProduct(response?.data);
             setUser(response?.data?.user)
             setListProduct(response?.data?.productList)
-            console.log(response?.data)
         } catch (error) {
             setLoading(false);
         }

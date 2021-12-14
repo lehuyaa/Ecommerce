@@ -96,7 +96,7 @@ const CartScreen = () => {
               </View>
 
               <ButtonDefault
-                disabled={cart?.isNotEnought}
+                disabled={cart?.isNotEnought || cart?.listProduct.length === 0}
                 title={'Check Out'}
                 onPress={() => {
                   navigation.navigate('SHIPPING_ADDRESS', {

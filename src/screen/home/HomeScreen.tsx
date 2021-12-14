@@ -166,7 +166,6 @@ const HomeScreen = () => {
   };
   const handleLoadmore = () => {
     setPageIndex(pageIndex + 1);
-    console.log('listProduct', listProduct);
   };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>

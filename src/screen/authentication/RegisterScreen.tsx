@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-import {Controller, FormProvider, useForm} from 'react-hook-form';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 import {
   Image,
   Keyboard,
@@ -11,21 +11,21 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
-import {AUTHENTICATE_ROUTE} from '../../navigation/config/routes';
+import { AUTHENTICATE_ROUTE } from '../../navigation/config/routes';
 import ButtonDefault from '../../component/button/ButtonDefault';
 import Feather from 'react-native-vector-icons/Feather';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import IconLeftInputForm from '../../component/form/IconLeftInputForm';
 import Images from '../../assets/images';
 import LoadingScreen from '../../component/LoadingScreen';
-import {ScaledSheet} from 'react-native-size-matters';
+import { ScaledSheet } from 'react-native-size-matters';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import {Themes} from '../../assets/themes';
-import {register} from '../../api/modules/api-app/authenticate';
-import {useNavigation} from '@react-navigation/native';
-import {yupResolver} from '@hookform/resolvers/yup';
+import { Themes } from '../../assets/themes';
+import { register } from '../../api/modules/api-app/authenticate';
+import { useNavigation } from '@react-navigation/native';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
@@ -52,7 +52,7 @@ const RegisterScreen = () => {
   });
   const {
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = form;
   const registerFunc = async data => {
     const param = {
@@ -61,16 +61,13 @@ const RegisterScreen = () => {
       password: data.password,
       role: ['user'],
     };
-    console.log('data', data);
     setLoading(true);
 
     try {
       const response = await register(param);
       setLoading(false);
       navigation.navigate(AUTHENTICATE_ROUTE.LOGIN);
-      console.log('response', response);
     } catch (error) {
-      console.log('error', error);
       setLoading(false);
     }
   };

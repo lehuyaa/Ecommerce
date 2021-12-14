@@ -8,7 +8,7 @@ const ButtonDefault = (props: any) => {
   return (
     <TouchableOpacity
       disabled={disabled}
-      style={[styles.container, customStyles]}
+      style={[styles.container, customStyles, { backgroundColor: disabled ? Themes.NeutralColors.grey : Themes.PrimaryColor.blue }]}
       onPress={onPress}>
       <Text style={styles.tittle}>{title}</Text>
     </TouchableOpacity>
