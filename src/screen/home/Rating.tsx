@@ -1,5 +1,5 @@
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import React, { useState, useEffect, useMemo } from 'react';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import React, {useState, useEffect, useMemo} from 'react';
 import {
   Text,
   TouchableOpacity,
@@ -7,13 +7,13 @@ import {
   Image as DefaultImage,
   ScrollView,
 } from 'react-native';
-import { ScaledSheet } from 'react-native-size-matters';
-import { store } from '../../app-redux/store';
+import {ScaledSheet} from 'react-native-size-matters';
+import {store} from '../../app-redux/store';
 import Images from '../../assets/images';
-import { Themes } from '../../assets/themes';
+import {Themes} from '../../assets/themes';
 import ButtonDefault from '../../component/button/ButtonDefault';
 import Header from '../../component/header/Header';
-import { TAB_NAVIGATION_ROOT } from '../../navigation/config/routes';
+import {TAB_NAVIGATION_ROOT} from '../../navigation/config/routes';
 import Review from './component/Review';
 import Toast from 'react-native-toast-message';
 
@@ -28,25 +28,26 @@ type ParamList = {
 const Rating = () => {
   const navigation = useNavigation();
   const route = useRoute<RouteProp<ParamList, 'Rating'>>();
-  const { item, listReview } = route.params || {};
+  const {item, listReview} = route.params || {};
   const [rate, setRating] = useState(listReview);
   const [star, setStar] = useState(0);
   useEffect(() => {
-    setRating(listReview)
+    setRating(listReview);
   }, [listReview]);
   const onFilterItem = item => {
     setRating(item);
     if (item === 0) {
       setStar(0);
-      setRating(listReview)
+      setRating(listReview);
     } else {
       setStar(item);
-      const newRating = listReview.filter(itemReview => itemReview.starNumber === item)
-      setRating(newRating || [])
+      const newRating = listReview.filter(
+        itemReview => itemReview.starNumber === item,
+      );
+      setRating(newRating || []);
     }
   };
-  console.log(rate)
-  const { userInfo } = store.getState();
+  const {userInfo} = store.getState();
   const showFailureNotEnoughtToast = () => {
     Toast.show({
       type: 'error',
@@ -88,7 +89,18 @@ const Rating = () => {
                   onPress={() => onFilterItem(item)}
                   key={item.toString()}
                   style={customSelectFilterStyle}>
-                  <Text style={[styles.review, { color: star === 0 ? Themes.PrimaryColor.blue : Themes.NeutralColors.grey }]}>All Review</Text>
+                  <Text
+                    style={[
+                      styles.review,
+                      {
+                        color:
+                          star === 0
+                            ? Themes.PrimaryColor.blue
+                            : Themes.NeutralColors.grey,
+                      },
+                    ]}>
+                    All Review
+                  </Text>
                 </TouchableOpacity>
               );
             }
@@ -104,7 +116,18 @@ const Rating = () => {
                     borderWidth: rate === item ? 0 : 1,
                   },
                 ]}>
-                <Text style={[styles.star, { color: star === item ? Themes.PrimaryColor.blue : Themes.NeutralColors.grey }]}>{item} Star</Text>
+                <Text
+                  style={[
+                    styles.star,
+                    {
+                      color:
+                        star === item
+                          ? Themes.PrimaryColor.blue
+                          : Themes.NeutralColors.grey,
+                    },
+                  ]}>
+                  {item} Star
+                </Text>
               </TouchableOpacity>
             );
           })}
@@ -177,7 +200,7 @@ const styles = ScaledSheet.create({
     flex: 1,
     marginBottom: '100@vs',
   },
-  star: { fontSize: 12, color: Themes.NeutralColors.grey, fontWeight: '700' },
-  review: { fontSize: 12, color: Themes.PrimaryColor.blue, fontWeight: '700' },
-  listRating: { padding: '16@s', marginRight: '16@s' },
+  star: {fontSize: 12, color: Themes.NeutralColors.grey, fontWeight: '700'},
+  review: {fontSize: 12, color: Themes.PrimaryColor.blue, fontWeight: '700'},
+  listRating: {padding: '16@s', marginRight: '16@s'},
 });

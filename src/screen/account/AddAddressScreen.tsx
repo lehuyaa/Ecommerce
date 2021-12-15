@@ -1,5 +1,5 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import {useNavigation} from '@react-navigation/native';
+import React, {useState} from 'react';
 import {
   Text,
   TouchableOpacity,
@@ -8,20 +8,20 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native';
-import { scale, ScaledSheet, verticalScale } from 'react-native-size-matters';
+import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
 import Images from '../../assets/images';
-import { Themes } from '../../assets/themes';
+import {Themes} from '../../assets/themes';
 import Header from '../../component/header/Header';
-import { windowWidth } from '../../utilities/size';
+import {windowWidth} from '../../utilities/size';
 import DropDown from './component/DropDown';
 import * as yup from 'yup';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import {useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
 import InputForm from '../../component/form/InputForm';
 import ButtonDefault from '../../component/button/ButtonDefault';
 import LoadingScreen from '../../component/LoadingScreen';
-import { addAddress } from '../../api/modules/api-app/address';
-import { store } from '../../app-redux/store';
+import {addAddress} from '../../api/modules/api-app/address';
+import {store} from '../../app-redux/store';
 
 const AddAddressScreen = () => {
   const navigation = useNavigation();
@@ -31,7 +31,7 @@ const AddAddressScreen = () => {
     Object.values(selectedItem.value)[0],
   );
   const [loading, setLoading] = useState<boolean>(false);
-  const { userInfo } = store.getState();
+  const {userInfo} = store.getState();
 
   const addAddressModel = yup.object().shape({
     nameReceiver: yup.string().required('Name Receiver field is required'),
@@ -44,7 +44,7 @@ const AddAddressScreen = () => {
   });
   const {
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
   } = form;
   const [hideDropDownCity, setHideDropDownCity] = useState<boolean>(false);
   const [hideDropDownDistrict, setHideDropDownDistrict] =
@@ -57,6 +57,7 @@ const AddAddressScreen = () => {
       phoneNumber: data.phoneNumber,
       city: `${district}-${selectedItem?.text}`,
       user_id: userInfo?.user?.id,
+      location: Number(selectedItem?.location),
       zipCode: '8000',
     };
     setLoading(true);
@@ -69,7 +70,7 @@ const AddAddressScreen = () => {
       setLoading(false);
     }
   };
-  const Item = ({ item }) => (
+  const Item = ({item}) => (
     <TouchableOpacity
       onPress={() => {
         if (item.text) {
@@ -110,7 +111,7 @@ const AddAddressScreen = () => {
             <View style={styles.viewDropDownCity}>
               <FlatList
                 data={dataCity}
-                renderItem={({ item }) => <Item item={item} />}
+                renderItem={({item}) => <Item item={item} />}
                 keyExtractor={item => item.text}
               />
             </View>

@@ -1,35 +1,30 @@
 import React from 'react';
-import {
-  Text,
-  View,
-  Image as DefaultImage,
-} from 'react-native';
-import { scale, ScaledSheet, verticalScale } from 'react-native-size-matters';
-import { starImage } from '../../../utilities/staticData';
+import {Text, View, Image as DefaultImage} from 'react-native';
+import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
+import {starImage} from '../../../utilities/staticData';
 import Image from '../../../assets/images';
-import { Themes } from '../../../assets/themes';
+import {Themes} from '../../../assets/themes';
 
 const Review = (props: any) => {
-  const { item, itemReview = {} } = props;
-  console.log('itemReview', itemReview)
+  const {item, itemReview = {}} = props;
   return (
     <View style={styles.review}>
-
       <View style={styles.profile}>
         <DefaultImage style={styles.avatar} source={Image.avatar} />
         <View>
-          <Text style={[styles.textReview, { marginRight: scale(8) }]}>
+          <Text style={[styles.textReview, {marginRight: scale(8)}]}>
             {itemReview?.user?.username}
           </Text>
           <DefaultImage
-            style={[styles.star, { marginTop: verticalScale(4), marginRight: scale(8) }]}
+            style={[
+              styles.star,
+              {marginTop: verticalScale(4), marginRight: scale(8)},
+            ]}
             source={starImage[itemReview?.starNumber - 1]}
           />
         </View>
       </View>
-      <Text style={styles.reviewContent}>
-        {itemReview?.content}
-      </Text>
+      <Text style={styles.reviewContent}>{itemReview?.content}</Text>
       {/* <View style={styles.profile}>
         <DefaultImage
           style={styles.reviewImage}
@@ -71,11 +66,11 @@ const styles = ScaledSheet.create({
     marginTop: '10@vs',
   },
   review: {
-    paddingHorizontal: '16@s'
+    paddingHorizontal: '16@s',
   },
   reviewProduct: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   textReview: {
     fontSize: '14@vs',
@@ -91,7 +86,7 @@ const styles = ScaledSheet.create({
 
   profile: {
     flexDirection: 'row',
-    marginTop: '16@vs'
+    marginTop: '16@vs',
   },
   avatar: {
     width: '72@s',

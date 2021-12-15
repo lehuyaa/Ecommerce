@@ -1,5 +1,5 @@
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {ScrollView, Text, View} from 'react-native';
 import {ScaledSheet, verticalScale} from 'react-native-size-matters';
 import IconAdd from '../../assets/icons/IconAdd';
@@ -12,12 +12,12 @@ import ItemPaymentMethod from './component/ItemPaymentMethod';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Toast from 'react-native-toast-message';
 import ButtonDefault from '../../component/button/ButtonDefault';
-import { store } from '../../app-redux/store';
-import { order } from '../../api/modules/api-app/order';
+import {store} from '../../app-redux/store';
+import {order} from '../../api/modules/api-app/order';
 import LoadingScreen from '../../component/LoadingScreen';
-import { TAB_NAVIGATION_ROOT } from '../../navigation/config/routes';
-import { useDispatch } from 'react-redux';
-import { removeAllCart } from '../../app-redux/slices/cartSlice';
+import {TAB_NAVIGATION_ROOT} from '../../navigation/config/routes';
+import {useDispatch} from 'react-redux';
+import {removeAllCart} from '../../app-redux/slices/cartSlice';
 
 type ParamList = {
   PaymentMethod: {
@@ -27,7 +27,6 @@ type ParamList = {
 };
 const PaymentMethod = () => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   const route = useRoute<RouteProp<ParamList, 'PaymentMethod'>>();
   const {listSeller, address} = route.params || {};
@@ -38,7 +37,7 @@ const PaymentMethod = () => {
       icon: <Entypo name="home" size={30} color={Themes.PrimaryColor.blue} />,
     },
   ];
-  const [paymentMethod, setPaymentMethod] = useState<any>(null)
+  const [paymentMethod, setPaymentMethod] = useState<any>(null);
 
   const showFailureToast = () => {
     Toast.show({
@@ -49,30 +48,13 @@ const PaymentMethod = () => {
 
   const choicePayment = item => {
     const payment = {
-      id : item?.id,
+      id: item?.id,
       name: item?.name,
     };
     setPaymentMethod(payment);
   };
-  const {userInfo} = store.getState();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const orderFunc = async () => {
-      const params = {
-        payment: paymentMethod,
-        address,
-        listSeller,
-        userID:  userInfo?.user?.id
-      }
-      try {
-        const response = await order(params);
-        setLoading(false);
-        navigation.navigate(TAB_NAVIGATION_ROOT.CART_ROUTE.ORDER_SUCCESS);
-        dispatch(removeAllCart());
-      } catch (error) {
-        setLoading(false);
-      }
-  }
   return (
     <View style={styles.container}>
       {loading && <LoadingScreen />}
@@ -91,8 +73,11 @@ const PaymentMethod = () => {
       </Header>
       <ScrollView style={styles.viewMain}>
         {listPaymentMethod.map(item => (
-          <ItemPaymentMethod key={item.id} item={item}                 isChoice={item.id === paymentMethod?.id}
-          onPress={() => choicePayment(item)}
+          <ItemPaymentMethod
+            key={item.id}
+            item={item}
+            isChoice={item.id === paymentMethod?.id}
+            onPress={() => choicePayment(item)}
           />
         ))}
       </ScrollView>
@@ -101,7 +86,11 @@ const PaymentMethod = () => {
           title={'Next'}
           onPress={() => {
             if (paymentMethod) {
-              orderFunc();
+              navigation.navigate(TAB_NAVIGATION_ROOT.CART_ROUTE.INFO_ORDER, {
+                listSeller,
+                address,
+                paymentMethod,
+              });
             } else {
               showFailureToast();
             }
@@ -144,5 +133,3 @@ const styles = ScaledSheet.create({
 });
 
 export default PaymentMethod;
-
-

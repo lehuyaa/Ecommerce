@@ -12,17 +12,17 @@ import Header from '../../component/header/Header';
 import Images from '../../assets/images';
 import ItemCart from '../../component/item/ItemCart';
 import React from 'react';
-import { ScaledSheet } from 'react-native-size-matters';
-import { Themes } from '../../assets/themes';
-import { useNavigation } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
-import { caculatorTotalCart, formatCurrencyVND } from '../../utilities/format';
-import _, { groupBy } from 'lodash';
+import {ScaledSheet} from 'react-native-size-matters';
+import {Themes} from '../../assets/themes';
+import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import {caculatorTotalCart, formatCurrencyVND} from '../../utilities/format';
+import _, {groupBy} from 'lodash';
 import ItemShopCart from './component/ItemShopCart';
 
 const CartScreen = () => {
   const navigation = useNavigation();
-  const { cart } = useSelector((state: any) => state);
+  const {cart} = useSelector((state: any) => state);
   const groupCart = listProduct => {
     return _.chain(listProduct)
       .groupBy('idSeller')
@@ -40,67 +40,25 @@ const CartScreen = () => {
       <View style={styles.contentCart}>
         <FlatList
           data={groupCart(cart?.listProduct)}
-          renderItem={({ item }) => <ItemShopCart item={item} />}
+          renderItem={({item}) => <ItemShopCart item={item} />}
           keyExtractor={(_, index) => index.toString()}
           showsVerticalScrollIndicator={false}
           ListFooterComponent={
-            <View style={{ marginTop: 16 }}>
-              {/* <View style={styles.buttonVoucher}>
-                <TextInput
-                  placeholder={'Enter Cupon Code'}
-                  style={styles.buttonInput}
-                />
-                <TouchableOpacity style={styles.buttonApply}>
-                  <Text style={styles.textApply}>Apply</Text>
-                </TouchableOpacity>
-              </View> */}
-
-              <View style={styles.bill}>
-                <View>
-                  <View style={styles.eachField}>
-                    <Text style={styles.textLeftBill}>
-                      Item({cart?.numberCart})
-                    </Text>
-                    <Text style={styles.textRighBill}>
-                      {formatCurrencyVND(caculatorTotalCart(cart?.listProduct))}
-                    </Text>
-                  </View>
-                  <View style={styles.eachField}>
-                    <Text style={styles.textLeftBill}>Shipping</Text>
-                    <Text style={styles.textRighBill}>
-                      {formatCurrencyVND(
-                        caculatorTotalCart(cart?.listProduct) * 0.01,
-                      )}
-                    </Text>
-                  </View>
-                  <View style={styles.eachField}>
-                    <Text style={styles.textLeftBill}>Import charges</Text>
-                    <Text style={styles.textRighBill}>
-                      {formatCurrencyVND(
-                        caculatorTotalCart(cart?.listProduct) * 0.1,
-                      )}
-                    </Text>
-                  </View>
-                </View>
-
-                <View style={styles.divider} />
-
-                <View style={styles.eachField}>
-                  <Text style={styles.textLeftTotalBill}>Total Price</Text>
-                  <Text style={styles.textRightTotalBill}>
-                    {formatCurrencyVND(
-                      caculatorTotalCart(cart?.listProduct) * 1.11,
-                    )}
-                  </Text>
-                </View>
-              </View>
-
+            <View style={{marginTop: 16}}>
               <ButtonDefault
-                disabled={cart?.isNotEnought || cart?.listProduct.length === 0}
+                disabled={
+                  cart?.isNotEnought ||
+                  cart?.listProduct.length === 0 ||
+                  cart?.listProduct.filter(item => item.isCheck === true)
+                    .length === 0
+                }
                 title={'Check Out'}
                 onPress={() => {
+                  const newCart = cart?.listProduct.filter(
+                    e => e.isCheck === true,
+                  );
                   navigation.navigate('SHIPPING_ADDRESS', {
-                    listSeller: groupCart(cart?.listProduct),
+                    listSeller: groupCart(newCart),
                   });
                 }}
               />
@@ -127,7 +85,7 @@ const styles = ScaledSheet.create({
     paddingVertical: '16@vs',
     paddingHorizontal: '16@s',
   },
-  listCart: { height: '240@vs' },
+  listCart: {height: '240@vs'},
   buttonVoucher: {
     height: '55@s',
     width: '100%',

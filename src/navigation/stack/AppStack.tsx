@@ -35,7 +35,7 @@ import Feed from '../../screen/home/Feed';
 import Activity from '../../screen/home/Activity';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-
+import InforOrder from '../../screen/cart/InforOrder';
 const HomeStack = () => (
   <Stack.Navigator headerMode={'none'} screenOptions={navigationConfigs}>
     <Stack.Screen
@@ -198,6 +198,10 @@ const AppStack = () => (
     <Stack.Screen
       name={TAB_NAVIGATION_ROOT.ACCOUNT_ROUTE.SHOP_SELLER}
       component={ShopSellerScreen}
+    />
+    <Stack.Screen
+      name={TAB_NAVIGATION_ROOT.CART_ROUTE.INFO_ORDER}
+      component={InforOrder}
     />
   </Stack.Navigator>
 );

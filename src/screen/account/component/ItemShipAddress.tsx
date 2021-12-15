@@ -11,7 +11,7 @@ const areEqual = (prevProps: any, nextProps: any) =>
 
 const ItemShipAddress = (props: any) => {
   const {item, isChoice, onPress} = props;
-  const {nameReceiver, streetAddress, phoneNumber, city} = item || {};
+  const {nameReceiver, streetAddress, phoneNumber, city, district} = item || {};
   const editAddress = () => {};
   return (
     <TouchableOpacity
@@ -26,7 +26,10 @@ const ItemShipAddress = (props: any) => {
         },
       ]}>
       <Text style={styles.nameReceiver}>{nameReceiver}</Text>
-      <Text style={styles.streetAddress}>{`${streetAddress}-${city}`}</Text>
+      <Text
+        style={
+          styles.streetAddress
+        }>{`${streetAddress} - ${district} - ${city}`}</Text>
       <Text style={styles.phoneNumber}>{phoneNumber}</Text>
       <View style={styles.viewButton}>
         <ButtonDefault

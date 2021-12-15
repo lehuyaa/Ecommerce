@@ -1,8 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { generatePersistConfig } from '../../utilities/helper';
-import { persistReducer } from 'redux-persist';
-import { store } from '../store';
-import { formatStringCurrency } from '../../utilities/format';
+import {createSlice} from '@reduxjs/toolkit';
+import {generatePersistConfig} from '../../utilities/helper';
+import {persistReducer} from 'redux-persist';
+import {store} from '../store';
+import {formatStringCurrency} from '../../utilities/format';
 
 interface Cart {
   listProduct: any;
@@ -20,7 +20,7 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addToCart: (state, { payload }) => {
+    addToCart: (state, {payload}) => {
       const product = {
         id: payload.id,
         productName: payload.productName,
@@ -31,6 +31,8 @@ const cartSlice = createSlice({
         idBuyer: payload?.idUser,
         nameSeller: payload?.user?.username,
         quantity: 1,
+        isCheck: false,
+        location: payload?.user?.shopAddress?.location,
       };
       if (state.listProduct.length === 0) {
         state.listProduct.push(product);
@@ -49,7 +51,7 @@ const cartSlice = createSlice({
       }
       state.numberCart++;
     },
-    increaseQuantityToCart: (state, { payload }) => {
+    increaseQuantityToCart: (state, {payload}) => {
       state.listProduct.map((item, key) => {
         if (item.id === payload) {
           state.listProduct[key].quantity++;
@@ -57,7 +59,7 @@ const cartSlice = createSlice({
       });
       state.numberCart++;
     },
-    decreaseQuantityToCart: (state, { payload }) => {
+    decreaseQuantityToCart: (state, {payload}) => {
       state.listProduct.map((item, key) => {
         if (item.id === payload) {
           state.listProduct[key].quantity--;
@@ -65,19 +67,29 @@ const cartSlice = createSlice({
       });
       state.numberCart--;
     },
-    removeToCart: (state, { payload }) => {
+    removeToCart: (state, {payload}) => {
       const newCart = state.listProduct.filter(e => e.id !== payload.id);
       state.listProduct = newCart;
       state.numberCart = state.listProduct.reduce((total, currentValue) => {
         return total + currentValue.quantity;
       }, 0);
     },
-    removeAllCart: (state) => {
+    removeOrderCart: state => {
+      const newList = state.listProduct.filter(e => e.isCheck === false);
+      state.listProduct = newList;
+      state.numberCart = newList.length;
+    },
+    removeAllCart: state => {
       state.listProduct = [];
       state.numberCart = 0;
     },
-    updateStatus: (state, { payload }) => {
+    updateStatus: (state, {payload}) => {
       state.isNotEnought = payload;
+    },
+    checkProduct: (state, {payload}) => {
+      const objIndex = state.listProduct.findIndex(obj => obj.id == payload);
+      state.listProduct[objIndex].isCheck =
+        !state.listProduct[objIndex].isCheck;
     },
   },
 });
@@ -91,7 +103,9 @@ export const {
   increaseQuantityToCart,
   decreaseQuantityToCart,
   removeToCart,
+  removeOrderCart,
   removeAllCart,
   updateStatus,
+  checkProduct,
 } = cartSlice.actions;
 export default persistReducer<Cart>(persistConfig, cartSlice.reducer);
