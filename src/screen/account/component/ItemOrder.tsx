@@ -26,6 +26,8 @@ const ItemOrder = (props: ItemOrderProps) => {
   const navigation = useNavigation();
 
   const {item} = props || {};
+  const locationShop = item?.orderDetails[0].location;
+  const locationUser = item?.shipAddress.location;
   const {id, orderDetails, timeCreated} = item || {};
   const calculatorTotal = (list: any) => {
     const totalPrice = list.reduce((total: number, item: any) => {
@@ -38,7 +40,11 @@ const ItemOrder = (props: ItemOrderProps) => {
     {title: 'Items', content: `${item?.orderDetails.length} Items purchased`},
     {
       title: 'Total',
-      content: formatCurrencyVND(calculatorTotal(orderDetails) * 1.11),
+      content: formatCurrencyVND(
+        calculatorTotal(orderDetails) * 1.1 +
+          Math.abs(locationShop - locationUser) * 1400 +
+          2000,
+      ),
     },
   ];
   return (

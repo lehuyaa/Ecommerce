@@ -1,26 +1,27 @@
-import { useIsFocused, useNavigation } from '@react-navigation/core';
+import {useIsFocused, useNavigation} from '@react-navigation/core';
 import * as React from 'react';
-import { useEffect } from 'react';
-import { ScrollView, Text, View } from 'react-native';
-import { ScaledSheet, verticalScale } from 'react-native-size-matters';
-import { getOrderByUserId } from '../../api/modules/api-app/order';
-import { store } from '../../app-redux/store';
+import {useEffect} from 'react';
+import {FlatList, ScrollView, Text, View} from 'react-native';
+import {ScaledSheet, verticalScale} from 'react-native-size-matters';
+import {getOrderByUserId} from '../../api/modules/api-app/order';
+import {store} from '../../app-redux/store';
 import IconBack from '../../assets/icons/IconBack';
-import { Themes } from '../../assets/themes';
+import {Themes} from '../../assets/themes';
 import ButtonIcon from '../../component/button/ButtonIcon';
 import Header from '../../component/header/Header';
 import LoadingScreen from '../../component/LoadingScreen';
-import { TAB_NAVIGATION_ROOT } from '../../navigation/config/routes';
+import {TAB_NAVIGATION_ROOT} from '../../navigation/config/routes';
 import ItemOrder from './component/ItemOrder';
 
-interface ListOrderScreenNameProps { }
+interface ListOrderScreenNameProps {}
 
 const ListOrderScreen = (props: ListOrderScreenNameProps) => {
   const [loading, setLoading] = React.useState<boolean>(false);
-  const { userInfo } = store.getState();
+  const {userInfo} = store.getState();
   const [listOrder, setListOrder] = React.useState<any>([]);
   const navigation = useNavigation();
   const isFocus = useIsFocused();
+
   const getAllOrderFunc = async () => {
     setLoading(true);
 
@@ -37,6 +38,24 @@ const ListOrderScreen = (props: ListOrderScreenNameProps) => {
       getAllOrderFunc();
     }
   }, [isFocus]);
+  const listItemOrder = [
+    {
+      id: 1,
+      name: 'Packing',
+      list: listOrder.filter(item => item.statusOrder.id === 1),
+    },
+    {
+      id: 2,
+      name: 'Shipping',
+      list: listOrder.filter(item => item.statusOrder.id === 2),
+    },
+    {
+      id: 3,
+      name: 'Success',
+      list: listOrder.filter(item => item.statusOrder.id === 3),
+    },
+  ];
+
   return (
     <View style={styles.container}>
       {loading && <LoadingScreen />}
@@ -56,9 +75,20 @@ const ListOrderScreen = (props: ListOrderScreenNameProps) => {
       <ScrollView
         contentContainerStyle={styles.contentScroll}
         style={styles.viewMain}>
-        {listOrder.reverse().map(item => (
-          <ItemOrder key={item.id} item={item} />
-        ))}
+        {listItemOrder.reverse().map(item =>
+          // <ItemOrder key={item.id} item={item} />
+          item.list.length > 0 ? (
+            <>
+              <Text style={styles.title}>{item.name}</Text>
+              <FlatList
+                data={item?.list}
+                renderItem={({item}) => <ItemOrder item={item} />}
+                keyExtractor={(_, index) => index.toString()}
+                showsVerticalScrollIndicator={false}
+              />
+            </>
+          ) : null,
+        )}
       </ScrollView>
     </View>
   );
@@ -88,6 +118,12 @@ const styles = ScaledSheet.create({
   },
   contentScroll: {
     paddingBottom: '100@vs',
+  },
+  title: {
+    fontSize: '14@ms0.3',
+    color: Themes.NeutralColors.Dark,
+    fontWeight: '700',
+    marginBottom: '15@vs',
   },
 });
 

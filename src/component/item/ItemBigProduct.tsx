@@ -36,9 +36,7 @@ const ItemBigProduct = props => {
           style={styles.star}
           source={starImage[convertRate(item?.rate) - 1]}
         />
-        <Text style={styles.sellerName}>
-          Name Seller: {item?.user?.username}
-        </Text>
+        <Text style={styles.sellerName}>{item?.user?.shopAddress?.city}</Text>
 
         <View style={styles.discount}>
           <Text style={styles.oldPrice}>{oldPrice}</Text>

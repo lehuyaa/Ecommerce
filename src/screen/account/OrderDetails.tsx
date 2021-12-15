@@ -1,21 +1,20 @@
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import React, { useState } from 'react';
-import { Text, View, Image, ScrollView } from 'react-native';
-import { scale, ScaledSheet, verticalScale } from 'react-native-size-matters';
-import { receivedOrder } from '../../api/modules/api-app/order';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import React, {useState} from 'react';
+import {Text, View, Image, ScrollView} from 'react-native';
+import {scale, ScaledSheet, verticalScale} from 'react-native-size-matters';
+import {receivedOrder} from '../../api/modules/api-app/order';
 import IconBack from '../../assets/icons/IconBack';
 import Images from '../../assets/images';
-import { Themes } from '../../assets/themes';
+import {Themes} from '../../assets/themes';
 import ButtonDefault from '../../component/button/ButtonDefault';
 import ButtonIcon from '../../component/button/ButtonIcon';
 import Header from '../../component/header/Header';
 import LoadingScreen from '../../component/LoadingScreen';
-import { formatCurrencyVND } from '../../utilities/format';
+import {formatCurrencyVND} from '../../utilities/format';
 import ItemProduct from './component/ItemProduct';
 
-
 const ItemStatus = (props: any) => {
-  const { title, isDone, isLeft, isRight } = props;
+  const {title, isDone, isLeft, isRight} = props;
   return (
     <View style={styles.viewItemStatus}>
       <View style={styles.viewImage}>
@@ -50,7 +49,7 @@ const ItemStatus = (props: any) => {
   );
 };
 const ItemInfo = (props: any) => {
-  const { title, content } = props;
+  const {title, content} = props;
   return (
     <View style={styles.itemInfo}>
       <Text style={styles.textTitle}>{title}</Text>
@@ -59,9 +58,9 @@ const ItemInfo = (props: any) => {
   );
 };
 const listStatus = [
-  { title: 'Packing' },
-  { title: 'Shipping' },
-  { title: 'Success' },
+  {title: 'Packing'},
+  {title: 'Shipping'},
+  {title: 'Success'},
 ];
 type ParamList = {
   OrderDetails: {
@@ -73,7 +72,9 @@ const OrderDetails = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const { item } = route.params || {};
+  const {item} = route.params || {};
+  const locationShop = item?.orderDetails[0].location;
+  const locationUser = item?.shipAddress.location;
   const calculatorTotalProduct = (list: any) => {
     const totalPrice = list.reduce((total, item) => {
       return total + item?.total;
@@ -81,7 +82,7 @@ const OrderDetails = () => {
     return totalPrice;
   };
   const listInfo = [
-    { title: 'Name Receiver', content: item?.shipAddress?.nameReceiver },
+    {title: 'Name Receiver', content: item?.shipAddress?.nameReceiver},
     {
       title: 'Phone Number',
       content: item?.shipAddress?.phoneNumber,
@@ -102,7 +103,7 @@ const OrderDetails = () => {
     },
     {
       title: 'Shipping',
-      content: calculatorTotalProduct(item?.orderDetails) * 0.01,
+      content: Math.abs(locationShop - locationUser) * 1400 + 2000,
     },
     {
       title: 'Import charges',
@@ -120,7 +121,8 @@ const OrderDetails = () => {
     } catch (error) {
       setLoading(false);
     }
-  }
+  };
+
   return (
     <View style={styles.container}>
       {loading && <LoadingScreen />}
@@ -144,7 +146,11 @@ const OrderDetails = () => {
         showsVerticalScrollIndicator={false}>
         <View style={styles.viewStatus}>
           <ItemStatus
-            isDone={item?.statusOrder?.id === 1 || item?.statusOrder?.id === 2 || item?.statusOrder?.id === 3}
+            isDone={
+              item?.statusOrder?.id === 1 ||
+              item?.statusOrder?.id === 2 ||
+              item?.statusOrder?.id === 3
+            }
             isRight={item?.statusOrder?.id === 2 || item?.statusOrder?.id === 3}
             title={'Packing'}
           />
@@ -168,11 +174,15 @@ const OrderDetails = () => {
           ))}
         </View>
         <View style={styles.viewListProduct}>
-          <Text style={[styles.title, { marginBottom: verticalScale(10) }]}>
+          <Text style={[styles.title, {marginBottom: verticalScale(10)}]}>
             Product
           </Text>
-          {item?.orderDetails.map(item => (
-            <ItemProduct key={item.id} item={item} />
+          {item?.orderDetails.map(product => (
+            <ItemProduct
+              isReview={item?.statusOrder?.id === 3}
+              key={product.id}
+              item={product}
+            />
           ))}
         </View>
         <Text
@@ -211,18 +221,21 @@ const OrderDetails = () => {
             <Text style={styles.textTitleTotal}>Total Price</Text>
             <Text style={styles.textContentTotalPrice}>
               {formatCurrencyVND(
-                calculatorTotalProduct(item?.orderDetails) * 1.11,
+                calculatorTotalProduct(item?.orderDetails) * 1.1 +
+                  Math.abs(locationShop - locationUser) * 1400 +
+                  2000,
               )}
             </Text>
           </View>
         </View>
-        {item?.statusOrder?.id === 2 ? <View style={styles.viewButton}>
-          <ButtonDefault
-            title={'Received Order'}
-            onPress={() => receivedOrderFunc()}
-          />
-        </View> : null}
-
+        {item?.statusOrder?.id === 2 ? (
+          <View style={styles.viewButton}>
+            <ButtonDefault
+              title={'Received Order'}
+              onPress={() => receivedOrderFunc()}
+            />
+          </View>
+        ) : null}
       </ScrollView>
     </View>
   );

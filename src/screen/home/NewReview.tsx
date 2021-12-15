@@ -25,7 +25,7 @@ import IconAdd from '../../assets/icons/IconAdd';
 
 type ParamList = {
   ProductDetailsScreen: {
-    item?: any;
+    idProduct?: any;
   };
 };
 const NewReview = () => {
@@ -34,7 +34,7 @@ const NewReview = () => {
   const [content, setContent] = useState<string>('');
   const navigation = useNavigation();
   const route = useRoute<RouteProp<ParamList, 'ProductDetailsScreen'>>();
-  const {item} = route.params || {};
+  const {idProduct} = route.params || {};
   const {userInfo} = store.getState();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -42,7 +42,7 @@ const NewReview = () => {
     const params = {
       content: content,
       starNumber: rate,
-      productId: item?.id,
+      productId: idProduct,
       userId: userInfo?.user?.id,
       createdTime: dayjs(new Date()).format('DD/MM/YYYY'),
     };
@@ -50,9 +50,7 @@ const NewReview = () => {
 
     try {
       const response: any = await addReview(params);
-      navigation.navigate(TAB_NAVIGATION_ROOT.HOME_ROUTE.PRODUCT_DETAILS, {
-        item,
-      });
+      navigation.navigate(TAB_NAVIGATION_ROOT.HOME_ROUTE.ROOT);
       setLoading(false);
     } catch (error) {
       setLoading(false);

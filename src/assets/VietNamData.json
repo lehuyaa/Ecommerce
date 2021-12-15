@@ -1,6 +1,7 @@
 [
   {
     "text": "Thành phố Cần Thơ",
+    "location": "60",
     "value": {
       "66": "Huyện Cờ Đỏ",
       "67": "Huyện Phong Điền",
@@ -15,6 +16,7 @@
   },
   {
     "text": "Thành phố Đà Nẵng",
+    "location": "32",
     "value": {
       "76": "Huyện Hòa Vang",
       "77": "Huyện Hoàng Sa",
@@ -28,6 +30,7 @@
   },
   {
     "text": "Thành phố Hà Nội",
+    "location": "15",
     "value": {
       "85": "Huyện Ba Vì",
       "86": "Huyện Chương Mỹ",
@@ -62,6 +65,7 @@
   },
   {
     "text": "Thành phố Hải Phòng",
+    "location": "20",
     "value": {
       "115": "Huyện An Dương",
       "116": "Huyện An Lão",
@@ -82,6 +86,7 @@
   },
   {
     "text": "Thành phố Hồ Chí Minh",
+    "location": "51",
     "value": {
       "131": "Huyện Bình Chánh",
       "132": "Huyện Cần Giờ",
@@ -111,6 +116,7 @@
   },
   {
     "text": "Tỉnh An Giang",
+    "location": "58",
     "value": {
       "155": "Huyện An Phú",
       "156": "Huyện Châu Phú",
@@ -127,6 +133,7 @@
   },
   {
     "text": "Tỉnh Bà Rịa-Vũng Tàu",
+    "location": "50",
     "value": {
       "166": "Huyện Châu Đức",
       "167": "Huyện Côn Đảo",
@@ -140,6 +147,7 @@
   },
   {
     "text": "Tỉnh Bắc Giang",
+    "location": "9",
     "value": {
       "174": "Huyện Hiệp Hòa",
       "175": "Huyện Lạng Giang",
@@ -155,6 +163,7 @@
   },
   {
     "text": "Tỉnh Bắc Kạn",
+    "location": "3",
     "value": {
       "184": "Huyện Ba Bể",
       "185": "Huyện Bạch Thông",
@@ -168,6 +177,7 @@
   },
   {
     "text": "Tỉnh Bạc Liêu",
+    "location": "62",
     "value": {
       "192": "Huyện Đông Hải",
       "193": "Huyện Giá Rai",
@@ -180,6 +190,7 @@
   },
   {
     "text": "Tỉnh Bắc Ninh",
+    "location": "17",
     "value": {
       "199": "Huyện Gia Bình",
       "200": "Huyện Lương Tài",
@@ -193,6 +204,7 @@
   },
   {
     "text": "Tỉnh Bến Tre",
+    "location": "54",
     "value": {
       "207": "Huyện Ba Tri",
       "208": "Huyện Bình Đại",
@@ -207,6 +219,7 @@
   },
   {
     "text": "Tỉnh Bình Định",
+    "location": "35",
     "value": {
       "216": "Huyện An Lão",
       "217": "Huyện An Nhơn",
@@ -223,6 +236,7 @@
   },
   {
     "text": "Tỉnh Bình Dương",
+    "location": "48",
     "value": {
       "227": "Huyện Bến Cát",
       "228": "Huyện Dầu Tiếng",
@@ -235,6 +249,7 @@
   },
   {
     "text": "Tỉnh Bình Phước",
+    "location": "46",
     "value": {
       "234": "Huyện Bù Đăng",
       "235": "Huyện Bù Đốp",
@@ -250,6 +265,7 @@
   },
   {
     "text": "Tỉnh Bình Thuận",
+    "location": "39",
     "value": {
       "244": "Huyện  Đức Linh",
       "245": "Huyện Bắc Bình",
@@ -265,6 +281,7 @@
   },
   {
     "text": "Tỉnh Cà Mau",
+    "location": "63",
     "value": {
       "254": "Huyện Cái Nước",
       "255": "Huyện Đầm Dơi",
@@ -279,6 +296,7 @@
   },
   {
     "text": "Tỉnh Cao Bằng",
+    "location": "2",
     "value": {
       "263": "Huyện Bảo Lạc",
       "264": "Huyện Bảo Lâm",
@@ -297,6 +315,7 @@
   },
   {
     "text": "Tỉnh Đắk Lắk",
+    "location": "43",
     "value": {
       "276": "Huyện Buôn Đôn",
       "277": "Huyện Cư Kuin",
@@ -317,6 +336,7 @@
   },
   {
     "text": "Tỉnh Đắk Nông",
+    "location": "44",
     "value": {
       "291": "Huyện Cư Jút",
       "292": "Huyện Đắk GLong",
@@ -330,6 +350,7 @@
   },
   {
     "text": "Tỉnh Điện Biên",
+    "location": "11",
     "value": {
       "299": "Huyện Điện Biên",
       "300": "Huyện Điện Biên Đông",
@@ -344,6 +365,7 @@
   },
   {
     "text": "Tỉnh Đồng Nai",
+    "location": "49",
     "value": {
       "308": "Huyện Cẩm Mỹ",
       "309": "Huyện Định Quán",
@@ -360,6 +382,7 @@
   },
   {
     "text": "Tỉnh Đồng Tháp",
+    "location": "57",
     "value": {
       "319": "Huyện Cao Lãnh",
       "320": "Huyện Châu Thành",
@@ -377,6 +400,7 @@
   },
   {
     "text": "Tỉnh Gia Lai",
+    "location": "42",
     "value": {
       "331": "Huyện Chư Păh",
       "332": "Huyện Chư Pưh",
@@ -400,6 +424,7 @@
   },
   {
     "text": "Tỉnh Hà Giang",
+    "location": "1",
     "value": {
       "349": "Huyện Bắc Mê",
       "350": "Huyện Bắc Quang",
@@ -416,6 +441,7 @@
   },
   {
     "text": "Tỉnh Hà Nam",
+    "location": "23",
     "value": {
       "360": "Huyện Bình Lục",
       "361": "Huyện Duy Tiên",
@@ -427,6 +453,7 @@
   },
   {
     "text": "Tỉnh Hà Tĩnh",
+    "location": "28",
     "value": {
       "366": "Huyện Cẩm Xuyên",
       "367": "Huyện Can Lộc",
@@ -444,6 +471,7 @@
   },
   {
     "text": "Tỉnh Hải Dương",
+    "location": "19",
     "value": {
       "378": "Huyện Bình Giang",
       "379": "Huyện Cẩm Giàng",
@@ -461,6 +489,7 @@
   },
   {
     "text": "Tỉnh Hậu Giang",
+    "location": "61",
     "value": {
       "390": "Huyện Châu Thành",
       "391": "Huyện Châu Thành A",
@@ -473,6 +502,7 @@
   },
   {
     "text": "Tỉnh Hòa Bình",
+    "location": "14",
     "value": {
       "397": "Huyện Cao Phong",
       "398": "Huyện Đà Bắc",
@@ -489,6 +519,7 @@
   },
   {
     "text": "Tỉnh Hưng Yên",
+    "location": "21",
     "value": {
       "408": "Huyện Ân Thi",
       "409": "Huyện Khoái Châu",
@@ -504,6 +535,7 @@
   },
   {
     "text": "Tỉnh Khánh Hòa",
+    "location": "37",
     "value": {
       "418": "Huyện Cam Lâm",
       "419": "Huyện Diên Khánh",
@@ -518,6 +550,7 @@
   },
   {
     "text": "Tỉnh Kiên Giang",
+    "location": "59",
     "value": {
       "427": "Huyện An Biên",
       "428": "Huyện An Minh",
@@ -538,6 +571,7 @@
   },
   {
     "text": "Tỉnh Kon Tum",
+    "location": "41",
     "value": {
       "442": "Huyện Đắk Glei",
       "443": "Huyện Đắk Hà",
@@ -552,6 +586,7 @@
   },
   {
     "text": "Tỉnh Lai Châu",
+    "location": "12",
     "value": {
       "451": "Huyện Mường Tè",
       "452": "Huyện Phong Thổ",
@@ -564,6 +599,7 @@
   },
   {
     "text": "Tỉnh Lâm Đồng",
+    "location": "45",
     "value": {
       "458": "Huyện Bảo Lâm",
       "459": "Huyện Cát Tiên",
@@ -581,6 +617,7 @@
   },
   {
     "text": "Tỉnh Lạng Sơn",
+    "location": "8",
     "value": {
       "470": "Huyện Bắc Sơn",
       "471": "Huyện Bình Gia",
@@ -597,6 +634,7 @@
   },
   {
     "text": "Tỉnh Lào Cai",
+    "location": "5",
     "value": {
       "481": "Huyện Bắc Hà",
       "482": "Huyện Bảo Thắng",
@@ -611,6 +649,7 @@
   },
   {
     "text": "Tỉnh Long An",
+    "location": "52",
     "value": {
       "490": "Huyện Bến Lức",
       "491": "Huyện Cần Đước",
@@ -630,6 +669,7 @@
   },
   {
     "text": "Tỉnh Nam Định",
+    "location": "24",
     "value": {
       "504": "Huyện Giao Thủy",
       "505": "Huyện Hải Hậu",
@@ -645,6 +685,7 @@
   },
   {
     "text": "Tỉnh Nghệ An",
+    "location": "27",
     "value": {
       "514": "Huyện Anh Sơn",
       "515": "Huyện Con Cuông",
@@ -670,6 +711,7 @@
   },
   {
     "text": "Tỉnh Ninh Bình",
+    "location": "25",
     "value": {
       "534": "Huyện Gia Viễn",
       "535": "Huyện Hoa Lư",
@@ -683,6 +725,7 @@
   },
   {
     "text": "Tỉnh Ninh Thuận",
+    "location": "38",
     "value": {
       "542": "Huyên Bác ái",
       "543": "Huyện Ninh Hải",
@@ -695,6 +738,7 @@
   },
   {
     "text": "Tỉnh Phú Thọ",
+    "location": "10",
     "value": {
       "549": "Huyện Cẩm Khê",
       "550": "Huyện Đoan Hùng",
@@ -713,6 +757,7 @@
   },
   {
     "text": "Tỉnh Phú Yên",
+    "location": "36",
     "value": {
       "562": "Huyện Đông Hòa",
       "563": "Huyện Đồng Xuân",
@@ -727,6 +772,7 @@
   },
   {
     "text": "Tỉnh Quảng Bình",
+    "location": "29",
     "value": {
       "571": "Huyện Bố Trạch",
       "572": "Huyện Lệ Thủy",
@@ -739,6 +785,7 @@
   },
   {
     "text": "Tỉnh Quảng Nam",
+    "location": "33",
     "value": {
       "578": "Huyện Bắc Trà My",
       "579": "Huyện Đại Lộc",
@@ -762,6 +809,7 @@
   },
   {
     "text": "Tỉnh Quảng Ngãi",
+    "location": "34",
     "value": {
       "596": "Huyện Ba Tơ",
       "597": "Huyện Bình Sơn",
@@ -781,6 +829,7 @@
   },
   {
     "text": "Tỉnh Quảng Ninh",
+    "location": "18",
     "value": {
       "610": "Huyện Ba Chẽ",
       "611": "Huyện Bình Liêu",
@@ -800,6 +849,7 @@
   },
   {
     "text": "Tỉnh Quảng Trị",
+    "location": "30",
     "value": {
       "624": "Huyện Cam Lộ",
       "625": "Huyện Cồn Cỏ",
@@ -815,6 +865,7 @@
   },
   {
     "text": "Tỉnh Sóc Trăng",
+    "location": "40",
     "value": {
       "634": "Huyện Châu Thành",
       "635": "Huyện Cù Lao Dung",
@@ -831,6 +882,7 @@
   },
   {
     "text": "Tỉnh Sơn La",
+    "location": "13",
     "value": {
       "645": "Huyện Bắc Yên",
       "646": "Huyện Mai Sơn",
@@ -847,6 +899,7 @@
   },
   {
     "text": "Tỉnh Tây Ninh",
+    "location": "47",
     "value": {
       "656": "Huyện Bến Cầu",
       "657": "Huyện Châu Thành",
@@ -861,6 +914,7 @@
   },
   {
     "text": "Tỉnh Thái Bình",
+    "location": "22",
     "value": {
       "665": "Huyện Đông Hưng",
       "666": "Huyện Hưng Hà",
@@ -874,6 +928,7 @@
   },
   {
     "text": "Tỉnh Thái Nguyên",
+    "location": "7",
     "value": {
       "673": "Huyện Đại Từ",
       "674": "Huyện Định Hóa",
@@ -888,6 +943,7 @@
   },
   {
     "text": "Tỉnh Thanh Hóa",
+    "location": "26",
     "value": {
       "682": "Huyện Bá Thước",
       "683": "Huyện Cẩm Thủy",
@@ -920,6 +976,7 @@
   },
   {
     "text": "Tỉnh Thừa Thiên Huế",
+    "location": "31",
     "value": {
       "709": "Huyện A Lưới",
       "710": "Huyện Hương Trà",
@@ -934,6 +991,7 @@
   },
   {
     "text": "Tỉnh Tiền Giang",
+    "location": "53",
     "value": {
       "718": "Huyện Cái Bè",
       "719": "Huyện Cai Lậy",
@@ -949,6 +1007,7 @@
   },
   {
     "text": "Tỉnh Trà Vinh",
+    "location": "55",
     "value": {
       "728": "Huyện Càng Long",
       "729": "Huyện Cầu Kè",
@@ -962,6 +1021,7 @@
   },
   {
     "text": "Tỉnh Tuyên Quang",
+    "location": "4",
     "value": {
       "736": "Huyện Chiêm Hóa",
       "737": "Huyện Hàm Yên",
@@ -973,6 +1033,7 @@
   },
   {
     "text": "Tỉnh Vĩnh Long",
+    "location": "56",
     "value": {
       "742": "Huyện Bình Minh",
       "743": "Huyện Bình Tân",
@@ -986,6 +1047,7 @@
   },
   {
     "text": "Tỉnh Vĩnh Phúc",
+    "location": "16",
     "value": {
       "750": "Huyện Bình Xuyên",
       "751": "Huyện Lập Thạch",
@@ -1000,6 +1062,7 @@
   },
   {
     "text": "Tỉnh Yên Bái",
+    "location": "6",
     "value": {
       "759": "Huyện Lục Yên",
       "760": "Huyện Mù Cang Chải",
