@@ -44,7 +44,7 @@ const NewReview = () => {
       starNumber: rate,
       productId: idProduct,
       userId: userInfo?.user?.id,
-      createdTime: dayjs(new Date()).format('DD/MM/YYYY'),
+      createdTime: dayjs(new Date()).format('HH:mm - DD/MM/YYYY'),
     };
     setLoading(true);
 

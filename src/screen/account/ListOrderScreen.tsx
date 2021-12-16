@@ -28,6 +28,7 @@ const ListOrderScreen = (props: ListOrderScreenNameProps) => {
     try {
       const response = await getOrderByUserId(userInfo?.user?.id);
       setListOrder(response?.data);
+      console.log(response?.data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
