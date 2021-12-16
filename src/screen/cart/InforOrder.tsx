@@ -38,6 +38,7 @@ const InforOrder = () => {
       address,
       listSeller,
       userID: userInfo?.user?.id,
+      createTime: new Date(),
     };
     setLoading(true);
     try {

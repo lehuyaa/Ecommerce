@@ -5,6 +5,7 @@ import {ScaledSheet, verticalScale} from 'react-native-size-matters';
 import {Themes} from '../../../assets/themes';
 import {TAB_NAVIGATION_ROOT} from '../../../navigation/config/routes';
 import {formatCurrencyVND} from '../../../utilities/format';
+import dayjs from 'dayjs';
 
 interface ItemOrderProps {
   item?: any;
@@ -28,7 +29,7 @@ const ItemOrder = (props: ItemOrderProps) => {
   const {item} = props || {};
   const locationShop = item?.orderDetails[0].location;
   const locationUser = item?.shipAddress.location;
-  const {id, orderDetails, timeCreated} = item || {};
+  const {id, orderDetails, createTime} = item || {};
   const calculatorTotal = (list: any) => {
     const totalPrice = list.reduce((total: number, item: any) => {
       return total + item?.total;
@@ -62,7 +63,12 @@ const ItemOrder = (props: ItemOrderProps) => {
           styles.textTitle,
           {marginTop: verticalScale(12), marginBottom: verticalScale(24)},
         ]}>
-        Time Created: {timeCreated}
+        Time Created:{' '}
+        {createTime
+          ? dayjs(createTime).format('HH:mm - DD/MM/YYYY')
+          : dayjs('Thu Dec 16 2021 10:00:22 GMT+0700 (Indochina Time)').format(
+              'HH:mm - DD/MM/YYYY',
+            )}
       </Text>
 
       {listInfo.map(item => (

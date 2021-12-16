@@ -139,7 +139,7 @@ const Rating = () => {
           ))}
         </View>
       </ScrollView>
-      <View style={styles.viewButton}>
+      {/* <View style={styles.viewButton}>
         <ButtonDefault
           title={'Write Review'}
           onPress={() => {
@@ -152,7 +152,7 @@ const Rating = () => {
             }
           }}
         />
-      </View>
+      </View> */}
       <Toast />
     </View>
   );

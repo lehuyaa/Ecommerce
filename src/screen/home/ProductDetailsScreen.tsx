@@ -71,12 +71,15 @@ const ProductDetailsScreen = () => {
       text1: `You Can't Buy Your Product`,
     });
   };
+  console.log('item', item);
   const getListReview = async () => {
     setLoading(true);
 
     try {
       const response: any = await getReviewProduct(id);
-      const randomProduct: any = await getRandomProductByUserId(item?.user?.id);
+      const randomProduct: any = await getRandomProductByUserId(
+        item?.category?.id,
+      );
       setLoading(false);
       setListReview(response?.data);
       setListRandomPorduct(randomProduct?.data);
